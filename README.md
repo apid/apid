@@ -63,7 +63,7 @@ func init() {
 
 func initPlugin(services apid.Services) error {
 
-  log = services.Log() // note: could also access via `apid.Log()`
+  log = services.Log().ForModule("myPluginName") // note: could also access via `apid.Log().ForModule()`
   
   services.API().HandleFunc("/verifyAPIKey", handleRequest)
 }
