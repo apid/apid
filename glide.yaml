@@ -1,0 +1,9 @@
+package: github.com/30x/apid
+import:
+- package: github.com/Sirupsen/logrus
+- package: github.com/spf13/viper
+- package: github.com/mattn/go-sqlite3
+- package: github.com/gorilla/mux
+testImport:
+- package: github.com/onsi/ginkgo/ginkgo
+- package: github.com/onsi/gomega
