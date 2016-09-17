@@ -78,12 +78,16 @@ func (d *dispatcher) startDelivery() {
 					log.Debugf("delivering %v to %v", event, d.handlers)
 					var wg sync.WaitGroup
 					for _, h := range d.handlers {
-						// todo: recover on error?
 						handler := h
 						wg.Add(1)
-						go handler.Handle(event)
+						go func() {
+							defer wg.Done()
+							handler.Handle(event) // todo: recover on error?
+						}()
 					}
+					log.Debugf("waiting for handlers")
 					wg.Wait()
+					log.Debugf("delivery complete")
 				}
 			}
 

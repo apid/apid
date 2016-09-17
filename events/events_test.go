@@ -23,17 +23,37 @@ var _ = Describe("Events Service", func() {
 
 	It("should publish an event to a listener", func(done Done) {
 		em := events.CreateService()
-		defer em.Close()
 
 		h := test_handler{
 			"handler",
 			func(event apid.Event) {
+				em.Close()
 				close(done)
 			},
 		}
 
 		em.Listen("selector", &h)
 		em.Emit("selector", &test_event{"test"})
+	})
+
+	It("should publish multiple events to a listener", func(done Done) {
+		em := events.CreateService()
+
+		count := int32(0)
+		h := test_handler{
+			"handler",
+			func(event apid.Event) {
+				c := atomic.AddInt32(&count, 1)
+				if c > 1 {
+					em.Close()
+					close(done)
+				}
+			},
+		}
+
+		em.Listen("selector", &h)
+		em.Emit("selector", &test_event{"test1"})
+		em.Emit("selector", &test_event{"test2"})
 	})
 
 	It("should publish an event multiple listeners", func(done Done) {
@@ -47,6 +67,7 @@ var _ = Describe("Events Service", func() {
 			func(event apid.Event) {
 				hitH1 = true
 				if hitH1 && hitH2 {
+					em.Close()
 					close(done)
 				}
 			},
@@ -56,6 +77,7 @@ var _ = Describe("Events Service", func() {
 			func(event apid.Event) {
 				hitH2 = true
 				if hitH1 && hitH2 {
+					em.Close()
 					close(done)
 				}
 			},
@@ -68,7 +90,6 @@ var _ = Describe("Events Service", func() {
 
 	It("should deliver events according selector", func(done Done) {
 		em := events.CreateService()
-		defer em.Close()
 
 		e1 := &test_event{"test1"}
 		e2 := &test_event{"test2"}
@@ -81,6 +102,7 @@ var _ = Describe("Events Service", func() {
 				c := atomic.AddInt32(&count, 1)
 				Expect(event).To(BeIdenticalTo(e1))
 				if c == 2 {
+					em.Close()
 					close(done)
 				}
 			},
@@ -92,6 +114,7 @@ var _ = Describe("Events Service", func() {
 				c := atomic.AddInt32(&count, 1)
 				Expect(event).To(BeIdenticalTo(e2))
 				if c == 2 {
+					em.Close()
 					close(done)
 				}
 			},
