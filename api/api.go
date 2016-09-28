@@ -25,8 +25,8 @@ func CreateService() apid.APIService {
 
 	config.SetDefault(configAPIPort, 9000)
 
-	router := mux.NewRouter()
-	return &service{router}
+	r := mux.NewRouter()
+	return &service{r}
 }
 
 type service struct {
@@ -46,14 +46,22 @@ func (s *service) Listen() error {
 	return http.ListenAndServe(":"+port, s.router)
 }
 
-func (s *service) Handle(path string, handler http.Handler) {
+func (s *service) Handle(path string, handler http.Handler) apid.Route {
 	log.Infof("handle %s: %s", path, handler)
-	s.router.Handle(path, handler)
+	return s.Router().Handle(path, handler)
 }
 
-func (s *service) HandleFunc(path string, handlerFunc http.HandlerFunc) {
+func (s *service) HandleFunc(path string, handlerFunc http.HandlerFunc) apid.Route {
 	log.Infof("handle %s: %s", path, handlerFunc)
-	s.router.HandleFunc(path, handlerFunc)
+	return s.Router().HandleFunc(path, handlerFunc)
+}
+
+func (s *service) Router() apid.Router {
+	return &router{s.router}
+}
+
+func (s *service) Vars(r *http.Request) map[string]string {
+	return mux.Vars(r)
 }
 
 func expvarHandler(w http.ResponseWriter, r *http.Request) {
@@ -68,4 +76,28 @@ func expvarHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%q: %s", kv.Key, kv.Value)
 	})
 	fmt.Fprint(w, "\n}\n")
+}
+
+type router struct {
+	r *mux.Router
+}
+
+func (r *router) Handle(path string, handler http.Handler) apid.Route {
+	return &route{r.r.Handle(path, handler)}
+}
+
+func (r *router) HandleFunc(path string, f func(http.ResponseWriter, *http.Request)) apid.Route {
+	return &route{r.r.HandleFunc(path, f)}
+}
+
+func (r *router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	r.r.ServeHTTP(w, req)
+}
+
+type route struct {
+	r *mux.Route
+}
+
+func (r *route) Methods(methods ...string) apid.Route {
+	return &route{r.r.Methods(methods...)}
 }
