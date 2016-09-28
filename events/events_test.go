@@ -36,6 +36,18 @@ var _ = Describe("Events Service", func() {
 		em.Emit("selector", &test_event{"test"})
 	})
 
+	It("should publish an event to a listener func", func(done Done) {
+		em := events.CreateService()
+
+		h := func(event apid.Event) {
+			em.Close()
+			close(done)
+		}
+
+		em.ListenFunc("selector", h)
+		em.Emit("selector", &test_event{"test"})
+	})
+
 	It("should publish multiple events to a listener", func(done Done) {
 		em := events.CreateService()
 

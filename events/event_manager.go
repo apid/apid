@@ -29,6 +29,12 @@ func (em *eventManager) Listen(selector apid.EventSelector, handler apid.EventHa
 	em.dispatchers[selector].Add(handler)
 }
 
+func (em *eventManager) ListenFunc(selector apid.EventSelector, handlerFunc apid.EventHandlerFunc) {
+	log.Debugf("listen: '%s' handler: %s", selector, handlerFunc)
+	handler := &funcWrapper{handlerFunc}
+	em.Listen(selector, handler)
+}
+
 func (em *eventManager) Close() {
 	log.Debugf("Closing")
 	dispatchers := em.dispatchers
@@ -93,4 +99,12 @@ func (d *dispatcher) startDelivery() {
 
 		}
 	}()
+}
+
+type funcWrapper struct {
+	f apid.EventHandlerFunc
+}
+
+func (r *funcWrapper) Handle(e apid.Event) {
+	r.f(e)
 }
