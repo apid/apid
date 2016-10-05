@@ -47,7 +47,10 @@ func InitializePlugins() {
 	log := Log()
 	log.Debugf("initializing plugins...")
 	for _, p := range pluginInitFuncs {
-		p(services)
+		err := p(services)
+		if err != nil {
+			log.Panicf("Error initializing plugin: %s", err)
+		}
 	}
 	log.Debugf("done initializing plugins")
 	Events().Emit(SystemEventsSelector, PluginsInitializedEvent)
