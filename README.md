@@ -22,6 +22,7 @@ configuration setting, set env var "apid_log_level".
 ```
 api_port: 9000
 api_expvar_path: nil  # not exposed
+data_path: /var/tmp
 events_buffer_size: 5
 log_level: debug    # valid values: Debug, Info, Warning, Error, Fatal, Panic
 ```

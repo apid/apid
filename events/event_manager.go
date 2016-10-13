@@ -16,6 +16,10 @@ func (em *eventManager) Emit(selector apid.EventSelector, event apid.Event) {
 	em.dispatchers[selector].Send(event)
 }
 
+func (em *eventManager) HasListeners(selector apid.EventSelector) bool {
+	return em.dispatchers[selector].HasHandlers()
+}
+
 func (em *eventManager) Listen(selector apid.EventSelector, handler apid.EventHandler) {
 	log.Debugf("listen: '%s' handler: %s", selector, handler)
 	if em.dispatchers == nil {
@@ -23,14 +27,22 @@ func (em *eventManager) Listen(selector apid.EventSelector, handler apid.EventHa
 	}
 	list := em.dispatchers[selector]
 	if list == nil {
-		d := &dispatcher{}
+		d := &dispatcher{sync.RWMutex{}, em, selector, nil, nil}
 		em.dispatchers[selector] = d
 	}
 	em.dispatchers[selector].Add(handler)
 }
 
+func (em *eventManager) StopListening(selector apid.EventSelector, handler apid.EventHandler) {
+	log.Debugf("stop listening: '%s' handler: %s", selector, handler)
+	if em.dispatchers == nil {
+		return
+	}
+	em.dispatchers[selector].Remove(handler)
+}
+
 func (em *eventManager) ListenFunc(selector apid.EventSelector, handlerFunc apid.EventHandlerFunc) {
-	log.Debugf("listen: '%s' handler: %s", selector, handlerFunc)
+	log.Debugf("listenFunc: '%s' handler: %s", selector, handlerFunc)
 	handler := &funcWrapper{handlerFunc}
 	em.Listen(selector, handler)
 }
@@ -46,6 +58,8 @@ func (em *eventManager) Close() {
 
 type dispatcher struct {
 	sync.RWMutex
+	em       *eventManager
+	selector apid.EventSelector
 	channel  chan apid.Event
 	handlers []apid.EventHandler
 }
@@ -65,6 +79,18 @@ func (d *dispatcher) Add(h apid.EventHandler) {
 	d.handlers = cp
 }
 
+func (d *dispatcher) Remove(h apid.EventHandler) {
+	d.Lock()
+	defer d.Unlock()
+	for i := len(d.handlers) - 1; i >= 0; i-- {
+		ih := d.handlers[i]
+		if h == ih {
+			d.handlers = append(d.handlers[:i], d.handlers[i+1:]...)
+			return
+		}
+	}
+}
+
 func (d *dispatcher) Close() {
 	close(d.channel)
 }
@@ -73,6 +99,10 @@ func (d *dispatcher) Send(e apid.Event) {
 	if d != nil {
 		d.channel <- e
 	}
+}
+
+func (d *dispatcher) HasHandlers() bool {
+	return d != nil && len(d.handlers) > 0
 }
 
 func (d *dispatcher) startDelivery() {
@@ -93,6 +123,16 @@ func (d *dispatcher) startDelivery() {
 					}
 					log.Debugf("waiting for handlers")
 					wg.Wait()
+					if d.selector != apid.EventDeliveredSelector &&
+						d.em.HasListeners(apid.EventDeliveredSelector) {
+
+						e := apid.EventDeliveryEvent{
+							Description: "event complete",
+							Selector:    d.selector,
+							Event:       event,
+						}
+						d.em.Emit(apid.EventDeliveredSelector, e)
+					}
 					log.Debugf("delivery complete")
 				}
 			}

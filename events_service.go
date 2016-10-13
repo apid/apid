@@ -20,6 +20,17 @@ type EventsService interface {
 	// when an event matching selector occurs, run the provided handler function
 	ListenFunc(selector EventSelector, handler EventHandlerFunc)
 
+	// remove a listener
+	StopListening(selector EventSelector, handler EventHandler)
+
 	// shut it down
 	Close()
+}
+
+const EventDeliveredSelector EventSelector = "event delivered"
+
+type EventDeliveryEvent struct {
+	Description string
+	Selector    EventSelector
+	Event       Event
 }
