@@ -69,7 +69,7 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 		return
 	}
 
-	log.Errorf("#### DB path %s", datapath)
+	log.Errorf("#### DB path %s", dataPath)
 	err = db.Ping()
 	if err != nil {
 		log.Errorf("error pinging db: %s", err)
@@ -92,68 +92,4 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 
 	dbMap[id] = db
 	return
-}
-
-func (d *dataService) InsertSnapshotDB(rawjson []byte) (err error) {
-
-	log.Info("Cleanup old DB")
-	dbname := path.Join(config.GetString(configDataPath), commonDBID)
-
-	/* Clean up existing DB before getting new one */
-	os.Remove(dbname)
-	os.Remove(dbname + "-wal")
-	os.Remove(dbname + "-shm")
-
-	/* Create DB pointer */
-	db, err := d.DB()
-	if err != nil {
-		log.Error("Unable to create DB")
-		return err
-	}
-
-	snp, err := common.UnmarshalSnapshot(rawjson)
-	if err != nil {
-		log.Erro("Unable to Marshal Snapshot")
-		return err
-	}
-	txn, err := db.Begin()
-	if err != nil {
-		log.Error("Unable to get Txn for DB")
-		return err
-	}
-
-	for _, table := range snp.Tables {
-
-		for _, row := range table.Rows {
-			count := 0
-			sqli := "INSERT INTO " + table.Name + " ("
-			for rn, _ := range row {
-				count++
-				sqli += rn
-				if count < len(row) {
-					sqli += ","
-				}
-			}
-			count = 0
-			sqli += ") VALUES ("
-			for _, rv := range row {
-				count++
-				switch rv.Type {
-				case 1043:
-					sqli += "'" + rv.Value + "'"
-				default:
-					sqli += rv.Value
-				}
-				if count < len(row) {
-					sqli += ","
-				}
-			}
-			sqli += ")"
-			_, err = txn.Exec(sqli)
-		}
-	}
-	txn.Commit()
-
-	log.Info("Downloaded a new DB from Snapshot server")
-	return err
 }

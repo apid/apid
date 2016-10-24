@@ -10,7 +10,7 @@ var (
 	APIListeningEvent       = systemEvent{"api listening"}
 
 	pluginInitFuncs []PluginInitFunc
-	services Services
+	services        Services
 )
 
 type Services interface {
@@ -111,4 +111,3 @@ func (s *servicesSet) Log() LogService {
 type systemEvent struct {
 	description string
 }
-
