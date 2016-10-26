@@ -179,7 +179,7 @@ var _ = Describe("Events Service", func() {
 			"handler1",
 			func(event apid.Event) {
 				c := atomic.AddInt32(&count, 1)
-				Expect(event).To(BeIdenticalTo(e1))
+				Expect(event).Should(Equal(e1))
 				if c == 2 {
 					em.Close()
 					close(done)
@@ -191,7 +191,7 @@ var _ = Describe("Events Service", func() {
 			"handler2",
 			func(event apid.Event) {
 				c := atomic.AddInt32(&count, 1)
-				Expect(event).To(BeIdenticalTo(e2))
+				Expect(event).Should(Equal(e2))
 				if c == 2 {
 					em.Close()
 					close(done)
