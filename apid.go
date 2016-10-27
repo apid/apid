@@ -5,14 +5,12 @@ const (
 )
 
 var (
-	APIDInitializedEvent        = systemEvent{"apid initialized"}
-	PluginsInitializedEvent     = systemEvent{"plugins initialized"}
-	PostPluginsInitializedEvent = systemEvent{"post plugins initialized"}
-	APIListeningEvent           = systemEvent{"api listening"}
+	APIDInitializedEvent    = systemEvent{"apid initialized"}
+	PluginsInitializedEvent = systemEvent{"plugins initialized"}
+	APIListeningEvent       = systemEvent{"api listening"}
 
-	pluginInitFuncs     []PluginInitFunc
-	postpluginInitFuncs []PostPluginInitFunc
-	services            Services
+	pluginInitFuncs []PluginInitFunc
+	services        Services
 )
 
 type Services interface {
@@ -24,7 +22,6 @@ type Services interface {
 }
 
 type PluginInitFunc func(Services) error
-type PostPluginInitFunc func(Services) error
 
 // passed Services can be a factory - makes copies and maintains returned references
 // eg. apid.Initialize(factory.DefaultServicesFactory())
@@ -46,10 +43,6 @@ func RegisterPlugin(plugin PluginInitFunc) {
 	pluginInitFuncs = append(pluginInitFuncs, plugin)
 }
 
-func RegisterPostPlugin(plugin PostPluginInitFunc) {
-	postpluginInitFuncs = append(postpluginInitFuncs, plugin)
-}
-
 func InitializePlugins() {
 	log := Log()
 	log.Debugf("Initializing plugins...")
@@ -61,20 +54,6 @@ func InitializePlugins() {
 	}
 	Events().Emit(SystemEventsSelector, PluginsInitializedEvent)
 	log.Debugf("done initializing plugins")
-}
-
-func PostInitializePlugins() {
-
-	log := Log()
-	log.Debugf("Post Initializing plugins...")
-	for _, p := range postpluginInitFuncs {
-		err := p(services)
-		if err != nil {
-			log.Panicf("Error initializing plugin: %s", err)
-		}
-	}
-	Events().Emit(SystemEventsSelector, PostPluginsInitializedEvent)
-	log.Debugf("Done Post initializing plugins")
 }
 
 func AllServices() Services {
