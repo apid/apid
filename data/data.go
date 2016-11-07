@@ -59,9 +59,10 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 		return
 	}
 
-	log.Info("LoadDB: ", id)
-
 	dataPath := path.Join(config.GetString(configDataPath), id)
+
+	log.Infof("LoadDB: %s", dataPath)
+
 	dataSource := fmt.Sprintf(config.GetString(configDataSource), dataPath)
 	db, err = sql.Open(config.GetString(configDataDriver), dataSource)
 	if err != nil {
