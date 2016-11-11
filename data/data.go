@@ -55,15 +55,18 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 
 	db = dbMap[id]
 	if db != nil {
-		dbMapSync.Unlock()
 		return
 	}
 
-	log.Info("LoadDB: ", id)
-
 	dataPath := path.Join(config.GetString(configDataPath), id)
+
+	log.Infof("LoadDB: %s", dataPath)
+
 	dataSource := fmt.Sprintf(config.GetString(configDataSource), dataPath)
+
 	db, err = sql.Open(config.GetString(configDataDriver), dataSource)
+	db.SetMaxOpenConns(1);
+
 	if err != nil {
 		log.Errorf("error loading db: %s", err)
 		return
