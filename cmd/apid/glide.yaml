@@ -1,0 +1,10 @@
+package: github.com/30x/apid_build
+import:
+- package: github.com/30x/apid
+- package: github.com/spf13/viper
+- package: github.com/apigee-labs/transicator
+- package: github.com/30x/apidApigeeSync
+- package: github.com/30x/apidGatewayDeploy
+  subpackages:
+  - github
+- package: github.com/30x/apidVerifyAPIKey

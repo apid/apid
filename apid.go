@@ -44,7 +44,7 @@ func Initialize(s Services) {
 }
 
 func RegisterPlugin(plugin PluginInitFunc) {
-	fmt.Printf("Registered plugin: %v", plugin)
+	fmt.Printf("Registered plugin: %v\n", plugin)
 	pluginInitFuncs = append(pluginInitFuncs, plugin)
 }
 

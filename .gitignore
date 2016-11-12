@@ -2,3 +2,6 @@ profile.out
 cover.html
 coverage.txt
 vendor
+/cmd/apid/apid_config.yaml
+/cmd/apid/apid
+/cmd/apid/vendor
