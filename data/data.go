@@ -7,12 +7,13 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"path"
 	"sync"
+	"os"
 )
 
 const (
-	configDataDriver = "data_driver"
-	configDataSource = "data_source"
-	configDataPath   = "data_path"
+	configDataDriverKey = "data_driver"
+	configDataSourceKey = "data_source"
+	configDataPathKey   = "data_path"
 
 	commonDBID = "_apid_common_"
 )
@@ -27,9 +28,9 @@ func CreateDataService() apid.DataService {
 	config = apid.Config()
 	log = apid.Log().ForModule("data")
 
-	config.SetDefault(configDataDriver, "sqlite3")
-	config.SetDefault(configDataSource, "file:%s")
-	config.SetDefault(configDataPath, "/var/tmp")
+	config.SetDefault(configDataDriverKey, "sqlite3")
+	config.SetDefault(configDataSourceKey, "file:%s")
+	config.SetDefault(configDataPathKey, "sqlite")
 
 	return &dataService{}
 }
@@ -58,13 +59,18 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 		return
 	}
 
-	dataPath := path.Join(config.GetString(configDataPath), id)
+	storagePath := config.GetString("local_storage_path")
+	relativeDataPath := config.GetString(configDataPathKey)
+	dataPath := path.Join(storagePath, relativeDataPath)
 
-	log.Infof("LoadDB: %s", dataPath)
+	if err = os.MkdirAll(dataPath, 0700); err != nil {
+		return
+	}
 
-	dataSource := fmt.Sprintf(config.GetString(configDataSource), dataPath)
-
-	db, err = sql.Open(config.GetString(configDataDriver), dataSource)
+	dataFile := path.Join(dataPath, id)
+	log.Infof("LoadDB: %s", dataFile)
+	dataSource := fmt.Sprintf(config.GetString(configDataSourceKey), dataFile)
+	db, err = sql.Open(config.GetString(configDataDriverKey), dataSource)
 
 	if err != nil {
 		log.Errorf("error loading db: %s", err)

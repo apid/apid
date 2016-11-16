@@ -9,6 +9,9 @@ import (
 )
 
 const (
+	localStoragePathKey     = "local_storage_path"
+	localStoragePathDefault = "/var/tmp"
+
 	configFileEnvVar = "APID_CONFIG_FILE"
 
 	configFileType    = "yaml"
@@ -42,6 +45,8 @@ func GetConfig() apid.ConfigService {
 		configFile, ok := os.LookupEnv(configFileEnvVar); if ok {
 			cfg.SetConfigFile(configFile)
 		}
+
+		cfg.SetDefault(localStoragePathKey, localStoragePathDefault)
 
 		err := cfg.ReadInConfig()
 		if err != nil {
