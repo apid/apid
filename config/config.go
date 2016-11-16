@@ -10,7 +10,7 @@ import (
 
 const (
 	localStoragePathKey     = "local_storage_path"
-	localStoragePathDefault = "/var/tmp"
+	localStoragePathDefault = "/var/tmp/apid"
 
 	configFileEnvVar = "APID_CONFIG_FILE"
 
