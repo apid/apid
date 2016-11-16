@@ -28,7 +28,7 @@ func CreateDataService() apid.DataService {
 	log = apid.Log().ForModule("data")
 
 	config.SetDefault(configDataDriver, "sqlite3")
-	config.SetDefault(configDataSource, "file:%s?cache=shared&mode=rwc")
+	config.SetDefault(configDataSource, "file:%s")
 	config.SetDefault(configDataPath, "/var/tmp")
 
 	return &dataService{}
@@ -65,7 +65,6 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 	dataSource := fmt.Sprintf(config.GetString(configDataSource), dataPath)
 
 	db, err = sql.Open(config.GetString(configDataDriver), dataSource)
-	db.SetMaxOpenConns(1);
 
 	if err != nil {
 		log.Errorf("error loading db: %s", err)
