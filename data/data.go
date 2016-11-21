@@ -77,6 +77,7 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 		return
 	}
 
+	log.Infof("Sqlite DB path used by apid: %s", dataPath)
 	err = db.Ping()
 	if err != nil {
 		log.Errorf("error pinging db: %s", err)

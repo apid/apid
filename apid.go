@@ -14,7 +14,7 @@ var (
 	APIListeningEvent       = systemEvent{"api listening"}
 
 	pluginInitFuncs []PluginInitFunc
-	services Services
+	services        Services
 )
 
 type Services interface {
@@ -50,15 +50,15 @@ func RegisterPlugin(plugin PluginInitFunc) {
 
 func InitializePlugins() {
 	log := Log()
-	log.Debugf("initializing plugins...")
+	log.Debugf("Initializing plugins...")
 	for _, p := range pluginInitFuncs {
 		err := p(services)
 		if err != nil {
 			log.Panicf("Error initializing plugin: %s", err)
 		}
 	}
-	log.Debugf("done initializing plugins")
 	Events().Emit(SystemEventsSelector, PluginsInitializedEvent)
+	log.Debugf("done initializing plugins")
 }
 
 func AllServices() Services {
@@ -116,4 +116,3 @@ func (s *servicesSet) Log() LogService {
 type systemEvent struct {
 	description string
 }
-
