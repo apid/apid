@@ -13,7 +13,7 @@ const (
 	defaultLevel = logrus.DebugLevel
 
 	moduleField       = "module"
-	organizationField = "org"
+	environmentField = "env"
 )
 
 var std apid.LogService
@@ -47,9 +47,8 @@ func (l *logger) ForModule(name string) apid.LogService {
 	return log
 }
 
-func (l *logger) ForOrganization(name string) apid.LogService {
-	// todo: custom logging levels
-	return l.WithField(organizationField, name)
+func (l *logger) ForEnvironment(name string) apid.LogService {
+	return l.WithField(environmentField, name)
 }
 
 func (l *logger) WithField(key string, value interface{}) apid.LogService {

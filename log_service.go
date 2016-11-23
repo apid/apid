@@ -31,5 +31,5 @@ type LogService interface {
 	WithField(key string, value interface{}) LogService
 
 	ForModule(name string) LogService
-	ForOrganization(name string) LogService
+	ForEnvironment(name string) LogService
 }
