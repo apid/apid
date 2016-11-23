@@ -4,10 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/30x/apid"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/mattn/go-sqlite3"
 	"path"
 	"sync"
 	"os"
+	"github.com/30x/apid/data/wrap"
 )
 
 const (
@@ -16,9 +17,11 @@ const (
 	configDataPathKey   = "data_path"
 
 	commonDBID = "_apid_common_"
+
+	defaultTraceLevel = "warn"
 )
 
-var log apid.LogService
+var log, dbTraceLog apid.LogService
 var config apid.ConfigService
 
 var dbMap = make(map[string]*sql.DB)
@@ -27,6 +30,10 @@ var dbMapSync sync.RWMutex
 func CreateDataService() apid.DataService {
 	config = apid.Config()
 	log = apid.Log().ForModule("data")
+
+	// we don't want to trace normally
+	config.SetDefault("DATA_TRACE_LOG_LEVEL", defaultTraceLevel)
+	dbTraceLog = apid.Log().ForModule("data_trace")
 
 	config.SetDefault(configDataDriverKey, "sqlite3")
 	config.SetDefault(configDataSourceKey, "file:%s")
@@ -70,8 +77,12 @@ func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
 	dataFile := path.Join(dataPath, id)
 	log.Infof("LoadDB: %s", dataFile)
 	dataSource := fmt.Sprintf(config.GetString(configDataSourceKey), dataFile)
-	db, err = sql.Open(config.GetString(configDataDriverKey), dataSource)
 
+	wrappedDriverName := "dd:" + config.GetString(configDataDriverKey)
+	dataDriver := wrap.WrapDriver{&sqlite3.SQLiteDriver{}, dbTraceLog}
+	sql.Register(wrappedDriverName, &dataDriver)
+
+	db, err = sql.Open(wrappedDriverName, dataSource)
 	if err != nil {
 		log.Errorf("error loading db: %s", err)
 		return
