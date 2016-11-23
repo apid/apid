@@ -1,7 +1,6 @@
 package data_test
 
 import (
-	"database/sql"
 	"github.com/30x/apid"
 	"github.com/30x/apid/factory"
 	. "github.com/onsi/ginkgo"
@@ -16,7 +15,7 @@ import (
 )
 
 const (
-	count    = 3000
+	count    = 2000
 	setupSql = `
 		CREATE TABLE IF NOT EXISTS test_1 (id INTEGER PRIMARY KEY, counter TEXT);
 		CREATE TABLE IF NOT EXISTS test_2 (id INTEGER PRIMARY KEY, counter TEXT);
@@ -44,6 +43,25 @@ var _ = Describe("Events Service", func() {
 
 	AfterSuite(func() {
 		os.RemoveAll(tmpDir)
+	})
+
+	It("should be able to open a new datbase", func () {
+		db, err := apid.Data().DBForID("test")
+		Expect(err).NotTo(HaveOccurred())
+		setup(db)
+
+		var prod string
+		rows, err := db.Query(`SELECT counter FROM test_2 LIMIT 5`)
+		Expect(err).NotTo(HaveOccurred())
+		defer rows.Close()
+		var count = 0
+		for rows.Next() {
+			count++
+			rows.Scan(&prod)
+		}
+		Expect(count).To(Equal(5))
+
+		//db, err := apid.Data().DBForID("test", "someid")
 	})
 
 	It("should handle multi-threaded access", func(done Done) {
@@ -83,7 +101,7 @@ func randomSleep() {
 	time.Sleep(time.Duration(r.Intn(1)) * time.Millisecond)
 }
 
-func setup(db *sql.DB) {
+func setup(db apid.DB) {
 	_, err := db.Exec(setupSql)
 	if err != nil {
 		log.Fatal(err)
@@ -101,7 +119,7 @@ func setup(db *sql.DB) {
 	tx.Commit()
 }
 
-func read(db *sql.DB, i int) {
+func read(db apid.DB, i int) {
 	var prod string
 	rows, err := db.Query(`SELECT counter FROM test_2 LIMIT 5`)
 	if err != nil {
@@ -116,7 +134,7 @@ func read(db *sql.DB, i int) {
 	fmt.Print(".")
 }
 
-func write(db *sql.DB, i int) {
+func write(db apid.DB, i int) {
 	tx, err := db.Begin()
 	defer tx.Rollback()
 	if err != nil {

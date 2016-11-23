@@ -24,7 +24,7 @@ const (
 var log, dbTraceLog apid.LogService
 var config apid.ConfigService
 
-var dbMap = make(map[string]*sql.DB)
+var dbMap = make(map[string]apid.DB)
 var dbMapSync sync.RWMutex
 
 func CreateDataService() apid.DataService {
@@ -45,11 +45,11 @@ func CreateDataService() apid.DataService {
 type dataService struct {
 }
 
-func (d *dataService) DB() (*sql.DB, error) {
+func (d *dataService) DB() (apid.DB, error) {
 	return d.DBForID(commonDBID)
 }
 
-func (d *dataService) DBForID(id string) (db *sql.DB, err error) {
+func (d *dataService) DBForID(id string) (db apid.DB, err error) {
 
 	dbMapSync.RLock()
 	db = dbMap[id]
