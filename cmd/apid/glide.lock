@@ -1,5 +1,5 @@
-hash: 526c791f6bc598c820d13f2fb7bf02764a7086db48b187b7365a21441e0cbf03
-updated: 2016-11-11T17:26:14.669214342-08:00
+hash: f3dc2db21f613a96b9813cfa96b493a1af143875f4cf8ea52c099bf1e123320c
+updated: 2016-11-23T17:50:45.156237106-08:00
 imports:
 - name: github.com/30x/apid
   version: a6a1489821eae43312dd88a733c85a604f2e6777
@@ -17,9 +17,9 @@ imports:
   subpackages:
   - github
 - name: github.com/30x/apidVerifyAPIKey
-  version: 594d71754f849cfd862f2ba1656ce7b80c5b724f
+  version: 6218cb0843f68ea7cb6d7a7144e5e4426b7367ba
 - name: github.com/apigee-labs/transicator
-  version: 290b26aeac93afaeea5c75b96acb8a4b07a7e6e9
+  version: 1b579d18d82956ff1f30c02f72d2812bcca093f8
   subpackages:
   - common
 - name: github.com/fsnotify/fsnotify

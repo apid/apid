@@ -1,8 +1,22 @@
 hash: 40de1172d0d2b2c7b5d02a923c2ccdf8474904fe03926bcc6eabc1e4369598c4
-updated: 2016-10-24T14:37:50.103199133-07:00
+updated: 2016-11-23T17:24:52.395084588-08:00
 imports:
+- name: github.com/30x/apidApigeeSync
+  version: ddc7021b4fa0e8b7147fc51af253438163d02d46
+- name: github.com/30x/apidGatewayDeploy
+  version: 75a87de3880bdf18b3fdc7aea2388a7e0822c70a
+- name: github.com/30x/apidVerifyAPIKey
+  version: 6218cb0843f68ea7cb6d7a7144e5e4426b7367ba
+- name: github.com/apigee-labs/transicator
+  version: 1b579d18d82956ff1f30c02f72d2812bcca093f8
+  subpackages:
+  - common
 - name: github.com/fsnotify/fsnotify
   version: bd2828f9f176e52d7222e565abb2d338d3f3c103
+- name: github.com/golang/protobuf
+  version: df1d3ca07d2d07bba352d5b73c4313b4e2a6203e
+  subpackages:
+  - proto
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
@@ -87,7 +101,7 @@ testImports:
   - reporters/stenographer
   - types
 - name: github.com/onsi/gomega
-  version: a78ae492d53aad5a7a232d0d0462c14c400e3ee7
+  version: d59fa0ac68bb5dd932ee8d24eed631cdd519efc3
   subpackages:
   - format
   - internal/assertion

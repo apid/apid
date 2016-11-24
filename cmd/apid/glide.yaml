@@ -5,6 +5,4 @@ import:
 - package: github.com/apigee-labs/transicator
 - package: github.com/30x/apidApigeeSync
 - package: github.com/30x/apidGatewayDeploy
-  subpackages:
-  - github
 - package: github.com/30x/apidVerifyAPIKey

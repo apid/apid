@@ -1,6 +1,7 @@
 package data_test
 
 import (
+	"fmt"
 	"github.com/30x/apid"
 	"github.com/30x/apid/factory"
 	. "github.com/onsi/ginkgo"
@@ -11,17 +12,15 @@ import (
 	"os"
 	"strconv"
 	"time"
-	"fmt"
+	"github.com/30x/apid/data"
+	"database/sql"
 )
 
 const (
 	count    = 2000
 	setupSql = `
-		CREATE TABLE IF NOT EXISTS test_1 (id INTEGER PRIMARY KEY, counter TEXT);
-		CREATE TABLE IF NOT EXISTS test_2 (id INTEGER PRIMARY KEY, counter TEXT);
-		DELETE FROM test_1;
-		DELETE FROM test_2;
-	`
+		CREATE TABLE test_1 (id INTEGER PRIMARY KEY, counter TEXT);
+		CREATE TABLE test_2 (id INTEGER PRIMARY KEY, counter TEXT);`
 )
 
 var (
@@ -29,7 +28,7 @@ var (
 	r      *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 )
 
-var _ = Describe("Events Service", func() {
+var _ = Describe("Data Service", func() {
 
 	BeforeSuite(func() {
 		apid.Initialize(factory.DefaultServicesFactory())
@@ -45,47 +44,71 @@ var _ = Describe("Events Service", func() {
 		os.RemoveAll(tmpDir)
 	})
 
-	It("should be able to open a new datbase", func () {
-		db, err := apid.Data().DBForID("test")
+	It("should not allow reserved id or version", func() {
+		_, err := apid.Data().DBForID("common")
+		Expect(err).To(HaveOccurred())
+
+		_, err = apid.Data().DBVersion("base")
+		Expect(err).To(HaveOccurred())
+
+		_, err = apid.Data().DBVersionForID("common", "base")
+		Expect(err).To(HaveOccurred())
+	})
+
+	It("should be able to change versions of a datbase", func() {
+		var versions []string
+		var dbs []apid.DB
+
+		for i := 0; i < 2; i++ {
+			version := time.Now().String()
+			db, err := apid.Data().DBVersionForID("test", version)
+			Expect(err).NotTo(HaveOccurred())
+			setup(db)
+			versions = append(versions, version)
+			dbs = append(dbs, db)
+		}
+
+		for _, db := range dbs {
+			var numRows int
+			err := db.QueryRow(`SELECT count(*) FROM test_2`).Scan(&numRows)
+			Expect(err).NotTo(HaveOccurred())
+			Expect(numRows).To(Equal(count))
+		}
+	})
+
+	It("should be able to release a database", func() {
+		db, err := apid.Data().DBVersionForID("release", "version")
 		Expect(err).NotTo(HaveOccurred())
 		setup(db)
-
-		var prod string
-		rows, err := db.Query(`SELECT counter FROM test_2 LIMIT 5`)
-		Expect(err).NotTo(HaveOccurred())
-		defer rows.Close()
-		var count = 0
-		for rows.Next() {
-			count++
-			rows.Scan(&prod)
-		}
-		Expect(count).To(Equal(5))
-
-		//db, err := apid.Data().DBForID("test", "someid")
+		id := data.VersionedDBID("release", "version")
+		sqlDB := db.(*sql.DB)
+		Expect(sqlDB.Stats().OpenConnections).To(Equal(1))
+		// run finalizer
+		data.Delete(id).(func(db *sql.DB))(sqlDB)
+		Expect(sqlDB.Stats().OpenConnections).To(Equal(0))
+		Expect(data.DBPath(id)).ShouldNot(BeAnExistingFile())
 	})
 
 	It("should handle multi-threaded access", func(done Done) {
 		db, err := apid.Data().DBForID("test")
 		Expect(err).NotTo(HaveOccurred())
 		setup(db)
-
 		finished := make(chan struct{})
 
 		go func() {
 			for i := 0; i < count; i++ {
 				write(db, i)
-				randomSleep()
 			}
 			finished <- struct{}{}
 		}()
 
 		go func() {
 			for i := 0; i < count; i++ {
-				go func(i int) {
-					read(db, i)
+				go func() {
+					read(db)
 					finished <- struct{}{}
-				}(i)
-				randomSleep()
+				}()
+				time.Sleep(time.Duration(r.Intn(2)) * time.Millisecond)
 			}
 		}()
 
@@ -94,12 +117,8 @@ var _ = Describe("Events Service", func() {
 		}
 
 		close(done)
-	}, 4)
+	}, 10)
 })
-
-func randomSleep() {
-	time.Sleep(time.Duration(r.Intn(1)) * time.Millisecond)
-}
 
 func setup(db apid.DB) {
 	_, err := db.Exec(setupSql)
@@ -119,16 +138,16 @@ func setup(db apid.DB) {
 	tx.Commit()
 }
 
-func read(db apid.DB, i int) {
-	var prod string
+func read(db apid.DB) {
+	var counter string
 	rows, err := db.Query(`SELECT counter FROM test_2 LIMIT 5`)
 	if err != nil {
 		log.Fatalf("test_2 select failed. Exec error=%s", err)
 	} else {
 		defer rows.Close()
 		for rows.Next() {
-			rows.Scan(&prod)
-			fmt.Print("*")
+			rows.Scan(&counter)
+			//fmt.Print("*")
 		}
 	}
 	fmt.Print(".")

@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/30x/apid"
+	"github.com/30x/apid/data/wrap"
 	"github.com/mattn/go-sqlite3"
+	"os"
 	"path"
 	"sync"
-	"os"
-	"github.com/30x/apid/data/wrap"
+	"runtime"
 )
 
 const (
@@ -16,7 +17,8 @@ const (
 	configDataSourceKey = "data_source"
 	configDataPathKey   = "data_path"
 
-	commonDBID = "_apid_common_"
+	commonDBID      = "common"
+	commonDBVersion = "base"
 
 	defaultTraceLevel = "warn"
 )
@@ -24,7 +26,7 @@ const (
 var log, dbTraceLog apid.LogService
 var config apid.ConfigService
 
-var dbMap = make(map[string]apid.DB)
+var dbMap = make(map[string]*sql.DB)
 var dbMapSync sync.RWMutex
 
 func CreateDataService() apid.DataService {
@@ -46,13 +48,57 @@ type dataService struct {
 }
 
 func (d *dataService) DB() (apid.DB, error) {
-	return d.DBForID(commonDBID)
+	return d.dbVersionForID(commonDBID, commonDBVersion)
 }
 
-func (d *dataService) DBForID(id string) (db apid.DB, err error) {
+func (d *dataService) DBForID(id string) (apid.DB, error) {
+	if id == commonDBID {
+		return nil, fmt.Errorf("reserved ID: %s", id)
+	}
+	return d.dbVersionForID(id, commonDBVersion)
+}
+
+func (d *dataService) DBVersion(version string) (apid.DB, error) {
+	if version == commonDBVersion {
+		return nil, fmt.Errorf("reserved version: %s", version)
+	}
+	return d.dbVersionForID(commonDBID, version)
+}
+
+func (d *dataService) DBVersionForID(id, version string) (apid.DB, error) {
+	if id == commonDBID {
+		return nil, fmt.Errorf("reserved ID: %s", id)
+	}
+	if version == commonDBVersion {
+		return nil, fmt.Errorf("reserved version: %s", version)
+	}
+	return d.dbVersionForID(id, version)
+}
+
+// will set DB to close and delete when no more references
+func (d *dataService) ReleaseDB(id, version string) {
+	versionedID := VersionedDBID(id, version)
+
+	dbMapSync.Lock()
+	defer dbMapSync.Unlock()
+
+	db := dbMap[versionedID]
+	if db != nil {
+		dbMap[versionedID] = nil
+		log.Errorf("SETTING FINALIZER")
+		finalizer := Delete(versionedID)
+		runtime.SetFinalizer(db, finalizer)
+	}
+
+	return
+}
+
+func (d *dataService) dbVersionForID(id, version string) (db *sql.DB, err error) {
+
+	versionedID := VersionedDBID(id, version)
 
 	dbMapSync.RLock()
-	db = dbMap[id]
+	db = dbMap[versionedID]
 	dbMapSync.RUnlock()
 	if db != nil {
 		return
@@ -61,26 +107,29 @@ func (d *dataService) DBForID(id string) (db apid.DB, err error) {
 	dbMapSync.Lock()
 	defer dbMapSync.Unlock()
 
-	db = dbMap[id]
+	db = dbMap[versionedID]
 	if db != nil {
 		return
 	}
 
-	storagePath := config.GetString("local_storage_path")
-	relativeDataPath := config.GetString(configDataPathKey)
-	dataPath := path.Join(storagePath, relativeDataPath)
+	dataPath := DBPath(versionedID)
 
-	if err = os.MkdirAll(dataPath, 0700); err != nil {
+	if err = os.MkdirAll(path.Dir(dataPath), 0700); err != nil {
 		return
 	}
 
-	dataFile := path.Join(dataPath, id)
-	log.Infof("LoadDB: %s", dataFile)
-	dataSource := fmt.Sprintf(config.GetString(configDataSourceKey), dataFile)
+	log.Infof("LoadDB: %s", dataPath)
+	dataSource := fmt.Sprintf(config.GetString(configDataSourceKey), dataPath)
 
 	wrappedDriverName := "dd:" + config.GetString(configDataDriverKey)
 	dataDriver := wrap.WrapDriver{&sqlite3.SQLiteDriver{}, dbTraceLog}
-	sql.Register(wrappedDriverName, &dataDriver)
+	func() {
+		// just ignore the "registered twice" panic
+		defer func() {
+			recover()
+		}()
+		sql.Register(wrappedDriverName, &dataDriver)
+	}()
 
 	db, err = sql.Open(wrappedDriverName, dataSource)
 	if err != nil {
@@ -88,7 +137,6 @@ func (d *dataService) DBForID(id string) (db apid.DB, err error) {
 		return
 	}
 
-	log.Infof("Sqlite DB path used by apid: %s", dataPath)
 	err = db.Ping()
 	if err != nil {
 		log.Errorf("error pinging db: %s", err)
@@ -109,6 +157,31 @@ func (d *dataService) DBForID(id string) (db apid.DB, err error) {
 		return
 	}
 
-	dbMap[id] = db
+	dbMap[versionedID] = db
 	return
+}
+
+func Delete(versionedID string) interface{} {
+	return func(db *sql.DB) {
+		err := db.Close()
+		if err != nil {
+			log.Errorf("error closing DB: %v", err)
+		}
+		dataDir := path.Dir(DBPath(versionedID))
+		err = os.RemoveAll(dataDir)
+		if err != nil {
+			log.Errorf("error removing DB files: %v", err)
+		}
+		delete(dbMap, versionedID)
+	}
+}
+
+func VersionedDBID(id, version string) string {
+	return path.Join(id, version)
+}
+
+func DBPath(id string) string {
+	storagePath := config.GetString("local_storage_path")
+	relativeDataPath := config.GetString(configDataPathKey)
+	return path.Join(storagePath, relativeDataPath, id, "sqlite3")
 }
