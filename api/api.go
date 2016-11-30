@@ -21,7 +21,7 @@ var config apid.ConfigService
 
 func CreateService() apid.APIService {
 	config = apid.Config()
-	log = apid.Log()
+	log = apid.Log().ForModule("api")
 
 	config.SetDefault(configAPIPort, 9000)
 
@@ -38,7 +38,7 @@ func (s *service) Listen() error {
 	log.Infof("opening api port %s", port)
 
 	if config.IsSet(configExpVarPath) {
-		log.Info("expvar available on path: %s", config.Get(configExpVarPath))
+		log.Infof("expvar available on path: %s", config.Get(configExpVarPath))
 		s.HandleFunc(config.GetString(configExpVarPath), expvarHandler)
 	}
 
@@ -47,12 +47,12 @@ func (s *service) Listen() error {
 }
 
 func (s *service) Handle(path string, handler http.Handler) apid.Route {
-	log.Infof("handle %s: %s", path, handler)
+	log.Infof("handle %s: %v", path, handler)
 	return s.Router().Handle(path, handler)
 }
 
 func (s *service) HandleFunc(path string, handlerFunc http.HandlerFunc) apid.Route {
-	log.Infof("handle %s: %s", path, handlerFunc)
+	log.Infof("handle %s: %v", path, handlerFunc)
 	return s.Router().HandleFunc(path, handlerFunc)
 }
 
