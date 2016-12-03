@@ -27,6 +27,8 @@ var _ = Describe("Events Service", func() {
 		h := test_handler{
 			"handler",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				em.Close()
 				close(done)
 			},
@@ -40,6 +42,8 @@ var _ = Describe("Events Service", func() {
 		em := events.CreateService()
 
 		h := func(event apid.Event) {
+			defer GinkgoRecover()
+
 			em.Close()
 			close(done)
 		}
@@ -55,6 +59,8 @@ var _ = Describe("Events Service", func() {
 		h := test_handler{
 			"handler",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				c := atomic.AddInt32(&count, 1)
 				if c > 1 {
 					em.Close()
@@ -68,6 +74,38 @@ var _ = Describe("Events Service", func() {
 		em.Emit("selector", &test_event{"test2"})
 	})
 
+	It("EmitWithCallback should call the callback when done with delivery", func(done Done) {
+		em := events.CreateService()
+
+		delivered := func(event apid.Event) {
+			defer GinkgoRecover()
+			close(done)
+		}
+
+		em.EmitWithCallback("selector", &test_event{"test1"}, delivered)
+	})
+
+	It("should publish only one event to a listenOnce", func(done Done) {
+		em := events.CreateService()
+
+		count := 0
+		h := func(event apid.Event) {
+			defer GinkgoRecover()
+			count++
+		}
+
+		delivered := func(event apid.Event) {
+			defer GinkgoRecover()
+			Expect(count).To(Equal(1))
+			em.Close()
+			close(done)
+		}
+
+		em.ListenOnceFunc("selector", h)
+		em.Emit("selector", &test_event{"test1"})
+		em.EmitWithCallback("selector", &test_event{"test2"}, delivered)
+	})
+
 	It("should publish an event to multiple listeners", func(done Done) {
 		em := events.CreateService()
 		defer em.Close()
@@ -77,6 +115,8 @@ var _ = Describe("Events Service", func() {
 		h1 := test_handler{
 			"handler 1",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				hitH1 = true
 				if hitH1 && hitH2 {
 					em.Close()
@@ -87,6 +127,8 @@ var _ = Describe("Events Service", func() {
 		h2 := test_handler{
 			"handler 2",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				hitH2 = true
 				if hitH1 && hitH2 {
 					em.Close()
@@ -111,6 +153,8 @@ var _ = Describe("Events Service", func() {
 		h := test_handler{
 			"event delivered handler",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				e, ok := event.(apid.EventDeliveryEvent)
 
 				Expect(ok).To(BeTrue())
@@ -139,6 +183,8 @@ var _ = Describe("Events Service", func() {
 		h := test_handler{
 			"handler",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				Expect(event).NotTo(Equal(event2))
 				if event == event3 {
 					em.Close()
@@ -152,6 +198,8 @@ var _ = Describe("Events Service", func() {
 		td := test_handler{
 			"test driver",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				e := event.(apid.EventDeliveryEvent)
 				if e.Event == event1 {
 					em.StopListening("selector", &h)
@@ -178,6 +226,8 @@ var _ = Describe("Events Service", func() {
 		h1 := test_handler{
 			"handler1",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				c := atomic.AddInt32(&count, 1)
 				Expect(event).Should(Equal(e1))
 				if c == 2 {
@@ -190,6 +240,8 @@ var _ = Describe("Events Service", func() {
 		h2 := test_handler{
 			"handler2",
 			func(event apid.Event) {
+				defer GinkgoRecover()
+
 				c := atomic.AddInt32(&count, 1)
 				Expect(event).Should(Equal(e2))
 				if c == 2 {
