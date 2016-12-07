@@ -3,17 +3,12 @@ package events_test
 import (
 	"github.com/30x/apid"
 	"github.com/30x/apid/events"
-	"github.com/30x/apid/factory"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"sync/atomic"
 )
 
 var _ = Describe("Events Service", func() {
-
-	BeforeSuite(func() {
-		apid.Initialize(factory.DefaultServicesFactory())
-	})
 
 	It("should ignore event with no listeners", func() {
 		em := events.CreateService()

@@ -12,14 +12,14 @@ type eventManager struct {
 }
 
 func (em *eventManager) Emit(selector apid.EventSelector, event apid.Event) {
-	log.Debugf("emit selector: '%s' event: %s", selector, event)
+	log.Debugf("emit selector: '%s' event: %v", selector, event)
 	if !em.dispatchers[selector].Send(event) {
 		em.sendDelivered(selector, event, 0) // in case of no dispatcher
 	}
 }
 
 func (em *eventManager) EmitWithCallback(selector apid.EventSelector, event apid.Event, callback apid.EventHandlerFunc) {
-	log.Debugf("emit with callback selector: '%s' event: %s", selector, event)
+	log.Debugf("emit with callback selector: '%s' event: %v", selector, event)
 
 	handler := &funcWrapper{em, nil}
 	handler.HandlerFunc = func(e apid.Event) {
@@ -40,7 +40,7 @@ func (em *eventManager) HasListeners(selector apid.EventSelector) bool {
 }
 
 func (em *eventManager) Listen(selector apid.EventSelector, handler apid.EventHandler) {
-	log.Debugf("listen: '%s' handler: %s", selector, handler)
+	log.Debugf("listen: '%s' handler: %v", selector, handler)
 	if em.dispatchers == nil {
 		em.dispatchers = make(map[apid.EventSelector]*dispatcher)
 	}
@@ -53,7 +53,7 @@ func (em *eventManager) Listen(selector apid.EventSelector, handler apid.EventHa
 }
 
 func (em *eventManager) StopListening(selector apid.EventSelector, handler apid.EventHandler) {
-	log.Debugf("stop listening: '%s' handler: %s", selector, handler)
+	log.Debugf("stop listening: '%s' handler: %v", selector, handler)
 	if em.dispatchers == nil {
 		return
 	}
@@ -61,13 +61,13 @@ func (em *eventManager) StopListening(selector apid.EventSelector, handler apid.
 }
 
 func (em *eventManager) ListenFunc(selector apid.EventSelector, handlerFunc apid.EventHandlerFunc) {
-	log.Debugf("listenFunc: '%s' handler: %s", selector, handlerFunc)
+	log.Debugf("listenFunc: '%s' handler: %v", selector, handlerFunc)
 	handler := &funcWrapper{em, handlerFunc}
 	em.Listen(selector, handler)
 }
 
 func (em *eventManager) ListenOnceFunc(selector apid.EventSelector, handlerFunc apid.EventHandlerFunc) {
-	log.Debugf("listenOnceFunc: '%s' handler: %s", selector, handlerFunc)
+	log.Debugf("listenOnceFunc: '%s' handler: %v", selector, handlerFunc)
 	handler := &funcWrapper{em, nil}
 	handler.HandlerFunc = func(event apid.Event) {
 		em.StopListening(selector, handler)

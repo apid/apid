@@ -3,13 +3,10 @@ package data_test
 import (
 	"fmt"
 	"github.com/30x/apid"
-	"github.com/30x/apid/factory"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"io/ioutil"
 	"log"
 	"math/rand"
-	"os"
 	"strconv"
 	"time"
 	"github.com/30x/apid/data"
@@ -24,25 +21,10 @@ const (
 )
 
 var (
-	tmpDir string
 	r      *rand.Rand = rand.New(rand.NewSource(time.Now().UnixNano()))
 )
 
 var _ = Describe("Data Service", func() {
-
-	BeforeSuite(func() {
-		apid.Initialize(factory.DefaultServicesFactory())
-
-		var err error
-		config := apid.Config()
-		tmpDir, err = ioutil.TempDir("", "apid_test")
-		Expect(err).NotTo(HaveOccurred())
-		config.Set("local_storage_path", tmpDir)
-	})
-
-	AfterSuite(func() {
-		os.RemoveAll(tmpDir)
-	})
 
 	It("should not allow reserved id or version", func() {
 		_, err := apid.Data().DBForID("common")
