@@ -7,15 +7,18 @@ type APIService interface {
 	Handle(path string, handler http.Handler) Route
 	HandleFunc(path string, handlerFunc http.HandlerFunc) Route
 	Vars(r *http.Request) map[string]string
-	Router() Router
-}
 
-type Router interface {
-	Handle(path string, handler http.Handler) Route
-	HandleFunc(path string, f func(http.ResponseWriter, *http.Request)) Route
-	ServeHTTP(w http.ResponseWriter, req *http.Request)
+	// for testing
+	Router() Router
 }
 
 type Route interface {
 	Methods(methods ...string) Route
+}
+
+// for testing
+type Router interface {
+	Handle(path string, handler http.Handler) Route
+	HandleFunc(path string, handlerFunc http.HandlerFunc) Route
+	ServeHTTP(w http.ResponseWriter, req *http.Request)
 }
