@@ -10,7 +10,6 @@ const (
 
 var (
 	APIDInitializedEvent    = systemEvent{"apid initialized"}
-	PluginsInitializedEvent = systemEvent{"plugins initialized"}
 	APIListeningEvent       = systemEvent{"api listening"}
 
 	pluginInitFuncs []PluginInitFunc
@@ -25,7 +24,7 @@ type Services interface {
 	Log() LogService
 }
 
-type PluginInitFunc func(Services) error
+type PluginInitFunc func(Services) (PluginData, error)
 
 // passed Services can be a factory - makes copies and maintains returned references
 // eg. apid.Initialize(factory.DefaultServicesFactory())
@@ -51,13 +50,17 @@ func RegisterPlugin(plugin PluginInitFunc) {
 func InitializePlugins() {
 	log := Log()
 	log.Debugf("Initializing plugins...")
-	for _, p := range pluginInitFuncs {
-		err := p(services)
+	pie := PluginsInitializedEvent{
+		Description: "plugins initialized",
+	}
+	for _, pif := range pluginInitFuncs {
+		pluginData, err := pif(services)
 		if err != nil {
 			log.Panicf("Error initializing plugin: %s", err)
 		}
+		pie.Plugins = append(pie.Plugins, pluginData)
 	}
-	Events().Emit(SystemEventsSelector, PluginsInitializedEvent)
+	Events().Emit(SystemEventsSelector, pie)
 	log.Debugf("done initializing plugins")
 }
 

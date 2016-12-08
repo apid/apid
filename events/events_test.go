@@ -252,6 +252,41 @@ var _ = Describe("Events Service", func() {
 		em.Emit("selector2", e2)
 		em.Emit("selector1", e1)
 	})
+
+	It("should publish PluginsInitialized event", func(done Done) {
+		xData := make(map[string]interface{})
+		xData["schemaVersion"] = "1.2.3"
+		p := func(s apid.Services) (pd apid.PluginData, err error) {
+			pd = apid.PluginData{
+				Name: "test plugin",
+				Version: "1.0.0",
+				ExtraData: xData,
+			}
+			return
+		}
+		apid.RegisterPlugin(p)
+
+		h := func(event apid.Event) {
+			defer GinkgoRecover()
+
+			if pie, ok := event.(apid.PluginsInitializedEvent); ok {
+
+				apid.Events().Close()
+
+				Expect(len(pie.Plugins)).Should(Equal(1))
+				p := pie.Plugins[0]
+				Expect(p.Name).To(Equal("test plugin"))
+				Expect(p.Version).To(Equal("1.0.0"))
+				Expect(p.ExtraData["schemaVersion"]).To(Equal("1.2.3"))
+
+				close(done)
+			}
+		}
+		apid.Events().ListenFunc(apid.SystemEventsSelector, h)
+
+		apid.InitializePlugins()
+	})
+
 })
 
 type test_handler struct {

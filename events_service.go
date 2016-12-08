@@ -41,3 +41,14 @@ type EventDeliveryEvent struct {
 	Event       Event
 	Count       int
 }
+
+type PluginsInitializedEvent struct {
+	Description string
+	Plugins []PluginData
+}
+
+type PluginData struct {
+	Name string
+	Version string
+	ExtraData map[string]interface{}
+}
