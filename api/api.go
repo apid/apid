@@ -92,6 +92,7 @@ func (r *router) HandleFunc(path string, handlerFunc http.HandlerFunc) apid.Rout
 
 func (r *router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	requests.Add(req.URL.Path, 1)
+	log.Infof("Handling %s", req.URL.Path)
 	r.r.ServeHTTP(w, req)
 }
 
