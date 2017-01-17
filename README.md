@@ -75,3 +75,7 @@ the Log service and some kind of driver (via API or Events), so it's common prac
     func handleRequest(w http.ResponseWriter, r *http.Request) {
       // respond to request
     }
+
+# Helpful Hints
+
+* Use `export APID_DATA_TRACE_LOG_LEVEL=debug` to see DB Tracing
