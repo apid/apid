@@ -61,6 +61,7 @@ func InitializePlugins() {
 		pie.Plugins = append(pie.Plugins, pluginData)
 	}
 	Events().Emit(SystemEventsSelector, pie)
+	pluginInitFuncs = nil
 	log.Debugf("done initializing plugins")
 }
 
