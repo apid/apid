@@ -3,7 +3,7 @@ package main
 import (
 	// import plugins to ensure they're bound into the executable
 	_ "github.com/30x/apidApigeeSync"
-	//_ "github.com/30x/apidVerifyAPIKey"
+	_ "github.com/30x/apidVerifyAPIKey"
 	_ "github.com/30x/apidGatewayDeploy"
 
 	// other imports
