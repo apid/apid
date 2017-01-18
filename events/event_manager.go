@@ -12,14 +12,14 @@ type eventManager struct {
 }
 
 func (em *eventManager) Emit(selector apid.EventSelector, event apid.Event) {
-	log.Debugf("emit selector: '%s' event: %v", selector, event)
+	log.Debugf("emit selector: '%s' event %v: %v", selector, &event, event)
 	if !em.dispatchers[selector].Send(event) {
 		em.sendDelivered(selector, event, 0) // in case of no dispatcher
 	}
 }
 
 func (em *eventManager) EmitWithCallback(selector apid.EventSelector, event apid.Event, callback apid.EventHandlerFunc) {
-	log.Debugf("emit with callback selector: '%s' event: %v", selector, event)
+	log.Debugf("emit with callback selector: '%s' event %v: %v", selector, &event, event)
 
 	handler := &funcWrapper{em, nil}
 	handler.HandlerFunc = func(e apid.Event) {
@@ -154,7 +154,7 @@ func (d *dispatcher) startDelivery() {
 			select {
 			case event := <-d.channel:
 				if event != nil {
-					log.Debugf("delivering %v to %v", event, d.handlers)
+					log.Debugf("delivering %v to %v", &event, d.handlers)
 					if len(d.handlers) > 0 {
 						var wg sync.WaitGroup
 						for _, h := range d.handlers {
@@ -169,7 +169,7 @@ func (d *dispatcher) startDelivery() {
 						wg.Wait()
 					}
 					d.em.sendDelivered(d.selector, event, len(d.handlers))
-					log.Debugf("delivery complete")
+					log.Debugf("event %v delivered", &event)
 				}
 			}
 
