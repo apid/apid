@@ -2,8 +2,6 @@ package: github.com/30x/apid/cmd/apid
 import:
 - package: github.com/30x/apid
   version: master
-- package: github.com/spf13/viper
-- package: github.com/apigee-labs/transicator
 - package: github.com/30x/apidApigeeSync
   version: master
 - package: github.com/30x/apidGatewayDeploy

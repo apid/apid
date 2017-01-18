@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"expvar"
 	"fmt"
+	"github.com/30x/goscaffold"
 )
 
 // todo: handle TLS
@@ -14,6 +15,8 @@ import (
 const (
 	configAPIPort = "api_port"
 	configExpVarPath = "api_expvar_path"
+	configReadyPath = "api_ready"
+	configHealthyPath = "api_healthy"
 )
 
 var log apid.LogService
@@ -25,24 +28,55 @@ func CreateService() apid.APIService {
 	log = apid.Log().ForModule("api")
 
 	config.SetDefault(configAPIPort, 9000)
+	config.SetDefault(configReadyPath, "/ready")
+	config.SetDefault(configHealthyPath, "/healthy")
 
 	r := mux.NewRouter()
 	rw := &router{r}
-	return &service{rw}
+	scaffold := goscaffold.CreateHTTPScaffold()
+	return &service{rw, scaffold}
 }
 
 type service struct {
 	*router
+	scaffold *goscaffold.HTTPScaffold
 }
 
 func (s *service) Listen() error {
-	port := config.GetString(configAPIPort)
-	log.Infof("opening api port %s", port)
+	port := config.GetInt(configAPIPort)
+	log.Infof("opening api port %d", port)
 
 	s.InitExpVar()
 
-	apid.Events().Emit(apid.SystemEventsSelector, apid.APIListeningEvent) // todo: run after successful listen?
-	return http.ListenAndServe(":"+port, s.r)
+	s.scaffold.SetInsecurePort(port)
+
+	// Direct the scaffold to catch common signals and trigger a graceful shutdown.
+	s.scaffold.CatchSignals()
+
+	// Set an URL that may be used by a load balancer to test if the server is ready to handle requests
+	if config.GetString(configReadyPath) != "" {
+		s.scaffold.SetReadyPath(config.GetString(configReadyPath))
+	}
+
+	// Set an URL that may be used by infrastructure to test
+	// if the server is working or if it needs to be restarted or replaced
+	if config.GetString(configHealthyPath) != "" {
+		s.scaffold.SetReadyPath(config.GetString(configHealthyPath))
+	}
+
+	err := s.scaffold.StartListen(s.r)
+	if err != nil {
+		return err
+	}
+
+	apid.Events().Emit(apid.SystemEventsSelector, apid.APIListeningEvent)
+
+	return s.scaffold.WaitForShutdown()
+}
+
+func (s *service) Close() {
+	s.scaffold.Shutdown(nil)
+	s.scaffold = nil
 }
 
 func (s *service) InitExpVar() {

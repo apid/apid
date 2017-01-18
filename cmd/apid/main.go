@@ -34,6 +34,8 @@ func main() {
 	log.Debug("listening...")
 
 	api := apid.API()
-	err := api.Listen() // doesn't return if no error
-	log.Fatal("Is APID already running?", err)
+	err := api.Listen()
+	if err != nil {
+		log.Print(err)
+	}
 }
