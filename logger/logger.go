@@ -24,7 +24,7 @@ func Base() apid.LogService {
 	if std == nil {
 		config = apid.Config()
 		config.SetDefault(configLevel, defaultLevel.String())
-		std = newLogger(configLevel)
+		std = NewLogger(configLevel,configLevel)
 	}
 	return std
 }
@@ -42,7 +42,7 @@ type logger struct {
 func (l *logger) ForModule(name string) apid.LogService {
 
 	configKey := fmt.Sprintf("%s_%s", name, configLevel)
-	log := newLogger(configKey).WithField(moduleField, name)
+	log := NewLogger(configKey,config.GetString(configKey)).WithField(moduleField, name)
 	std.Debugf("created logger '%s' at level %s", name, log.(loggerPlus).Level())
 	return log
 }
@@ -59,7 +59,7 @@ func (l *logger) Level() logrus.Level {
 	return l.Entry.Logger.Level
 }
 
-func newLogger(configKey string) apid.LogService {
+func NewLogger(configKey string, lvlString string) apid.LogService {
 
 	var logLevel logrus.Level
 	if std != nil {
@@ -67,7 +67,7 @@ func newLogger(configKey string) apid.LogService {
 	} else {
 		logLevel = defaultLevel
 	}
-	lvlString := config.GetString(configKey)
+
 	if lvlString != "" {
 		lvl, err := logrus.ParseLevel(lvlString)
 		if err == nil {
