@@ -13,3 +13,4 @@ import:
 testImport:
 - package: github.com/onsi/ginkgo/ginkgo
 - package: github.com/onsi/gomega
+  version: master
