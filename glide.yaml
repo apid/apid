@@ -10,6 +10,7 @@ import:
   version: master
 - package: github.com/30x/goscaffold
   version: master
+- package: gopkg.in/gemnasium/logrus-airbrake-hook.v2
 testImport:
 - package: github.com/onsi/ginkgo/ginkgo
 - package: github.com/onsi/gomega
