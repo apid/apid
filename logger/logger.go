@@ -24,7 +24,7 @@ func Base() apid.LogService {
 	if std == nil {
 		config = apid.Config()
 		config.SetDefault(configLevel, defaultLevel.String())
-		std = NewLogger(configLevel,configLevel)
+		std = NewLogger(configLevel, defaultLevel.String())
 	}
 	return std
 }
