@@ -54,3 +54,8 @@ func (c *wrapConn) Close() (err error) {
 	c.log.Debug("end close")
 	return
 }
+
+func (c *wrapConn) Query(query string, args []driver.Value) (driver.Rows, error) {
+	c.log.Debugf("query: %s args: %#v", query, args)
+	return c.SQLiteConn.Query(query, args)
+}
