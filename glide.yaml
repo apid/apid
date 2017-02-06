@@ -1,16 +1,17 @@
 package: github.com/30x/apid
 import:
 - package: github.com/Sirupsen/logrus
-  version: master
+  version: v0.11.0
 - package: github.com/spf13/viper
-  version: master
+  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
 - package: github.com/mattn/go-sqlite3
-  version: master
+  version: v1.2.0
 - package: github.com/gorilla/mux
-  version: master
+  version: v1.3.0
 - package: github.com/30x/goscaffold
-  version: master
+  version: cbed6858015606bec730ced4b5423392667d69c6
 testImport:
 - package: github.com/onsi/ginkgo/ginkgo
+  version: master
 - package: github.com/onsi/gomega
   version: master
