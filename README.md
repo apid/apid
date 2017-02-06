@@ -79,3 +79,20 @@ the Log service and some kind of driver (via API or Events), so it's common prac
 # Helpful Hints
 
 * Use `export APID_DATA_TRACE_LOG_LEVEL=debug` to see DB Tracing
+
+### Glide
+still here is what we need to do to have glide working correctly:
++ make sure `$GOPATH/pkg` `$GOPATH/bin` dirs are empty
++ each project should have glide.yaml with version
+
+```
+- package: github.com/gorilla/mux
+  version: v1.3.0
+- package: github.com/spf13/viper
+  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
+```
+
++ all projects we have should have same versions reference
++ glide.lock file must be checked in once and updated only on new dependency version update
++ you never do `glide up` anymore always do `glide i`. Do `glide up` only when there is new dependency version update
++ all CI jobs do only `glide install`

@@ -6,5 +6,4 @@ vendor
 /cmd/apid/apid
 /cmd/apid/vendor
 *.impl
-*.lock
 .idea
