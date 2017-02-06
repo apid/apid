@@ -4,6 +4,7 @@
 * [ApigeeSync](https://github.com/30x/apidApigeeSync)
 * [VerifyAPIKey](https://github.com/30x/apidVerifyApiKey)
 * [GatewayDeploy](https://github.com/30x/apidGatewayDeploy)
+* [ApigeeAnalytics](https://github.com/30x/apidAnalytics)
 
 To change plugins list, edit main.go and update glide.yaml.
 
