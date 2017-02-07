@@ -5,6 +5,7 @@ import (
 	_ "github.com/30x/apidApigeeSync"
 	_ "github.com/30x/apidVerifyAPIKey"
 	_ "github.com/30x/apidGatewayDeploy"
+	_ "github.com/30x/apidAnalytics"
 
 	// other imports
 	"github.com/30x/apid"
