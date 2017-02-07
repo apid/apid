@@ -2,9 +2,11 @@ package logger
 
 import (
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/30x/apid"
 	"github.com/Sirupsen/logrus"
-	"os"
 )
 
 const (
@@ -12,13 +14,16 @@ const (
 
 	defaultLevel = logrus.DebugLevel
 
-	moduleField       = "module"
+	moduleField      = "module"
 	environmentField = "env"
 )
 
 var std apid.LogService
-var textFormatter = new(logrus.TextFormatter)
 var config apid.ConfigService
+var textFormatter = &logrus.TextFormatter{
+	FullTimestamp:   false,
+	TimestampFormat: time.StampMilli,
+}
 
 func Base() apid.LogService {
 	if std == nil {
@@ -42,7 +47,7 @@ type logger struct {
 func (l *logger) ForModule(name string) apid.LogService {
 
 	configKey := fmt.Sprintf("%s_%s", name, configLevel)
-	log := NewLogger(configKey,config.GetString(configKey)).WithField(moduleField, name)
+	log := NewLogger(configKey, config.GetString(configKey)).WithField(moduleField, name)
 	std.Debugf("created logger '%s' at level %s", name, log.(loggerPlus).Level())
 	return log
 }
