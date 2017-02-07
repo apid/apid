@@ -10,6 +10,7 @@ before_install:
 
 install:
   - glide install
+  - cd cmd/apid ; glide install
 
 script:
   - go test $(glide novendor)
