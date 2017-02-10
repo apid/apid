@@ -1,0 +1,26 @@
+config:
+  target: 'http://localhost:9090'
+  http:
+    timeout: 10
+  phases:
+    - duration: 120
+      arrivalRate: 1
+  processor: "./my-functions.js"
+  defaults:
+    headers:
+      x-my-service-auth: '987401838271002188298567'
+
+scenarios:
+  -
+    name: "Deployments ping"
+    flow:
+      -
+        get:
+          url: "/deployments"
+          afterResponse: "captureDeployments"
+      -
+        think: 1
+      -
+        put:
+          url: "/deployments"
+          beforeRequest: "fakeStatuses"
