@@ -29,7 +29,9 @@ func Base() apid.LogService {
 	if std == nil {
 		config = apid.Config()
 		config.SetDefault(configLevel, defaultLevel.String())
-		std = NewLogger(configLevel, defaultLevel.String())
+		logLevel := config.GetString(configLevel)
+		fmt.Printf("Base log level: %s\n", logLevel)
+		std = NewLogger(configLevel, logLevel)
 	}
 	return std
 }
