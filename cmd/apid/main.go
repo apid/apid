@@ -2,16 +2,17 @@ package main
 
 import (
 	// import plugins to ensure they're bound into the executable
-	_ "github.com/30x/apidApigeeSync"
-	_ "github.com/30x/apidVerifyAPIKey"
-	_ "github.com/30x/apidGatewayDeploy"
 	_ "github.com/30x/apidAnalytics"
+	_ "github.com/30x/apidApigeeSync"
+	_ "github.com/30x/apidGatewayDeploy"
+	_ "github.com/30x/apidVerifyAPIKey"
 
 	// other imports
-	"github.com/30x/apid"
-	"github.com/30x/apid/factory"
 	"flag"
 	"os"
+
+	"github.com/30x/apid"
+	"github.com/30x/apid/factory"
 )
 
 func main() {
@@ -33,9 +34,11 @@ func main() {
 	if *cleanFlag {
 		localStorage := config.GetString("local_storage_path")
 		log.Infof("removing existing data from: %s", localStorage)
-		err := os.RemoveAll(localStorage)
-		if err != nil {
-			log.Panic("Failed to clean data directory: %v", err)
+		if err := os.RemoveAll(localStorage); err != nil {
+			log.Panicf("Failed to clean data directory: %v", err)
+		}
+		if err := os.MkdirAll(localStorage, 0700); err != nil {
+			log.Panicf("can't create local storage path %s:%v", localStorage, err)
 		}
 	}
 

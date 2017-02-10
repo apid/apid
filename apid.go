@@ -2,6 +2,7 @@ package apid
 
 import (
 	"fmt"
+	"os"
 )
 
 const (
@@ -9,8 +10,8 @@ const (
 )
 
 var (
-	APIDInitializedEvent    = systemEvent{"apid initialized"}
-	APIListeningEvent       = systemEvent{"api listening"}
+	APIDInitializedEvent = systemEvent{"apid initialized"}
+	APIListeningEvent    = systemEvent{"api listening"}
 
 	pluginInitFuncs []PluginInitFunc
 	services        Services
@@ -34,6 +35,13 @@ func Initialize(s Services) {
 	services = ss
 	// order is important
 	ss.config = s.Config()
+
+	// ensure storage path exists
+	lsp := ss.config.GetString("local_storage_path")
+	if err := os.MkdirAll(lsp, 0700); err != nil {
+		ss.log.Panicf("can't create local storage path %s:%v", lsp, err)
+	}
+
 	ss.log = s.Log()
 	ss.events = s.Events()
 	ss.api = s.API()
