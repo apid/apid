@@ -1,0 +1,14 @@
+api_port: 9000
+api_expvar_path: /expvar
+events_buffer_size: 5
+apigeesync_proxy_server_base: http://localhost:9001
+apigeesync_snapshot_server_base: http://localhost:9001
+apigeesync_change_server_base: http://localhost:9001
+apidanalytics_uap_server_base: http://localhost:9001
+apigeesync_consumer_key: key
+apigeesync_consumer_secret: secret
+apigeesync_cluster_id: cluster
+log_level: info
+data_trace_log_level: info
+data_source: file:%s?_busy_timeout=20000
+local_storage_path: /demo/data
