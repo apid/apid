@@ -1,0 +1,72 @@
+config:
+  target: http://localhost:9000
+  http:
+    timeout: 10
+  phases:
+    - duration: 120
+      arrivalRate: 50
+  defaults:
+    headers: {}
+
+scenarios:
+  - name: "Verified user"
+    flow:
+      - post:
+          headers:
+            Content-Type: application/x-www-form-urlencoded
+          url: /verifiers/apikey
+          body: "action=verify&key=1&uriPath=/&scopeuuid=scope"
+      - post:
+          url: /analytics/scope
+          json:
+            records:
+              - apiproxy: default
+                apiproxy_revision: "15"
+                client_ip: "::1"
+                client_received_start_timestamp: 1486591233123
+                client_received_end_timestamp: 1486591233130
+                client_sent_start_timestamp: 1486591233327
+                client_sent_end_timestamp: 1486591233330
+                request_path: /iloveapis
+                request_uri: http://localhost:8000/iloveapis
+                request_verb: GET
+                response_status_code: 200
+                useragent: curl/7.43.0
+                target_received_end_timestamp: 1486591233130
+                target_received_start_timestamp: 1486591233130
+                target_response_code: 200
+                target_sent_end_timestamp: 1486591233327
+                target_sent_start_timestamp: 1486591233328
+                target: default
+                recordType: APIAnalytics
+
+  - name: "Unverified user"
+    flow:
+      - post:
+          headers:
+            Content-Type: application/x-www-form-urlencoded
+          url: /verifiers/apikey
+          body: "action=verify&key=99999&uriPath=/&scopeuuid=scope"
+      - post:
+          url: /analytics/scope
+          json:
+            records:
+              - apiproxy: default
+                apiproxy_revision: "15"
+                client_ip: "::1"
+                client_received_start_timestamp: 1486591233123
+                client_received_end_timestamp: 1486591233130
+                client_sent_start_timestamp: 1486591233327
+                client_sent_end_timestamp: 1486591233330
+                request_path: /iloveapis
+                request_uri: http://localhost:8000/iloveapis
+                request_verb: GET
+                response_status_code: 200
+                useragent: curl/7.43.0
+                target_received_end_timestamp: 1486591233130
+                target_received_start_timestamp: 1486591233130
+                target_response_code: 200
+                target_sent_end_timestamp: 1486591233327
+                target_sent_start_timestamp: 1486591233328
+                target: default
+                recordType: APIAnalytics

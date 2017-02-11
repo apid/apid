@@ -8,3 +8,4 @@ vendor
 *.impl
 *.iml
 .idea
+artillery_report_*
