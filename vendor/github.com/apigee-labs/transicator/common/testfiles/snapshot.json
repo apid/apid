@@ -1,0 +1,28 @@
+{
+  "snapshotInfo": "123:130:125,126",
+  "timestamp": "January 8 04:05:06 1999 PST",
+  "tables": [
+    {
+      "name": "table1",
+      "rows": [
+        {
+          "foo": {"value": "foo", "type": 1 },
+          "foo2": {"value": "2", "type": 25}
+        },
+        {
+          "foo": {"value": "bar", "type": 1 },
+          "foo2": {"value": "3", "type": 25}
+        }
+      ]
+    },
+    {
+      "name": "table2",
+      "rows": [
+        {
+          "bar": {"value": "456", "type": 26 },
+          "baz": {"value": "bar", "type": 1 }
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,7 @@ API publishing, data access, and a local pub/sub event system.
 
 ## To build and run
 
-    glide install --strip-vendor
+    glide install
     go build
     ./apid
 
@@ -60,8 +60,6 @@ In order to have a reproducible build, we are following the following rules:
 * Each plugin's glide.yaml versions should match the libraries versions in apid
 * Use an empty $GOPATH to ensure a clean build
 
-
-Note: Use `glide install --strip-vendor` to keep vendor directory size to a minimum
 
 #### Important 
 
