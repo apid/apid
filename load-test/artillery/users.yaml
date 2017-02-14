@@ -39,6 +39,7 @@ scenarios:
                 target_sent_start_timestamp: 1486591233328
                 target: default
                 recordType: APIAnalytics
+                client_id: "1"
 
   - name: "Unverified user"
     flow:
@@ -70,3 +71,4 @@ scenarios:
                 target_sent_start_timestamp: 1486591233328
                 target: default
                 recordType: APIAnalytics
+                client_id: "1"

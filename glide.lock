@@ -1,16 +1,43 @@
-hash: 754cfd73eb8e40d4e756579e8998392b925481bc1ac05e785a3b308b27509b8e
-updated: 2017-02-06T11:23:39.683922198-08:00
+hash: cd70d7f72df29bc9bada945c1e558b82715db5950ed404cdd47721e02e458c6d
+updated: 2017-02-14T10:49:10.051208002-08:00
 imports:
+- name: github.com/30x/apid-core
+  version: 9c9a27e3a324d6d06eb0c89ff320d7627471bbeb
+  subpackages:
+  - api
+  - config
+  - data
+  - data/wrap
+  - events
+  - factory
+  - logger
+- name: github.com/30x/apidAnalytics
+  version: 41272f6fed4497eb059cc3b84c8cd15931416f9e
+- name: github.com/30x/apidApigeeSync
+  version: 745527bea92522b5abeafba4fda2ea5cff063933
+- name: github.com/30x/apidGatewayDeploy
+  version: 7bb2eccae0ab0c90da8642336e4480ebb205fbac
+- name: github.com/30x/apidVerifyAPIKey
+  version: 197bf1cdcebe36e6e63ec8b356ae196305370954
 - name: github.com/30x/goscaffold
   version: cbed6858015606bec730ced4b5423392667d69c6
+- name: github.com/apigee-labs/transicator
+  version: 7d8038eae524a5d798b2c117c85890ecf62f55b6
+  subpackages:
+  - common
 - name: github.com/fsnotify/fsnotify
-  version: fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197
+  version: bd2828f9f176e52d7222e565abb2d338d3f3c103
+- name: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+  repo: https://edge.googlesource.com/third_party/golang/protobuf.git
+  subpackages:
+  - proto
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
   version: 392c28fe23e1c45ddba891b0320b3b5df220beea
 - name: github.com/hashicorp/hcl
-  version: eb6f65b2d77ed5078887f960ff570fbddbbeb49d
+  version: 99ce73d4fe576449f7a689d4fc2b2ad09a86bdaa
   subpackages:
   - hcl/ast
   - hcl/parser
@@ -21,57 +48,20 @@ imports:
   - json/scanner
   - json/token
 - name: github.com/julienschmidt/httprouter
-  version: 8a45e95fc75cb77048068a62daed98cc22fdac7c
+  version: 8c199fb6259ffc1af525cc3ad52ee60ba8359669
+  repo: https://edge.googlesource.com/third_party/julienschmidt/httprouter.git
 - name: github.com/justinas/alice
   version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
+- name: github.com/kr/fs
+  version: 2788f0dbd16903de03cb8186e5c7d97b69ad387b
 - name: github.com/magiconair/properties
-  version: 00ec919ecb56326853e2c1eee377fa324bc23a79
+  version: 0723e352fa358f9322c938cc2dadda874e9151a9
 - name: github.com/mattn/go-sqlite3
   version: ca5e3819723d8eeaf170ad510e7da1d6d2e94a08
 - name: github.com/mitchellh/mapstructure
-  version: bfdb1a85537d60bc7e954e600c250219ea497417
-- name: github.com/pelletier/go-buffruneio
-  version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
-- name: github.com/pelletier/go-toml
-  version: 439fbba1f887c286024370cb4f281ba815c4c7d7
-- name: github.com/SermoDigital/jose
-  version: f6df55f235c24f236d11dbcf665249a59ac2021f
-  subpackages:
-  - crypto
-  - jws
-  - jwt
-- name: github.com/Sirupsen/logrus
-  version: d26492970760ca5d33129d2d799e34be5c4782eb
-- name: github.com/spf13/afero
-  version: 72b31426848c6ef12a7a8e216708cb0d1530f074
-  subpackages:
-  - mem
-- name: github.com/spf13/cast
-  version: 56a7ecbeb18dde53c6db4bd96b541fd9741b8d44
-- name: github.com/spf13/jwalterweatherman
-  version: fa7ca7e836cf3a8bb4ebf799f472c12d7e903d66
-- name: github.com/spf13/pflag
-  version: 25f8b5b07aece3207895bf19f7ab517eb3b22a40
-- name: github.com/spf13/viper
-  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
-- name: golang.org/x/net
-  version: 60c41d1de8da134c05b7b40154a9a82bf5b7edb9
-  subpackages:
-  - context
-- name: golang.org/x/sys
-  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
-  subpackages:
-  - unix
-- name: golang.org/x/text
-  version: 44f4f658a783b0cee41fe0a23b8fc91d9c120558
-  subpackages:
-  - transform
-  - unicode/norm
-- name: gopkg.in/yaml.v2
-  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
-testImports:
+  version: f3009df150dadf309fdee4a54ed65c124afad715
 - name: github.com/onsi/ginkgo
-  version: a23f924ce96d61f963fb6219b8ff069d8d768cc2
+  version: bb93381d543b0e5725244abe752214a110791d01
   subpackages:
   - config
   - ginkgo
@@ -91,7 +81,7 @@ testImports:
   - reporters/stenographer/support/go-isatty
   - types
 - name: github.com/onsi/gomega
-  version: e85f63af4302dc0e4277c6008ecf803f1d80e4f0
+  version: c463cd2a8578290d4be7a25cba69de81cf35785e
   subpackages:
   - format
   - internal/assertion
@@ -104,3 +94,56 @@ testImports:
   - matchers/support/goraph/node
   - matchers/support/goraph/util
   - types
+- name: github.com/pelletier/go-buffruneio
+  version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
+- name: github.com/pelletier/go-toml
+  version: 45932ad32dfdd20826f5671da37a5f3ce9f26a8d
+- name: github.com/pkg/errors
+  version: 839d9e913e063e28dfd0e6c7b7512793e0a48be9
+- name: github.com/pkg/sftp
+  version: 4d0e916071f68db74f8a73926335f809396d6b42
+- name: github.com/SermoDigital/jose
+  version: 2bd9b81ac51d6d6134fcd4fd846bd2e7347a15f9
+  subpackages:
+  - crypto
+  - jws
+  - jwt
+- name: github.com/Sirupsen/logrus
+  version: d26492970760ca5d33129d2d799e34be5c4782eb
+- name: github.com/spf13/afero
+  version: 52e4a6cfac46163658bd4f123c49b6ee7dc75f78
+  subpackages:
+  - mem
+  - sftp
+- name: github.com/spf13/cast
+  version: 2580bc98dc0e62908119e4737030cc2fdfc45e4c
+- name: github.com/spf13/jwalterweatherman
+  version: 33c24e77fb80341fe7130ee7c594256ff08ccc46
+- name: github.com/spf13/pflag
+  version: 9ff6c6923cfffbcd502984b8e0c80539a94968b7
+  repo: https://edge.googlesource.com/third_party/spf13/pflag.git
+- name: github.com/spf13/viper
+  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
+- name: golang.org/x/crypto
+  version: 8291fff38ab6f2928eca153913c3b5773aa0de98
+  subpackages:
+  - curve25519
+  - ed25519
+  - ed25519/internal/edwards25519
+  - ssh
+- name: golang.org/x/net
+  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
+  subpackages:
+  - context
+- name: golang.org/x/sys
+  version: c200b10b5d5e122be351b67af224adc6128af5bf
+  subpackages:
+  - unix
+- name: golang.org/x/text
+  version: 2556e8494a202e0b4008f70eda8cdb089b03fa50
+  subpackages:
+  - transform
+  - unicode/norm
+- name: gopkg.in/yaml.v2
+  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+testImports: []

@@ -8,9 +8,9 @@ WORKDIR /go/src/github.com/30x
 
 # install apid
 RUN git clone https://github.com/30x/apid.git \
- && (cd apid/cmd/apid; glide install) \
- && (cd apid/cmd/apid; go build) \
- && cp apid/cmd/apid/apid /demo
+ && glide install \
+ && go build \
+ && cp apid /demo
 
 # install mock server
 RUN (git clone https://github.com/30x/apidApigeeSync.git) \
