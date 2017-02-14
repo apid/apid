@@ -56,24 +56,15 @@ In order to have a reproducible build, we are following the following rules:
 
 * All glide.yaml packages must specify the version. 
 * Any 3rd-party libraries used by apid-core or any plugin must be checked into the vendor directory here.
+* Check in glide.lock and only use `glide up` when updating library versions
+* Each plugin's glide.yaml versions should match the libraries versions in apid
+* Use an empty $GOPATH to ensure a clean build
 
 
-Important: apid-core and all plugins must only rely on libraries including by this apid module.
-   If there are additional libraries that are needed, they must be approved and added to glide.yaml
-   and checked in to the vendor directory. 
+Note: Use `glide install --strip-vendor` to keep vendor directory size to a minimum
 
-still here is what we need to do to have glide working correctly:
-+ make sure `$GOPATH/pkg` `$GOPATH/bin` dirs are empty
-+ each project should have glide.yaml with version
+#### Important 
 
-```
-- package: github.com/gorilla/mux
-  version: v1.3.0
-- package: github.com/spf13/viper
-  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
-```
-
-+ all projects we have should have same versions reference
-+ glide.lock file must be checked in once and updated only on new dependency version update
-+ you never do `glide up` anymore always do `glide i`. Do `glide up` only when there is new dependency version update
-+ all CI jobs do only `glide install`
+apid-core and all plugins must only rely on libraries including by this apid module.
+If there are additional libraries that are needed, they must be approved and added to glide.yaml
+and checked in to the vendor directory. 
