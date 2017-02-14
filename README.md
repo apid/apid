@@ -1,12 +1,11 @@
-# APID
+# apid
 
-Apid is a container for publishing APIs that provides core services to its plugins including configuration, 
+apid is a container for publishing APIs that provides core services to its plugins including configuration, 
 API publishing, data access, and a local pub/sub event system.
 
-## To build and run standalone
+## To build and run
 
-    cd cmd/apid
-    glide install
+    glide install --strip-vendor
     go build
     ./apid
 
@@ -14,73 +13,55 @@ For command line options:
 
     ./apid -help
 
-# Configuration
+## Configuration
 
 Configuration can be done via yaml file or environment variables. Keys are case-insensitive. 
-By default, apid will look for a file called apid_config.yaml in the current working directory. 
-
-#### Environment variables
-
-Config will pick up env vars automatically. Use "apid_" as a prefix for settings. For example, for apid's "log_level" 
-configuration setting, set env var "apid_log_level". 
+By default, apid will look for a file called apid_config.yaml in the current working directory.
+See apid_config_sample.yaml in this directory for an example file.
 
 ### Defaults
 
     api_port: 9000
-    api_expvar_path: nil  # not exposed
     data_path: /var/tmp
-    events_buffer_size: 5
-    log_level: debug    # valid values: Debug, Info, Warning, Error, Fatal, Panic
+    log_level: debug    # valid values: Debug, Info, Warning, Error, Fatal, Panic 
  
-# Services
+### Environment variable overrides
 
-apid provides the following services:
+Config will pick up env vars automatically. Use "apid_" as a prefix for settings. For example, for 
+apid's "log_level" configuration setting, set env var "apid_log_level". 
 
-* apid.API()
-* apid.Config()
-* apid.Data()
-* apid.Events()
-* apid.Log()
- 
-### Initialization of services and plugins
-
-A driver process must initialize apid and its plugins like this:
-
-    apid.Initialize(factory.DefaultServicesFactory()) // when done, all services are available
-    apid.InitializePlugins() // when done, all plugins are running
-    api := apid.API() // access the API service
-    err := api.Listen() // start the listener
-
-
-Once apid.Initialize() has been called, all services are accessible via the apid package functions as details above. 
-
-# Plugins
-
-The only requirement of an apid plugin is to register itself upon init(). However, generally plugins will access
-the Log service and some kind of driver (via API or Events), so it's common practice to see something like this:
- 
-    var log apid.LogService
-     
-    func init() {
-      apid.RegisterPlugin(initPlugin)
-    }
-    
-    func initPlugin(services apid.Services) error {
-    
-      log = services.Log().ForModule("myPluginName") // note: could also access via `apid.Log().ForModule()`
-      
-      services.API().HandleFunc("/verifyAPIKey", handleRequest)
-    }
-    
-    func handleRequest(w http.ResponseWriter, r *http.Request) {
-      // respond to request
-    }
-
-# Helpful Hints
+## Helpful Hints
 
 * Use `export APID_DATA_TRACE_LOG_LEVEL=debug` to see DB Tracing
 
-### Glide
+
+## Components
+ 
+### Core
+
+* [ApigeeSync](https://github.com/30x/apidApigeeSync)
+ 
+### Plugins
+
+* [ApigeeSync](https://github.com/30x/apidApigeeSync)
+* [VerifyAPIKey](https://github.com/30x/apidVerifyApiKey)
+* [GatewayDeploy](https://github.com/30x/apidGatewayDeploy)
+* [ApigeeAnalytics](https://github.com/30x/apidAnalytics)
+
+To change plugins list, edit main.go and update glide.yaml.
+
+### Glide Build
+
+In order to have a reproducible build, we are following the following rules:
+
+* All glide.yaml packages must specify the version. 
+* Any 3rd-party libraries used by apid-core or any plugin must be checked into the vendor directory here.
+
+
+Important: apid-core and all plugins must only rely on libraries including by this apid module.
+   If there are additional libraries that are needed, they must be approved and added to glide.yaml
+   and checked in to the vendor directory. 
+
 still here is what we need to do to have glide working correctly:
 + make sure `$GOPATH/pkg` `$GOPATH/bin` dirs are empty
 + each project should have glide.yaml with version

@@ -1,11 +1,10 @@
 profile.out
 cover.html
 coverage.txt
-vendor
-/cmd/apid/apid_config.yaml
-/cmd/apid/apid
-/cmd/apid/vendor
+apid
 *.impl
 *.iml
 .idea
 artillery_report_*
+apid_config.yaml
+vendor/github.com/30x

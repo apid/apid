@@ -9,8 +9,7 @@ before_install:
   - sudo apt-get install glide -y
 
 install:
-  - glide install
-  - cd cmd/apid ; glide install
+  - glide install --strip-vendor
 
 script:
   - go test $(glide novendor)

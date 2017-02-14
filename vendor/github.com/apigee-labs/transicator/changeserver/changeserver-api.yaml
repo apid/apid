@@ -1,0 +1,292 @@
+swagger: '2.0'
+
+info:
+  version: "0.0.1"
+  title: changeserver
+  description:
+    Changeserver consumes changes from a Postgres replication scheme created
+    by the "transicator_output" plugin and makes them available to consumers
+    via an API. The API supports long polling so that a large number of
+    consumers may be notified of changes.
+  contact:
+    name: Apigee, Inc.
+    url: http://www.apigee.com/
+    email: sales@apigee.com
+  license: 
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+paths:
+  /changes:
+    get:
+      description:
+        Retrieve a list of changes. The query parameters may be used to
+        restrict the number of changes that are retrieved or return
+        only changes since a particular sequence. In addition, it
+        is possible to block (aka "long poll") until a new matching
+        change is available. The result will be produced in JSON format
+        unless the Accept header is used to select the protobuf format.
+      produces:
+        - application/json
+        - application/transicator+protobuf
+      parameters:
+        - name: scope
+          in: query
+          description:
+            The scope limits the changes that are returned. It is
+            extracted from a database column whenever a change is
+            made. Every call to this API must contain at least one
+            scope. Multiple "scope" parameters may also be used.
+            if more than one "scope" is included, then the operation
+            is treated as an "OR" of all the scopes, and the results
+            are sorted by sequence regardless of scope.
+          required: true
+          type: string
+        - name: snapshot
+          in: query
+          description:
+            If specified, then this must be set to a "snapshot ID" from Postgres.
+            This will be in the format "xmin:xmax:xip1,xip2,...xipN" and is
+            normally returned by executing "select txid_current_snapshot()".
+            By including this parameter, the change list will never include
+            any data that would be *visible* in the specified snapshot.
+            So in other words, if the value of this parameter comes from
+            a Postgres query executed during a transaction, then the
+            change server will not return any database changes that
+            were already in the snapshot.
+          required: false
+          type: string
+        - name: since
+          in: query
+          description:
+            The value of "sequence" from a previous invocation of
+            this API. If so specified, this API will only return changes
+            that happened after the change with the specified sequence.
+            Otherwise, this API will return changes since the
+            beginning. If this parameter is specified, but the specified
+            sequence no longer exists in the database, then a 400
+            error and the error code "SNAPSHOT_TOO_OLD" will be
+            returned.
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description:
+            Limit the number of changes returned by a single API
+            call. The default limit is 100.
+          required: false
+          type: integer
+        - name: block
+          in: query
+          description:
+            If specified, this sets the number of seconds that the API
+            call will block if there are no changes available since the
+            "since" value for the set of specified scopes. In the
+            event that there are no changes available when the API call
+            is made, the API will block for the specified number of
+            seconds until a matching change appears. If no changes
+            appear in the specified number of seconds, then an
+            empty change list will be returned.
+          required: false
+          type: integer
+
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: '#/definitions/ChangeList'
+        400:
+          description: Invalid input. Error "code" will tell why.
+            a code of "SNAPSHOT_TOO_OLD" means that records dating
+            back to the "since" parameter are not available.
+          schema:
+            $ref: '#/definitions/Error'
+            
+  /health:
+    get:
+      description:
+        Describes whether the server is "healthy." When the
+        server is not healthy, it is not able to process any requests, and
+        should be killed and restarted.
+        If the server was started with a
+        management port enabled, this URL only resolves on that
+        port.
+      produces:
+        - text/plain
+        - application/json
+      responses:
+        200:
+          description: Everything is fine. No output produced.
+        503:
+          description: 
+            Server is not healthy. Normally returns the status in textual
+            form, but if JSON is selected in the Accept header than
+            JSON will be returned.
+          schema:
+            $ref: '#/definitions/Status'
+            
+  /ready:
+    get:
+      description:
+        Describes whether the server is "ready." When the
+        server is not ready, it is not able to process any requests.
+        Load balancers should not route calls to a server that is
+        not ready. The server may not be ready because it is still
+        starting up, or because it is shutting down. It is possible
+        for a server to be "ready" but still "healthy."
+        If the server was started with a
+        management port enabled, this URL only resolves on that
+        port.
+      produces:
+        - text/plain
+        - application/json
+      responses:
+        200:
+          description: Everything is fine. No output produced.
+        503:
+          description: 
+            Server is not ready. Normally returns the status in textual
+            form, but if JSON is selected in the Accept header than
+            JSON will be returned.
+          schema:
+            $ref: '#/definitions/Status'
+            
+  /markdown:
+    get:
+      description:
+        Changes the state of the server to denote that it has been
+        marked down. After this is called, the "/ready" path will return
+        503, and all other API calls except "/health" will also fail with
+        503.
+        After this API call has been made, the server will delete its
+        Postgres replication slot when it exits. Management software
+        should call this URL before a planned shutdown to ensure
+        cleanup of Postgres resources.
+        If the server was started with a
+        management port enabled, this URL only resolves on that
+        port.
+      responses:
+        200:
+          description: Server is now marked down
+
+definitions:
+  Value:
+    description:
+      The value of a row in the "newRow" or "oldRow" property
+      of a change.
+    required:
+      - value
+      - type
+    properties:
+      value:
+        description: The row value in string form
+        type: string
+      type:
+        description: The Postgres numeric type of the field
+        type: integer
+
+  Change:
+    description: A single change.
+    properties:
+      operation:
+        description:
+          The type of change.
+          "1" denotes an insert.
+          "2" denotes an update.
+          "3" denotes a delete.
+        type: integer
+        enum:
+        - 1
+        - 2
+        - 3
+      table:
+        description: The name of the database table that was changed.
+        type: string
+      sequence:
+        description:
+          The unique, ordered identifier of the change in the list of
+          changes.
+        type: string
+      commitSequence:
+        description:
+          The order of this transaction's commit in the list of changes.
+        type: integer
+        format: int64
+      changeSequence:
+        description:
+          The order of this change in the list of changes. Since
+          transactions commit in different orders, changes are not
+          necessarily shown in this order
+        type: integer
+        format: int64
+      commitIndex:
+        description:
+          The order of this change in the list of changes for a
+          particular transaction. When multiple changes are made in
+          a transaction, they have the same commitSequence but
+          different values of commitIndex.
+        type: integer
+        format: int64
+      txid:
+        description:
+          The database transaction ID for this change
+        type: integer
+        format: int64
+      newRow:
+        description:
+          The new value of the row for an insert or update operation.
+          The fields in the object are named after the fields in the
+          row, and each field's value is a "Value" object.
+        type: object
+      oldRow:
+        description:
+          The old value of the row for a delete or update operation.
+        type: object
+
+  ChangeList:
+    description: A set of changes.
+    properties:
+      firstSequence:
+        description: The oldest sequence present in the databse
+        type: string
+      lastSequence:
+        description: The newest sequence present in the databse
+        type: string
+      changes:
+        description: A list of changes, in sequence order.
+        type: array
+        items:
+          $ref: '#/definitions/Change'
+          
+  Status:
+    description: A response sent by a server that has been marked down.
+    required:
+      - status
+      - reason
+    properties:
+      reason:
+        description: 
+          The reason that a server has been marked down. Suitable for
+          writing in to logs and diagnostic errors.
+        type: string
+      status:
+        description:
+          If the server has been marked down, a reason why.
+          One of "Unhealtly" or "NotReady".
+          
+  Error:
+    description: An error in processing by the server.
+    required:
+      - code
+      - error
+    properties:
+      code:
+        description: A short symbolic description of the error
+        type: string
+      error:
+        description: A short description of the error
+        type: string
+      description:
+        description: A longer description of the error
+        type: string
+        
