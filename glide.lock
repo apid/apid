@@ -1,0 +1,30 @@
+hash: cd70d7f72df29bc9bada945c1e558b82715db5950ed404cdd47721e02e458c6d
+updated: 2017-02-14T10:23:23.580826687-08:00
+imports:
+- name: github.com/30x/apid-core
+  version: 9c9a27e3a324d6d06eb0c89ff320d7627471bbeb
+- name: github.com/30x/apidAnalytics
+  version: 2ff4236780f849c44f9fa1e7094ad961dc8ad58d
+- name: github.com/30x/apidApigeeSync
+  version: 9d0d5f9b13eb4db2bc7b1484288909d9fcfca7e7
+- name: github.com/30x/apidGatewayDeploy
+  version: ca0b209cd21f6527424414a7d19e5a01375a9d01
+- name: github.com/30x/apidVerifyAPIKey
+  version: eb35511d2dfcc54fdc8a519fee36eae66b3b5dd2
+- name: github.com/30x/goscaffold
+  version: cbed6858015606bec730ced4b5423392667d69c6
+- name: github.com/gorilla/mux
+  version: 392c28fe23e1c45ddba891b0320b3b5df220beea
+- name: github.com/mattn/go-sqlite3
+  version: ca5e3819723d8eeaf170ad510e7da1d6d2e94a08
+- name: github.com/Sirupsen/logrus
+  version: d26492970760ca5d33129d2d799e34be5c4782eb
+- name: github.com/spf13/viper
+  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
+testImports:
+- name: github.com/onsi/ginkgo
+  version: bb93381d543b0e5725244abe752214a110791d01
+  subpackages:
+  - ginkgo
+- name: github.com/onsi/gomega
+  version: c463cd2a8578290d4be7a25cba69de81cf35785e
