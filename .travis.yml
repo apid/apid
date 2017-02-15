@@ -9,7 +9,7 @@ before_install:
   - sudo apt-get install glide -y
 
 install:
-  - glide install
+  - glide install --strip-vendor
   - "go build -v ./..."
 
 script:
