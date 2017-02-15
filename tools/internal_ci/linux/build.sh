@@ -17,7 +17,7 @@ mkdir -p ${base}
 set +x
 
 (cd ${base}; ${GOPATH}/bin/glide install)
-(cd ${base}; go build -o apid ./cmd/apid)
+(cd ${base}; go build -o apid)
 buildResult=$?
 
 cp ${base}/apid .
