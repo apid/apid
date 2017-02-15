@@ -3,10 +3,15 @@ language: go
 go:
   - 1.7.x
 
+os:
+  - linux
+  - osx
+
 before_install:
-  - sudo add-apt-repository ppa:masterminds/glide -y
-  - sudo apt-get update -q
-  - sudo apt-get install glide -y
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:masterminds/glide -y  ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -q                            ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install glide -y                     ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glide ; fi
 
 install:
   - glide install --strip-vendor
