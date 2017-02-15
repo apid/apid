@@ -3,7 +3,8 @@
 //
 module.exports = {
   captureDeployments: captureDeployments,
-  fakeStatuses: fakeStatuses
+  fakeStatuses: fakeStatuses,
+  randomUserKey: randomUserKey
 }
 
 function captureDeployments(requestParams, response, context, ee, next) {
@@ -35,4 +36,12 @@ function fakeStatuses(requestParams, context, ee, next) {
   requestParams.json = true;
   //console.log(requestParams.body);
   return next();// MUST be called for the scenario to continue
+}
+
+function randomUserKey(requestParams, context, ee, next) {
+    numDevs = 50000
+    key = Math.floor((Math.random() * numDevs) + 1)
+
+    requestParams.body = requestParams.body + "&key=" + key
+    return next()
 }

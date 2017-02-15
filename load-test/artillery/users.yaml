@@ -3,19 +3,22 @@ config:
   http:
     timeout: 10
   phases:
-    - duration: 120
-      arrivalRate: 50
+    - duration: 10
+      arrivalRate: 1
+  processor: "./my-functions.js"
   defaults:
     headers: {}
 
 scenarios:
   - name: "Verified user"
+    weight: 90
     flow:
       - post:
           headers:
             Content-Type: application/x-www-form-urlencoded
           url: /verifiers/apikey
-          body: "action=verify&key=1&uriPath=/&scopeuuid=scope"
+          beforeRequest: randomUserKey
+          body: "action=verify&uriPath=/&scopeuuid=scope"
       - post:
           url: /analytics/scope
           json:
@@ -42,6 +45,7 @@ scenarios:
                 client_id: "1"
 
   - name: "Unverified user"
+    weight: 10
     flow:
       - post:
           headers:
