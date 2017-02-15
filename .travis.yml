@@ -10,7 +10,7 @@ before_install:
 
 install:
   - glide install --strip-vendor
-  - "go build -v ./..."
+  - go build
 
 script:
   - go test $(glide novendor)
