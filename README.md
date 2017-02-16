@@ -5,7 +5,7 @@ API publishing, data access, and a local pub/sub event system.
 
 ## To build and run
 
-    glide install
+    glide install --strip-vendor
     go build
     ./apid
 
@@ -48,21 +48,27 @@ apid's "log_level" configuration setting, set env var "apid_log_level".
 * [GatewayDeploy](https://github.com/30x/apidGatewayDeploy)
 * [ApigeeAnalytics](https://github.com/30x/apidAnalytics)
 
-To change plugins list, edit main.go and update glide.yaml.
+To change plugins list, edit main.go add to glide.yaml and follow the release process below.
 
-### Glide Build
+### Release process
 
-In order to have a reproducible build, we are following the following rules:
+To update the build dependencies and release, follow this process:
 
-* All glide.yaml packages must specify the version. 
-* Any 3rd-party libraries used by apid-core or any plugin must be checked into the vendor directory here.
-* Check in glide.lock and only use `glide up` when updating library versions
-* Each plugin's glide.yaml versions should match the libraries versions in apid
-* Use an empty $GOPATH to ensure a clean build
+1. Update `glide.yaml` to the correct versions
+2. Run `glide up --strip-vendor`
+3. `go build` to verify the result
+4. Check in
+5. Push a git label to Github to cause Travis to create a release
 
+#### Notes on release process
 
-#### Important 
+In order to have a reproducible build, we have the following rules:
 
-apid-core and all plugins must only rely on libraries including by this apid module.
-If there are additional libraries that are needed, they must be approved and added to glide.yaml
-and checked in to the vendor directory. 
+* All `glide.yaml` packages must specify a version. 
+* Any 3rd-party libraries used by apid-core or used by any plugin must be checked into the vendor dir.
+* The `glide.lock` file is checked in and `glide up` is only used to update library versions
+* Use an empty $GOPATH (aside from apid itself) to ensure a clean build
+* apid-core and all plugins must only rely on libraries including by this apid module.
+  If there are additional libraries that are needed, they must be approved and added to glide.yaml
+  and checked in to the vendor directory. 
+

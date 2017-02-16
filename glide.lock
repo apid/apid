@@ -1,5 +1,5 @@
 hash: cd70d7f72df29bc9bada945c1e558b82715db5950ed404cdd47721e02e458c6d
-updated: 2017-02-14T10:49:10.051208002-08:00
+updated: 2017-02-16T13:37:08.260630916-08:00
 imports:
 - name: github.com/30x/apid-core
   version: 9c9a27e3a324d6d06eb0c89ff320d7627471bbeb
@@ -12,9 +12,9 @@ imports:
   - factory
   - logger
 - name: github.com/30x/apidAnalytics
-  version: 41272f6fed4497eb059cc3b84c8cd15931416f9e
+  version: 8f6db46e24e8d65bd9632d75e7214c62caf60246
 - name: github.com/30x/apidApigeeSync
-  version: 745527bea92522b5abeafba4fda2ea5cff063933
+  version: dd1cda3cb41103a891b023287e121bd4f2d37d7d
 - name: github.com/30x/apidGatewayDeploy
   version: 7bb2eccae0ab0c90da8642336e4480ebb205fbac
 - name: github.com/30x/apidVerifyAPIKey
@@ -22,7 +22,7 @@ imports:
 - name: github.com/30x/goscaffold
   version: cbed6858015606bec730ced4b5423392667d69c6
 - name: github.com/apigee-labs/transicator
-  version: 7d8038eae524a5d798b2c117c85890ecf62f55b6
+  version: 11b7bfdd47f1120e94701ff90f6c6df19aa01483
   subpackages:
   - common
 - name: github.com/fsnotify/fsnotify
