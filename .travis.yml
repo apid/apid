@@ -15,18 +15,30 @@ before_install:
 
 install:
   - glide install --strip-vendor
-  - go build
+  - if [[ "$TRAVIS_OS_NAME" == "osx"   ]]; then go build -o apid_osx   ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then go build -o apid_linux ; fi
 
 script:
   - go test $(glide novendor)
 
 deploy:
-  provider: releases
-  api_key:
-    secure: jRjX7WLsg9z5sXhtIqh/P7OiFF1KD0f1L6ETs6Q7qUHIsJSElFxKfAQVaBBrLFlBCpmGKIlb6vnMPznDDIahts9lFBgrXmfEd74u7EP+m1yVAnPaPKG6CrHw/nyoPktXjkPEHJ4tL5PsArOBtYyClA5q/Fr87eLQ2ZEhCrjapoekt6urdhey9ImzSXDvm1vzj2r5ghicapNpBk1x8wp2jqB5nYl1GJCwfm7A4b1yKYcAm+BHBJrLC19J9W00Jt4MMjRuNpbdR5vAG+KjXcAPPwHEVL34dF8J9Jp/0tcVaJ4adHUO8Eo1fJWof7ljLecWCeaYUPD+FZP0Nf1ugxgnFcvFUZ2J2Hy+I11T/fbM6oonLHub33edSIAtmpGnd4mBS8EPMo1FBDuwgry4u3kLOkkBWFV7HCqXc1FGUsm7WM9CWJUXfj7wSKMvSURZqNpmBIaF19sN1Ajccf2k/XLxRgIlb6mQoGVxqa995CloVlpuJlJyCOhUl+v/SGtvEfKRv9LfUFbqQblqlU9Ul9zyYac4i/6uwE79jlwivPP4Z+W5sxxHYdIKYnv9VIp41RwTVi6aNSwee7EFOkiDu/QB7b6ZtWI1/S/h2nAWCbK2LDH2IR3qfLvvSNNc7ZRB80VkuRNsZLPPrSxbjTqy/LwZ0h6rYZtSfRal59pqTVgPWHA=
-  file: apid
-  skip_cleanup: true
-  on:
-    repo: 30x/apid
-    tags: true
-    all_branches: true
+  - provider: releases
+    api_key:
+      secure: jRjX7WLsg9z5sXhtIqh/P7OiFF1KD0f1L6ETs6Q7qUHIsJSElFxKfAQVaBBrLFlBCpmGKIlb6vnMPznDDIahts9lFBgrXmfEd74u7EP+m1yVAnPaPKG6CrHw/nyoPktXjkPEHJ4tL5PsArOBtYyClA5q/Fr87eLQ2ZEhCrjapoekt6urdhey9ImzSXDvm1vzj2r5ghicapNpBk1x8wp2jqB5nYl1GJCwfm7A4b1yKYcAm+BHBJrLC19J9W00Jt4MMjRuNpbdR5vAG+KjXcAPPwHEVL34dF8J9Jp/0tcVaJ4adHUO8Eo1fJWof7ljLecWCeaYUPD+FZP0Nf1ugxgnFcvFUZ2J2Hy+I11T/fbM6oonLHub33edSIAtmpGnd4mBS8EPMo1FBDuwgry4u3kLOkkBWFV7HCqXc1FGUsm7WM9CWJUXfj7wSKMvSURZqNpmBIaF19sN1Ajccf2k/XLxRgIlb6mQoGVxqa995CloVlpuJlJyCOhUl+v/SGtvEfKRv9LfUFbqQblqlU9Ul9zyYac4i/6uwE79jlwivPP4Z+W5sxxHYdIKYnv9VIp41RwTVi6aNSwee7EFOkiDu/QB7b6ZtWI1/S/h2nAWCbK2LDH2IR3qfLvvSNNc7ZRB80VkuRNsZLPPrSxbjTqy/LwZ0h6rYZtSfRal59pqTVgPWHA=
+    file: apid_linux
+    skip_cleanup: true
+    on:
+      repo: 30x/apid
+      tags: true
+      all_branches: true
+      condition: $TRAVIS_OS_NAME == linux
+  - provider: releases
+    api_key:
+      secure: jRjX7WLsg9z5sXhtIqh/P7OiFF1KD0f1L6ETs6Q7qUHIsJSElFxKfAQVaBBrLFlBCpmGKIlb6vnMPznDDIahts9lFBgrXmfEd74u7EP+m1yVAnPaPKG6CrHw/nyoPktXjkPEHJ4tL5PsArOBtYyClA5q/Fr87eLQ2ZEhCrjapoekt6urdhey9ImzSXDvm1vzj2r5ghicapNpBk1x8wp2jqB5nYl1GJCwfm7A4b1yKYcAm+BHBJrLC19J9W00Jt4MMjRuNpbdR5vAG+KjXcAPPwHEVL34dF8J9Jp/0tcVaJ4adHUO8Eo1fJWof7ljLecWCeaYUPD+FZP0Nf1ugxgnFcvFUZ2J2Hy+I11T/fbM6oonLHub33edSIAtmpGnd4mBS8EPMo1FBDuwgry4u3kLOkkBWFV7HCqXc1FGUsm7WM9CWJUXfj7wSKMvSURZqNpmBIaF19sN1Ajccf2k/XLxRgIlb6mQoGVxqa995CloVlpuJlJyCOhUl+v/SGtvEfKRv9LfUFbqQblqlU9Ul9zyYac4i/6uwE79jlwivPP4Z+W5sxxHYdIKYnv9VIp41RwTVi6aNSwee7EFOkiDu/QB7b6ZtWI1/S/h2nAWCbK2LDH2IR3qfLvvSNNc7ZRB80VkuRNsZLPPrSxbjTqy/LwZ0h6rYZtSfRal59pqTVgPWHA=
+    file: apid_osx
+    skip_cleanup: true
+    on:
+      repo: 30x/apid
+      tags: true
+      all_branches: true
+      condition: $TRAVIS_OS_NAME == osx
