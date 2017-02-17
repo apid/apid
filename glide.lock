@@ -1,5 +1,5 @@
 hash: cd70d7f72df29bc9bada945c1e558b82715db5950ed404cdd47721e02e458c6d
-updated: 2017-02-16T13:37:08.260630916-08:00
+updated: 2017-02-16T16:21:03.612461249-08:00
 imports:
 - name: github.com/30x/apid-core
   version: 9c9a27e3a324d6d06eb0c89ff320d7627471bbeb
@@ -14,7 +14,7 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 8f6db46e24e8d65bd9632d75e7214c62caf60246
 - name: github.com/30x/apidApigeeSync
-  version: dd1cda3cb41103a891b023287e121bd4f2d37d7d
+  version: 6869860b20af2c60559489b3c704faa6746e055c
 - name: github.com/30x/apidGatewayDeploy
   version: 7bb2eccae0ab0c90da8642336e4480ebb205fbac
 - name: github.com/30x/apidVerifyAPIKey
