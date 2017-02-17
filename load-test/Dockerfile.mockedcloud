@@ -20,9 +20,8 @@ RUN (git clone https://github.com/30x/apidApigeeSync.git) \
 
 WORKDIR /demo
 COPY ./apid_config.yaml apid_config.yaml
-COPY ./startServices.sh startServices.sh
+COPY ./startmockedcloud.sh startmockedcloud.sh
 ENV APID_API_PORT=9001
 EXPOSE 9001
-#APID_API_PORT=9001 ./mockServer -numDeps=100 -numDevs=50000 -addDevEach=3s -upDevEach=1s -upDepEach=3s
 
-ENTRYPOINT [ "./mockServer", "-numDeps=100", "-numDevs=50000", "-addDevEach=3s", "-upDevEach=1s", "-upDepEach=3s", "-bundleURI=$CLOUD_IP" ]
+ENTRYPOINT [ "./startmockedcloud.sh" ]

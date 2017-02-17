@@ -2,7 +2,7 @@ config:
   target: http://34.197.66.95:9000
   plugins:
     statsd:
-      host: ec2-54-159-50-133.compute-1.amazonaws.com
+      host: 34.200.46.239
       port: 8125
       prefix: 'artillery'
   http:

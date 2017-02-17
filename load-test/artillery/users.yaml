@@ -1,15 +1,17 @@
 config:
-  target: http://34.200.46.239:9000
+  target: http://34.194.181.130:9000
   http:
     timeout: 10
+    pool: 100
   plugins:
     statsd:
-      host: ec2-54-224-145-240.compute-1.amazonaws.com
+      host: 34.194.181.130
       port: 8125
       prefix: 'artillery'
   phases:
-    - duration: 1200
-      arrivalRate: 50
+    - duration: 300
+      arrivalRate: 20
+      rampTo: 20
   defaults:
     headers: {}
 

@@ -6,7 +6,7 @@
 
 ## Run
 
-    c
+    docker run -d
 
 docker will open port 9000 for api hits
 
