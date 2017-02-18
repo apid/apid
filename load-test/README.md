@@ -15,3 +15,8 @@ Open `Makefile` and change all the values `CLOUD_IP=192.168.99.100` to your dock
 + open `artillery/deployment.yaml` update the `target` to point to your `CLOUD_IP`:9000
 + `artillery run artillery/deployment.yaml `
 + generate report `artillery report [file.json]`
+
+## Start the test on AWS
+
+We use https://github.com/f1erro/spicer
+Docker commands file for spicer can be found in `docker-commands` file in this folder

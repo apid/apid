@@ -1,0 +1,3 @@
+docker run --name apid-lt-mockedcloud -e CLOUD_IP={{public_ip_0}} -p 9001:9001 alexkhimich/apid-lt-mockedcloud
+
+docker run --name apid-lt -e CLOUD_IP={{public_ip_0}} -p 9000:9000 alexkhimich/apid-lt
