@@ -2,7 +2,7 @@
 
 ## Build
 
-    make dockers
+    make docker
 
 ## Run
 Open `Makefile` and change all the values `CLOUD_IP=192.168.99.100` to your docker host(In my example that is `docker-machine ip`. For you it might be `localhost`)
