@@ -55,10 +55,13 @@ To change plugins list, edit main.go add to glide.yaml and follow the release pr
 To update the build dependencies and release, follow this process:
 
 1. Update `glide.yaml` to the correct versions
-2. Run `glide up --strip-vendor`
-3. `go build` to verify the result
-4. Check in
-5. Push a git label to Github to cause Travis to create a release
+2. `rm glide.lock`
+3. Run `glide up --strip-vendor`
+4. `go build` and verify the result
+5. Commit (should be glide.yaml, glide.lock, and vendor changes)
+6. Add a Git label on the commit for the version of the release (use semver, ie. "1.2.3") 
+7. Push commit and label to Github to cause Travis to create a release and attach binaries for OS X and Linux
+8. Once the release has been created, you may edit it on Github to add release notes  
 
 #### Notes on release process
 
@@ -69,6 +72,5 @@ In order to have a reproducible build, we have the following rules:
 * The `glide.lock` file is checked in and `glide up` is only used to update library versions
 * Use an empty $GOPATH (aside from apid itself) to ensure a clean build
 * apid-core and all plugins must only rely on libraries including by this apid module.
-  If there are additional libraries that are needed, they must be approved and added to glide.yaml
+  If there are additional libraries that are needed, they must be approved, added to glide.yaml,
   and checked in to the vendor directory. 
-
