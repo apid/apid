@@ -1,9 +1,14 @@
 config:
-  target: 'http://localhost:9090'
+  target: http://34.197.66.95:9000
+  plugins:
+    statsd:
+      host: 34.200.46.239
+      port: 8125
+      prefix: 'artillery'
   http:
     timeout: 10
   phases:
-    - duration: 120
+    - duration: 1200
       arrivalRate: 1
   processor: "./my-functions.js"
   defaults:

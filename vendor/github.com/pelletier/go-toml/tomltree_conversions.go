@@ -87,7 +87,7 @@ func toTomlValue(item interface{}, indent int) string {
 	case nil:
 		return ""
 	default:
-		panic(fmt.Errorf("unsupported value type %T: %v", value, value))
+		panic(fmt.Sprintf("unsupported value type %T: %v", value, value))
 	}
 }
 
@@ -154,23 +154,6 @@ func (t *TomlTree) toToml(indent, keyspace string) string {
 	return strings.Join(resultChunks, "")
 }
 
-// Same as ToToml(), but does not panic and returns an error
-func (t *TomlTree) toTomlSafe(indent, keyspace string) (result string, err error) {
-	defer func() {
-		if r := recover(); r != nil {
-			result = ""
-			switch x := r.(type) {
-			case error:
-				err = x
-			default:
-				err = fmt.Errorf("unknown panic: %s", r)
-			}
-		}
-	}()
-	result = t.toToml(indent, keyspace)
-	return
-}
-
 func convertMapStringString(in map[string]string) map[string]interface{} {
 	result := make(map[string]interface{}, len(in))
 	for k, v := range in {
@@ -187,18 +170,15 @@ func convertMapInterfaceInterface(in map[interface{}]interface{}) map[string]int
 	return result
 }
 
-// ToString generates a human-readable representation of the current tree.
-// Output spans multiple lines, and is suitable for ingest by a TOML parser.
-// If the conversion cannot be performed, ToString returns a non-nil error.
-func (t *TomlTree) ToString() (string, error) {
-	return t.toTomlSafe("", "")
+// ToString is an alias for String
+func (t *TomlTree) ToString() string {
+	return t.String()
 }
 
 // String generates a human-readable representation of the current tree.
-// Alias of ToString.
+// Output spans multiple lines, and is suitable for ingest by a TOML parser
 func (t *TomlTree) String() string {
-	result, _ := t.ToString()
-	return result
+	return t.toToml("", "")
 }
 
 // ToMap recursively generates a representation of the current tree using map[string]interface{}.

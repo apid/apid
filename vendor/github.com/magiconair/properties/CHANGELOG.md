@@ -2,10 +2,6 @@
 
 ### Unreleased
 
- * [Issue #15](https://github.com/magiconair/properties/issues/15): Drop gocheck dependency
-
-### [1.7.1](https://github.com/magiconair/properties/tags/v1.7.1) - 13 Jan 2017
-
  * [PR #16](https://github.com/magiconair/properties/pull/16): Keep gofmt happy
  * [PR #18](https://github.com/magiconair/properties/pull/18): Fix Delete() function
 

@@ -1,0 +1,27 @@
+FROM golang:1.7-wheezy
+
+# install tools
+RUN apt-get update && apt-get -y install vim sqlite3 && curl https://glide.sh/get | sh
+
+RUN mkdir -p /demo/data
+WORKDIR /go/src/github.com/30x
+
+# install apid
+RUN git clone https://github.com/30x/apid.git \
+ && (cd apid; glide install) \
+ && (cd apid; go build) \
+ && cp apid/apid /demo
+
+# install mock server
+RUN (git clone https://github.com/30x/apidApigeeSync.git) \
+ && (cd apidApigeeSync/; glide install) \
+ && (cd apidApigeeSync/cmd/mockServer; go build) \
+ && cp apidApigeeSync/cmd/mockServer/mockServer /demo
+
+WORKDIR /demo
+COPY ./apid_config.yaml apid_config.yaml
+COPY ./startServices.sh startServices.sh
+
+EXPOSE 9000
+
+ENTRYPOINT [ "./startServices.sh"]

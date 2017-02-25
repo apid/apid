@@ -59,10 +59,6 @@ func TestListType(t *testing.T) {
 			[]token.Type{token.NUMBER, token.STRING},
 		},
 		{
-			`foo = [false]`,
-			[]token.Type{token.BOOL},
-		},
-		{
 			`foo = []`,
 			[]token.Type{},
 		},

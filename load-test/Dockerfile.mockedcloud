@@ -8,20 +8,20 @@ WORKDIR /go/src/github.com/30x
 
 # install apid
 RUN git clone https://github.com/30x/apid.git \
- && glide install \
- && go build \
- && cp apid /demo
+&& (cd apid; glide install) \
+&& (cd apid; go build) \
+&& cp apid/apid /demo
 
 # install mock server
 RUN (git clone https://github.com/30x/apidApigeeSync.git) \
- && (cd apidApigeeSync/; glide install) \
- && (cd apidApigeeSync/cmd/mockServer; go build) \
- && cp apidApigeeSync/cmd/mockServer/mockServer /demo
+&& (cd apidApigeeSync/; glide install) \
+&& (cd apidApigeeSync/cmd/mockServer; go build) \
+&& cp apidApigeeSync/cmd/mockServer/mockServer /demo
 
 WORKDIR /demo
 COPY ./apid_config.yaml apid_config.yaml
-COPY ./startServices.sh startServices.sh
+COPY ./startmockedcloud.sh startmockedcloud.sh
+ENV APID_API_PORT=9001
+EXPOSE 9001
 
-CMD startServices.sh
-
-EXPOSE 9000
+ENTRYPOINT [ "./startmockedcloud.sh" ]

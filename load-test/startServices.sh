@@ -2,10 +2,13 @@
 
 cd /demo
 
+if [ -z "$CLOUD_IP" ];  then
+  echo "No replace"
+else
+  sed -i "s/localhost/${CLOUD_IP}/" apid_config.yaml
+fi
+
 echo "----- Apid config being loaded -----"
 cat apid_config.yaml
 echo "--------- End apid config ----------"
-
-APID_API_PORT=9001 ./mockServer -numDeps=100 -numDevs=50000 -addDevEach=3s -upDevEach=1s -upDepEach=3s  &
-sleep 2
-./apid -clean &
+./apid -clean

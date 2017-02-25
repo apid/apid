@@ -9,21 +9,21 @@ module.exports = {
 
 function captureDeployments(requestParams, response, context, ee, next) {
 
-  var array = JSON.parse(response.body);
-  context.vars.captureDeployments = array;
-  return next(); // MUST be called for the scenario to continue
+    var array = JSON.parse(response.body);
+    context.vars.captureDeployments = array;
+    return next(); // MUST be called for the scenario to continue
 }
 /*
-    requestParam are the parameters from this list
-    https://github.com/request/request#requestoptions-callback
-*/
+ requestParam are the parameters from this list
+ https://github.com/request/request#requestoptions-callback
+ */
 function fakeStatuses(requestParams, context, ee, next) {
-  //console.log("--------------------------");
-  //console.log(context.vars.captureDeployments)
-  var d = context.vars.captureDeployments;
-  var statusArray = [];
+    //console.log("--------------------------");
+    //console.log(context.vars.captureDeployments)
+    var d = context.vars.captureDeployments;
+    var statusArray = [];
 
-  for (var i = 0; i< d.length; i++) {
+    for (var i = 0; i< d.length; i++) {
         var status = {
             "id":d[i].id,
             "status": (i>(d.length*0.1))?"FAIL":"SUCCESS",
@@ -31,11 +31,11 @@ function fakeStatuses(requestParams, context, ee, next) {
             "errorCode":1
         };
         statusArray.push(status);
-  }
-  requestParams.body = statusArray;
-  requestParams.json = true;
-  //console.log(requestParams.body);
-  return next();// MUST be called for the scenario to continue
+    }
+    requestParams.body = statusArray;
+    requestParams.json = true;
+    //console.log(requestParams.body);
+    return next();// MUST be called for the scenario to continue
 }
 
 function randomUserKey(requestParams, context, ee, next) {
