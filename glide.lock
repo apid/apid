@@ -16,7 +16,7 @@ imports:
 - name: github.com/30x/apidApigeeSync
   version: 6869860b20af2c60559489b3c704faa6746e055c
 - name: github.com/30x/apidGatewayDeploy
-  version: f03d978b04b9804448235c1f3d692bb1eff9f560
+  version: 0b8be8db0cc59bd546bf7e013d0e38bd89cfbac0
 - name: github.com/30x/apidVerifyAPIKey
   version: 9e556aae9151082b1b75e342ebaf815377e68243
 - name: github.com/30x/goscaffold
