@@ -18,7 +18,7 @@ imports:
 - name: github.com/30x/apidGatewayDeploy
   version: c41b76d23b8ae87c27b32361b4247ce38ac9804b
 - name: github.com/30x/apidVerifyAPIKey
-  version: 814fe9769e4e101ce021b837c6e616d70f2f13de
+  version: fdeca8da4d9f163f9b001b7a8cff0d3f1fcdceb6
 - name: github.com/30x/goscaffold
   version: cbed6858015606bec730ced4b5423392667d69c6
 - name: github.com/apigee-labs/transicator
