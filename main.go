@@ -21,12 +21,12 @@ func main() {
 	configFlag := f.String("config", "", "path to the yaml config file [./apid_config.yaml]")
 	cleanFlag := f.Bool("clean", false, "start clean, deletes all existing data from local_storage_path")
 
+	f.Parse(os.Args[1:])
+
 	configFile := *configFlag
 	if configFile != "" {
 		os.Setenv("APID_CONFIG_FILE", configFile)
 	}
-
-	f.Parse(os.Args[1:])
 
 	apid.Initialize(factory.DefaultServicesFactory())
 
