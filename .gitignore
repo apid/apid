@@ -5,6 +5,5 @@ apid
 *.impl
 *.iml
 .idea
-artillery_report_*
 apid_config.yaml
 vendor/github.com/30x
