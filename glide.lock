@@ -2,7 +2,7 @@ hash: cd70d7f72df29bc9bada945c1e558b82715db5950ed404cdd47721e02e458c6d
 updated: 2017-02-24T16:51:48.358337652-08:00
 imports:
 - name: github.com/30x/apid-core
-  version: fce3010f588d4e5df4c358658eea62729f6f9821
+  version: 6086f0213e36c13d1ab0bf6b536237eeb106a9c0
   subpackages:
   - api
   - config
@@ -14,9 +14,9 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 92bef6643359fe58ace63ae6da63a8c1d31e7b81
 - name: github.com/30x/apidApigeeSync
-  version: 6869860b20af2c60559489b3c704faa6746e055c
+  version: 6b475806d360f1be55be4dde7d3edcb801ec073a
 - name: github.com/30x/apidGatewayDeploy
-  version: c41b76d23b8ae87c27b32361b4247ce38ac9804b
+  version: a76b8ad969c342f47cf4c37729d344725707de3d
 - name: github.com/30x/apidVerifyAPIKey
   version: fdeca8da4d9f163f9b001b7a8cff0d3f1fcdceb6
 - name: github.com/30x/goscaffold
