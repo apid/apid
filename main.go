@@ -9,13 +9,26 @@ import (
 
 	// other imports
 	"flag"
+	"fmt"
 	"os"
+	"reflect"
 
 	"github.com/30x/apid-core"
 	"github.com/30x/apid-core/factory"
 )
 
 func main() {
+	// clean exit messages w/o stack track during initialization
+	defer func() {
+		if r := recover(); r != nil {
+			// if coming from logrus, it's already been printed. otherwise...
+			if reflect.TypeOf(r).String() != "*logrus.Entry" {
+				fmt.Println(r)
+			}
+			os.Exit(1)
+		}
+	}()
+
 	f := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 
 	configFlag := f.String("config", "", "path to the yaml config file [./apid_config.yaml]")
