@@ -21,9 +21,9 @@ See apid_config_sample.yaml in this directory for an example file.
 
 ### Defaults
 
-    api_port: 9000
-    data_path: /var/tmp
-    log_level: debug    # valid values: Debug, Info, Warning, Error, Fatal, Panic 
+    api_listener: 127.0.0.1:9000  # api listener will bind to specified host and port
+    data_path: /var/tmp           # all data stored on disk will be under this path 
+    log_level: debug              # valid values: Debug, Info, Warning, Error, Fatal, Panic 
  
 ### Environment variable overrides
 

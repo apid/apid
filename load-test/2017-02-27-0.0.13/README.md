@@ -7,7 +7,7 @@
 
 apid config:
  ```
-api_port: 9000
+api_listen: :9000    # note: leave api open for connections from anywhere
 api_expvar_path: /expvar
 events_buffer_size: 5
 apigeesync_proxy_server_base: http://localhost:9001
