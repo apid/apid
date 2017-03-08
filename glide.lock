@@ -14,7 +14,7 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 92bef6643359fe58ace63ae6da63a8c1d31e7b81
 - name: github.com/30x/apidApigeeSync
-  version: 6b475806d360f1be55be4dde7d3edcb801ec073a
+  version: 476be26419e525475c29a633d0ae7712ac9a76e0
 - name: github.com/30x/apidGatewayDeploy
   version: a76b8ad969c342f47cf4c37729d344725707de3d
 - name: github.com/30x/apidVerifyAPIKey
