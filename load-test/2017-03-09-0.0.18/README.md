@@ -65,4 +65,4 @@ local_storage_path: /demo/data
 ```
 
 ### Influx Dashboard
-![dashboard](Screen Shot 2017-03-09 at 10.59.54 AM)
+![dashboard](Screen Shot 2017-03-09 at 10.59.54 AM.png)
