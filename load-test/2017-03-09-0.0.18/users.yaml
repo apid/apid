@@ -1,0 +1,85 @@
+config:
+  target: http://34.206.206.215:9000
+  http:
+    timeout: 10
+    pool: 100
+  plugins:
+    statsd:
+      host: 34.206.206.215
+      port: 8125
+      prefix: 'artillery'
+  phases:
+    - duration: 240
+      arrivalRate: 140
+      rampTo: 200
+  processor: "./my-functions.js"
+  defaults:
+    headers: {}
+
+scenarios:
+  - name: "Verified user"
+    weight: 90
+    flow:
+      - post:
+          headers:
+            Content-Type: application/x-www-form-urlencoded
+          url: /verifiers/apikey
+          beforeRequest: randomUserKey
+          body: "action=verify&uriPath=/&scopeuuid=scope"
+      - post:
+          url: /analytics/scope
+          json:
+            records:
+              - apiproxy: default
+                apiproxy_revision: "15"
+                client_ip: "::1"
+                client_received_start_timestamp: 1486591233123
+                client_received_end_timestamp: 1486591233130
+                client_sent_start_timestamp: 1486591233327
+                client_sent_end_timestamp: 1486591233330
+                request_path: /iloveapis
+                request_uri: http://localhost:8000/iloveapis
+                request_verb: GET
+                response_status_code: 200
+                useragent: curl/7.43.0
+                target_received_end_timestamp: 1486591233130
+                target_received_start_timestamp: 1486591233130
+                target_response_code: 200
+                target_sent_end_timestamp: 1486591233327
+                target_sent_start_timestamp: 1486591233328
+                target: default
+                recordType: APIAnalytics
+                client_id: "1"
+
+  - name: "Unverified user"
+    weight: 10
+    flow:
+      - post:
+          headers:
+            Content-Type: application/x-www-form-urlencoded
+          url: /verifiers/apikey
+          body: "action=verify&key=99999&uriPath=/&scopeuuid=scope"
+      - post:
+          url: /analytics/scope
+          json:
+            records:
+              - apiproxy: default
+                apiproxy_revision: "15"
+                client_ip: "::1"
+                client_received_start_timestamp: 1486591233123
+                client_received_end_timestamp: 1486591233130
+                client_sent_start_timestamp: 1486591233327
+                client_sent_end_timestamp: 1486591233330
+                request_path: /iloveapis
+                request_uri: http://localhost:8000/iloveapis
+                request_verb: GET
+                response_status_code: 200
+                useragent: curl/7.43.0
+                target_received_end_timestamp: 1486591233130
+                target_received_start_timestamp: 1486591233130
+                target_response_code: 200
+                target_sent_end_timestamp: 1486591233327
+                target_sent_start_timestamp: 1486591233328
+                target: default
+                recordType: APIAnalytics
+                client_id: "1"
