@@ -1,5 +1,5 @@
-hash: cd70d7f72df29bc9bada945c1e558b82715db5950ed404cdd47721e02e458c6d
-updated: 2017-02-24T16:51:48.358337652-08:00
+hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
+updated: 2017-03-08T17:44:36.133014237-08:00
 imports:
 - name: github.com/30x/apid-core
   version: 3237423ca35a780e5e67c48cf24a8a7cde503c16
@@ -16,9 +16,9 @@ imports:
 - name: github.com/30x/apidApigeeSync
   version: 476be26419e525475c29a633d0ae7712ac9a76e0
 - name: github.com/30x/apidGatewayDeploy
-  version: a76b8ad969c342f47cf4c37729d344725707de3d
+  version: db19d5b934e8a1db059dff4121eb3aa604c36c27
 - name: github.com/30x/apidVerifyAPIKey
-  version: fdeca8da4d9f163f9b001b7a8cff0d3f1fcdceb6
+  version: 29f8dc0734ce8043d326448b20fc1781e3fc87b9
 - name: github.com/30x/goscaffold
   version: 68835e7a23284346c2a11ad43effe69197c71b26
 - name: github.com/apigee-labs/transicator
@@ -59,7 +59,7 @@ imports:
 - name: github.com/mitchellh/mapstructure
   version: bfdb1a85537d60bc7e954e600c250219ea497417
 - name: github.com/onsi/ginkgo
-  version: bb93381d543b0e5725244abe752214a110791d01
+  version: ab07225d112dc7a93c289ac5b2e12735c2c46035
   subpackages:
   - config
   - ginkgo
@@ -79,7 +79,7 @@ imports:
   - reporters/stenographer/support/go-isatty
   - types
 - name: github.com/onsi/gomega
-  version: c463cd2a8578290d4be7a25cba69de81cf35785e
+  version: 1de7ab2df9105aa5c15c4d7e14a8a514e3cb8d4b
   subpackages:
   - format
   - internal/assertion
