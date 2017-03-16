@@ -1,8 +1,8 @@
 hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
-updated: 2017-03-09T13:28:13.078892419-08:00
+updated: 2017-03-16T09:15:50.055437425-07:00
 imports:
 - name: github.com/30x/apid-core
-  version: c88db3d54b52a1f78391ec2f2789f3e8b2ad9cea
+  version: 8b2a28a53cbfba19dcab896ded01ccd076374624
   subpackages:
   - api
   - config
@@ -14,9 +14,9 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 92bef6643359fe58ace63ae6da63a8c1d31e7b81
 - name: github.com/30x/apidApigeeSync
-  version: 476be26419e525475c29a633d0ae7712ac9a76e0
+  version: e5821faa40c1840f2158079ba2ad331a659f1b7c
 - name: github.com/30x/apidGatewayDeploy
-  version: 43915297ad2fdc56bba5d5065e056f55924ceb08
+  version: 129a8a0644d06faf5fde4d4cea0866874b48c2fb
 - name: github.com/30x/apidVerifyAPIKey
   version: 29f8dc0734ce8043d326448b20fc1781e3fc87b9
 - name: github.com/30x/goscaffold
@@ -59,7 +59,7 @@ imports:
 - name: github.com/mitchellh/mapstructure
   version: bfdb1a85537d60bc7e954e600c250219ea497417
 - name: github.com/onsi/ginkgo
-  version: ab07225d112dc7a93c289ac5b2e12735c2c46035
+  version: 5ca121185e255e5041d7727d77992618545a93d2
   subpackages:
   - config
   - ginkgo
@@ -69,6 +69,7 @@ imports:
   - internal/leafnodes
   - internal/remote
   - internal/spec
+  - internal/spec_iterator
   - internal/specrunner
   - internal/suite
   - internal/testingtproxy
