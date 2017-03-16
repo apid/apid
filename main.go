@@ -69,4 +69,8 @@ func main() {
 	if err != nil {
 		log.Print(err)
 	}
+
+	log.Infof("Wait for plugins to gracefully shutdown")
+	apid.ShutdownPluginsAndWait()
+	log.Infof("Apid graceful shutdown succeeded")
 }
