@@ -1,5 +1,5 @@
 hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
-updated: 2017-03-23T13:46:15.746744169-07:00
+updated: 2017-03-27T10:42:29.933148175-07:00
 imports:
 - name: github.com/30x/apid-core
   version: 5e36be94cec7523396322d1506c555dda65527c5
@@ -14,7 +14,7 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 92bef6643359fe58ace63ae6da63a8c1d31e7b81
 - name: github.com/30x/apidApigeeSync
-  version: b0e90dcd95eaba7aa5eb91ded9c8ea512379de5c
+  version: 1ad164f9316652b13286997c6fd5fd97a4484523
 - name: github.com/30x/apidGatewayDeploy
   version: d64e6258220c19a7da53267f3160719d401c18bf
 - name: github.com/30x/apidVerifyAPIKey
@@ -80,7 +80,7 @@ imports:
   - reporters/stenographer/support/go-isatty
   - types
 - name: github.com/onsi/gomega
-  version: 4ac488ac94a6dfbd2f7e01cc3bea24e2efc40663
+  version: 334b8f472b3af5d541c5642701c1e29e2126f486
   subpackages:
   - format
   - internal/assertion
