@@ -17,6 +17,10 @@ import (
 	"github.com/30x/apid-core/factory"
 )
 
+const (
+	VERSION_NUMBER = "0.0.23"
+)
+
 func main() {
 	// clean exit messages w/o stack track during initialization
 	defer func() {
@@ -33,8 +37,14 @@ func main() {
 
 	configFlag := f.String("config", "", "path to the yaml config file [./apid_config.yaml]")
 	cleanFlag := f.Bool("clean", false, "start clean, deletes all existing data from local_storage_path")
+	versionFlag := f.Bool("version", false, "display the version number of apid and exits")
 
 	f.Parse(os.Args[1:])
+
+	if *versionFlag {
+		fmt.Println("APID Version Number: " + VERSION_NUMBER)
+		return
+	}
 
 	configFile := *configFlag
 	if configFile != "" {
