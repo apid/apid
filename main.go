@@ -15,11 +15,10 @@ import (
 
 	"github.com/30x/apid-core"
 	"github.com/30x/apid-core/factory"
+	"github.com/30x/apid/version"
 )
 
-const (
-	VERSION_NUMBER = "0.0.23"
-)
+
 
 func main() {
 	// clean exit messages w/o stack track during initialization
@@ -42,7 +41,7 @@ func main() {
 	f.Parse(os.Args[1:])
 
 	if *versionFlag {
-		fmt.Println("APID Version Number: " + VERSION_NUMBER)
+		fmt.Println("APID Version Number: " + version.VERSION_NUMBER)
 		return
 	}
 
@@ -69,7 +68,7 @@ func main() {
 
 	log.Debug("initializing...")
 
-	apid.InitializePlugins()
+	apid.InitializePlugins(version.VERSION_NUMBER)
 
 	// start client API listener
 	log.Debug("listening...")
