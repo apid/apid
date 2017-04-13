@@ -1,136 +1,30 @@
 hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
-updated: 2017-04-12T16:34:26.082906331-07:00
+updated: 2017-04-12T17:41:08.331993659-07:00
 imports:
 - name: github.com/30x/apid-core
-  version: 95a9c4f3e421171c4539548ad1a90c1c25595410
-  subpackages:
-  - api
-  - config
-  - data
-  - data/wrap
-  - events
-  - factory
-  - logger
+  version: f748c2055a38c23e6ca38d32aa7196230cc4f2b8
 - name: github.com/30x/apidAnalytics
   version: 0c31af4357c6edb8e3383d51059f101785355c08
 - name: github.com/30x/apidApigeeSync
-  version: f0b9f21f2f86359ff77cf458c656b46bcd5b7ff1
+  version: edba343b78effeb2ebe3f84b8f9b9133b6305936
 - name: github.com/30x/apidGatewayDeploy
-  version: ebe1ffde2d6d687f591558284a367ba42f119674
+  version: f68851991a83ed02349525c2e8554b6aade4c01b
 - name: github.com/30x/apidVerifyAPIKey
-  version: f48a87e8ed84e8d5c4f5761b501cbb476263ccba
+  version: b7671556a0c61bb21cd06f5e97bdf779bfc6c00d
 - name: github.com/30x/goscaffold
   version: 68835e7a23284346c2a11ad43effe69197c71b26
-- name: github.com/apigee-labs/transicator
-  version: 97977ee46c7118c0686008761b10a03424d2a1bf
-  subpackages:
-  - common
-- name: github.com/fsnotify/fsnotify
-  version: a904159b9206978bb6d53fcc7a769e5cd726c737
-- name: github.com/golang/protobuf
-  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
-  repo: https://edge.googlesource.com/third_party/golang/protobuf.git
-  subpackages:
-  - proto
-- name: github.com/gorilla/context
-  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
   version: 392c28fe23e1c45ddba891b0320b3b5df220beea
-- name: github.com/hashicorp/hcl
-  version: 630949a3c5fa3c613328e1b8256052cbc2327c9b
-  subpackages:
-  - hcl/ast
-  - hcl/parser
-  - hcl/scanner
-  - hcl/strconv
-  - hcl/token
-  - json/parser
-  - json/scanner
-  - json/token
-- name: github.com/julienschmidt/httprouter
-  version: 8c199fb6259ffc1af525cc3ad52ee60ba8359669
-  repo: https://edge.googlesource.com/third_party/julienschmidt/httprouter.git
-- name: github.com/justinas/alice
-  version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
-- name: github.com/magiconair/properties
-  version: b3b15ef068fd0b17ddf408a23669f20811d194d2
 - name: github.com/mattn/go-sqlite3
   version: ca5e3819723d8eeaf170ad510e7da1d6d2e94a08
-- name: github.com/mitchellh/mapstructure
-  version: db1efb556f84b25a0a13a04aad883943538ad2e0
+- name: github.com/Sirupsen/logrus
+  version: d26492970760ca5d33129d2d799e34be5c4782eb
+- name: github.com/spf13/viper
+  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
+testImports:
 - name: github.com/onsi/ginkgo
   version: f40a49d81e5c12e90400620b6242fb29a8e7c9d9
   subpackages:
-  - config
   - ginkgo
-  - internal/codelocation
-  - internal/containernode
-  - internal/failer
-  - internal/leafnodes
-  - internal/remote
-  - internal/spec
-  - internal/spec_iterator
-  - internal/specrunner
-  - internal/suite
-  - internal/testingtproxy
-  - internal/writer
-  - reporters
-  - reporters/stenographer
-  - reporters/stenographer/support/go-colorable
-  - reporters/stenographer/support/go-isatty
-  - types
 - name: github.com/onsi/gomega
   version: 9b8c753e8dfb382618ba8fa19b4197b5dcb0434c
-  subpackages:
-  - format
-  - internal/assertion
-  - internal/asyncassertion
-  - internal/oraclematcher
-  - internal/testingtsupport
-  - matchers
-  - matchers/support/goraph/bipartitegraph
-  - matchers/support/goraph/edge
-  - matchers/support/goraph/node
-  - matchers/support/goraph/util
-  - types
-- name: github.com/pelletier/go-buffruneio
-  version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
-- name: github.com/pelletier/go-toml
-  version: 22139eb5469018e7374b3e7ef653de37ffb44f72
-- name: github.com/SermoDigital/jose
-  version: 2bd9b81ac51d6d6134fcd4fd846bd2e7347a15f9
-  subpackages:
-  - crypto
-  - jws
-  - jwt
-- name: github.com/Sirupsen/logrus
-  version: d26492970760ca5d33129d2d799e34be5c4782eb
-- name: github.com/spf13/afero
-  version: 9be650865eab0c12963d8753212f4f9c66cdcf12
-  subpackages:
-  - mem
-- name: github.com/spf13/cast
-  version: d1139bab1c07d5ad390a65e7305876b3c1a8370b
-- name: github.com/spf13/jwalterweatherman
-  version: fa7ca7e836cf3a8bb4ebf799f472c12d7e903d66
-- name: github.com/spf13/pflag
-  version: 9ff6c6923cfffbcd502984b8e0c80539a94968b7
-  repo: https://edge.googlesource.com/third_party/spf13/pflag.git
-- name: github.com/spf13/viper
-  version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
-- name: golang.org/x/net
-  version: 6b27048ae5e6ad1ef927e72e437531493de612fe
-  subpackages:
-  - context
-- name: golang.org/x/sys
-  version: 075e574b89e4c2d22f2286a7e2b919519c6f3547
-  subpackages:
-  - unix
-- name: golang.org/x/text
-  version: 85c29909967d7f171f821e7a42e7b7af76fb9598
-  subpackages:
-  - transform
-  - unicode/norm
-- name: gopkg.in/yaml.v2
-  version: a3f3340b5840cee44f372bddb5880fcbc419b46a
-testImports: []
