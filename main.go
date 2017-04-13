@@ -15,7 +15,10 @@ import (
 
 	"github.com/30x/apid-core"
 	"github.com/30x/apid-core/factory"
+	"github.com/30x/apid/version"
 )
+
+
 
 func main() {
 	// clean exit messages w/o stack track during initialization
@@ -33,8 +36,14 @@ func main() {
 
 	configFlag := f.String("config", "", "path to the yaml config file [./apid_config.yaml]")
 	cleanFlag := f.Bool("clean", false, "start clean, deletes all existing data from local_storage_path")
+	versionFlag := f.Bool("version", false, "display the version number of apid and exits")
 
 	f.Parse(os.Args[1:])
+
+	if *versionFlag {
+		fmt.Println("APID Version Number: " + version.VERSION_NUMBER)
+		return
+	}
 
 	configFile := *configFlag
 	if configFile != "" {
@@ -59,7 +68,7 @@ func main() {
 
 	log.Debug("initializing...")
 
-	apid.InitializePlugins()
+	apid.InitializePlugins(version.VERSION_NUMBER)
 
 	// start client API listener
 	log.Debug("listening...")
