@@ -1,8 +1,8 @@
 hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
-updated: 2017-04-12T17:43:09.524384753-07:00
+updated: 2017-04-18T14:37:56.842472728-07:00
 imports:
 - name: github.com/30x/apid-core
-  version: f748c2055a38c23e6ca38d32aa7196230cc4f2b8
+  version: b601a5f26268b404a32fbd104dafb6f98d47934c
   subpackages:
   - api
   - config
@@ -14,11 +14,11 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 0c31af4357c6edb8e3383d51059f101785355c08
 - name: github.com/30x/apidApigeeSync
-  version: edba343b78effeb2ebe3f84b8f9b9133b6305936
+  version: a0ac371956892aa4608063bc8f5d2dcb46ca77c3
 - name: github.com/30x/apidGatewayDeploy
-  version: f68851991a83ed02349525c2e8554b6aade4c01b
+  version: 476daa20cdc781b656b697ddff6a94a689f61112
 - name: github.com/30x/apidVerifyAPIKey
-  version: b7671556a0c61bb21cd06f5e97bdf779bfc6c00d
+  version: 3d3be42cd14a8bfccf2deb767877ca003740dcf9
 - name: github.com/30x/goscaffold
   version: 68835e7a23284346c2a11ad43effe69197c71b26
 - name: github.com/apigee-labs/transicator

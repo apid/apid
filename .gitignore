@@ -7,3 +7,4 @@ apid
 .idea
 apid_config.yaml
 vendor/github.com/30x
+vendor/github.com/apigee-labs

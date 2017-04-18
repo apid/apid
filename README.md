@@ -56,7 +56,7 @@ To update the build dependencies and release, follow this process:
 
 1. Update `glide.yaml` to the correct versions
 2. `rm glide.lock`
-3. Run `glide up --strip-vendor`
+3. Run `glide up`
 4. `go build` and verify the result
 5. Commit (should be glide.yaml, glide.lock, and vendor changes)
 6. Add a Git label on the commit for the version of the release (use semver, ie. "1.2.3") 
