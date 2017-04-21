@@ -1,5 +1,5 @@
-hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
-updated: 2017-04-18T14:37:56.842472728-07:00
+hash: 1eab6fc940f48b1c777ea26027fcb149660ce1c5ee8e08120529ba34d5388277
+updated: 2017-04-21T10:33:01.67207717-07:00
 imports:
 - name: github.com/30x/apid-core
   version: b601a5f26268b404a32fbd104dafb6f98d47934c
@@ -14,15 +14,15 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 0c31af4357c6edb8e3383d51059f101785355c08
 - name: github.com/30x/apidApigeeSync
-  version: a0ac371956892aa4608063bc8f5d2dcb46ca77c3
+  version: e54bd6b69eafa665333a08491cc1ed663a721360
 - name: github.com/30x/apidGatewayDeploy
-  version: 476daa20cdc781b656b697ddff6a94a689f61112
+  version: dea0e0dd18cfdc99c274025eac38bcfb9d19903b
 - name: github.com/30x/apidVerifyAPIKey
-  version: 3d3be42cd14a8bfccf2deb767877ca003740dcf9
+  version: f4e35e6602c85696799eb99860cbf8fa62a4a573
 - name: github.com/30x/goscaffold
   version: 68835e7a23284346c2a11ad43effe69197c71b26
 - name: github.com/apigee-labs/transicator
-  version: 97977ee46c7118c0686008761b10a03424d2a1bf
+  version: 015b22f0f030bbdc3195d092ce3956eb772b0efc
   subpackages:
   - common
 - name: github.com/fsnotify/fsnotify
@@ -59,7 +59,7 @@ imports:
 - name: github.com/mitchellh/mapstructure
   version: db1efb556f84b25a0a13a04aad883943538ad2e0
 - name: github.com/onsi/ginkgo
-  version: f40a49d81e5c12e90400620b6242fb29a8e7c9d9
+  version: 6adbc2648389a46e8ff0e96d07a07a9a9eb432de
   subpackages:
   - config
   - ginkgo
