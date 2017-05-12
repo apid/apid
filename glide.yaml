@@ -9,7 +9,7 @@ import:
 - package: github.com/30x/apidVerifyAPIKey
   version: genericsqlite
 - package: github.com/30x/apidAnalytics
-  version: master
+  version: SQLlite_tohave_schemas
 - package: github.com/Sirupsen/logrus
   version: v0.11.0
 - package: github.com/spf13/viper
