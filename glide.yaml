@@ -22,6 +22,4 @@ import:
   version: 68835e7a23284346c2a11ad43effe69197c71b26
 testImport:
 - package: github.com/onsi/ginkgo/ginkgo
-  version: master
 - package: github.com/onsi/gomega
-  version: master

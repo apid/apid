@@ -1,8 +1,8 @@
-hash: 3ec4614ffdf9b8f7121ba9333a53ac9353c46fe3d4f0ffd020972b9ca9a93290
-updated: 2017-05-31T15:09:17.841199347-07:00
+hash: 2409a99fc121ff7fe8f20d243afb94165165ef5c07242e6899067ca6fcd05a97
+updated: 2017-06-27T09:54:04.179536274-07:00
 imports:
 - name: github.com/30x/apid-core
-  version: b601a5f26268b404a32fbd104dafb6f98d47934c
+  version: 3f78cffcf966171174dc61584604563ca51a9f8a
   subpackages:
   - api
   - config
@@ -12,21 +12,21 @@ imports:
   - factory
   - logger
 - name: github.com/30x/apidAnalytics
-  version: 0c31af4357c6edb8e3383d51059f101785355c08
+  version: 80469ab6e6ef522b619fff8bef6189e22039c06a
 - name: github.com/30x/apidApigeeSync
-  version: 1156d73e7713e820a2c49d63539942c83d5ad14e
+  version: 5d2596ae6c6eea3134d74fe23b3cc78afbecfa2e
 - name: github.com/30x/apidGatewayDeploy
-  version: 394df44ba448d700c93a61f1be6564fa67984b69
+  version: 5d41aa8d25a5a85d20e2b55a25c111baec656f9f
 - name: github.com/30x/apidVerifyAPIKey
-  version: cf1461760ad0451636cafec15ce79613ee3f5225
+  version: a29f4e1f0436104f764dd3d9733db0101aa05be2
 - name: github.com/30x/goscaffold
   version: 68835e7a23284346c2a11ad43effe69197c71b26
 - name: github.com/apigee-labs/transicator
-  version: 0aa40a424a8b71a039ff020a8be90826bd105eed
+  version: c0794a4ece0ef43c39c930bf0c0777662289ac5f
   subpackages:
   - common
 - name: github.com/fsnotify/fsnotify
-  version: 4da3e2cfbabc9f751898f250b49f2439785783a1
+  version: a904159b9206978bb6d53fcc7a769e5cd726c737
 - name: github.com/golang/protobuf
   version: 8ee79997227bf9b34611aee7946ae64735e6fd93
   repo: https://edge.googlesource.com/third_party/golang/protobuf.git
@@ -37,7 +37,7 @@ imports:
 - name: github.com/gorilla/mux
   version: 392c28fe23e1c45ddba891b0320b3b5df220beea
 - name: github.com/hashicorp/hcl
-  version: 392dba7d905ed5d04a5794ba89f558b27e2ba1ca
+  version: 630949a3c5fa3c613328e1b8256052cbc2327c9b
   subpackages:
   - hcl/ast
   - hcl/parser
@@ -53,16 +53,15 @@ imports:
 - name: github.com/justinas/alice
   version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
 - name: github.com/magiconair/properties
-  version: 51463bfca2576e06c62a8504b5c0f06d61312647
+  version: b3b15ef068fd0b17ddf408a23669f20811d194d2
 - name: github.com/mattn/go-sqlite3
   version: ca5e3819723d8eeaf170ad510e7da1d6d2e94a08
 - name: github.com/mitchellh/mapstructure
-  version: d0303fe809921458f417bcf828397a65db30a7e4
+  version: db1efb556f84b25a0a13a04aad883943538ad2e0
 - name: github.com/onsi/ginkgo
-  version: a1f616c97771e46da1722d3aa9dcde0a43f55682
+  version: f24729c07644086231e82a4bc3a1cc2feff06e71
   subpackages:
   - config
-  - ginkgo
   - internal/codelocation
   - internal/containernode
   - internal/failer
@@ -80,7 +79,7 @@ imports:
   - reporters/stenographer/support/go-isatty
   - types
 - name: github.com/onsi/gomega
-  version: 39a54bd3c3bbfe1c331a9b3207e92134c77ed812
+  version: f9b2e15b86f3d6dd556700ffbaa4feee86745028
   subpackages:
   - format
   - internal/assertion
@@ -94,9 +93,9 @@ imports:
   - matchers/support/goraph/util
   - types
 - name: github.com/pelletier/go-buffruneio
-  version: c37440a7cf42ac63b919c752ca73a85067e05992
+  version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
-  version: 5ccdfb18c776b740aecaf085c4d9a2779199c279
+  version: 22139eb5469018e7374b3e7ef653de37ffb44f72
 - name: github.com/SermoDigital/jose
   version: 2bd9b81ac51d6d6134fcd4fd846bd2e7347a15f9
   subpackages:
@@ -110,27 +109,27 @@ imports:
   subpackages:
   - mem
 - name: github.com/spf13/cast
-  version: acbeb36b902d72a7a4c18e8f3241075e7ab763e4
+  version: d1139bab1c07d5ad390a65e7305876b3c1a8370b
 - name: github.com/spf13/jwalterweatherman
-  version: 0efa5202c04663c757d84f90f5219c1250baf94f
+  version: fa7ca7e836cf3a8bb4ebf799f472c12d7e903d66
 - name: github.com/spf13/pflag
   version: 9ff6c6923cfffbcd502984b8e0c80539a94968b7
   repo: https://edge.googlesource.com/third_party/spf13/pflag.git
 - name: github.com/spf13/viper
   version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
 - name: golang.org/x/net
-  version: 3da985ce5951d99de868be4385f21ea6c2b22f24
+  version: 6b27048ae5e6ad1ef927e72e437531493de612fe
   subpackages:
   - context
   - html
   - html/atom
   - html/charset
 - name: golang.org/x/sys
-  version: b90f89a1e7a9c1f6b918820b3daa7f08488c8594
+  version: 075e574b89e4c2d22f2286a7e2b919519c6f3547
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: 4ee4af566555f5fbe026368b75596286a312663a
+  version: 85c29909967d7f171f821e7a42e7b7af76fb9598
   subpackages:
   - encoding
   - encoding/charmap
@@ -149,5 +148,5 @@ imports:
   - transform
   - unicode/norm
 - name: gopkg.in/yaml.v2
-  version: cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b
+  version: a3f3340b5840cee44f372bddb5880fcbc419b46a
 testImports: []
