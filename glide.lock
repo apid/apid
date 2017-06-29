@@ -14,9 +14,9 @@ imports:
 - name: github.com/30x/apidAnalytics
   version: 80469ab6e6ef522b619fff8bef6189e22039c06a
 - name: github.com/30x/apidApigeeSync
-  version: 5d2596ae6c6eea3134d74fe23b3cc78afbecfa2e
+  version: 1f01b1f5dcb5149cec5e3707f7afa61b4a982ef9 
 - name: github.com/30x/apidGatewayConfDeploy
-  version: 2789f7a06d58daf3bd2a8b2543c5c2ea0a0fd22b
+  version: 8dd411050ee863fba2d949fef4a274d7e804ed5f 
 - name: github.com/30x/apidVerifyAPIKey
   version: a29f4e1f0436104f764dd3d9733db0101aa05be2
 - name: github.com/30x/goscaffold
