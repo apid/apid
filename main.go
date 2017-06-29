@@ -18,7 +18,7 @@ import (
 	// import plugins to ensure they're bound into the executable
 	_ "github.com/30x/apidAnalytics"
 	_ "github.com/30x/apidApigeeSync"
-	_ "github.com/30x/apidGatewayDeploy"
+	_ "github.com/30x/apidGatewayConfDeploy"
 	_ "github.com/30x/apidVerifyAPIKey"
 
 	// other imports
