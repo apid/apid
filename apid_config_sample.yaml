@@ -23,3 +23,4 @@ apigeesync_consumer_key: MDygyE8OD8rlemI7S1XhlUCA7jrarjxl
 apigeesync_consumer_secret: oAuKUqRVvFVq0tzS
 apigeesync_cluster_id: fc0e5137-d3fa-4017-8bfa-86b1103bc85d
 log_level: debug    # valid values: Debug, Info, Warning, Error, Panic, Fatal
+gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:9000
