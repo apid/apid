@@ -32,8 +32,6 @@ import (
 	"github.com/30x/apid/version"
 )
 
-
-
 func main() {
 	// clean exit messages w/o stack track during initialization
 	defer func() {
