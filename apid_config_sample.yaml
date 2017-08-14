@@ -12,16 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-api_listen: 127.0.0.1:9000  # will allow local connections only
-api_expvar_path: null  # not exposed
-apigeesync_proxy_server_base: http://localhost:9001/edgex
-apigeesync_snapshot_server_base: http://localhost:9001/edgex
-apigeesync_change_server_base: http://localhost:9001/edgex
-apidanalytics_uap_server_base: http://local.com:9001/edgex
-apigeesync_blob_server_base: http://local.com:9001/edgex
-apigeesync_consumer_key: MDygyE8OD8rlemI7S1XhlUCA7jrarjxl
-apigeesync_consumer_secret: oAuKUqRVvFVq0tzS
-apigeesync_cluster_id: fc0e5137-d3fa-4017-8bfa-86b1103bc85d
-log_level: debug    # valid values: Debug, Info, Warning, Error, Panic, Fatal
-gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:9000
-local_storage_path: /opt/apigee/
+api_listen: 127.0.0.1:8079  # will allow local connections only
+apigeesync_proxy_server_base: https://hybrid-eap.e2e.apigee.com/edgex
+apigeesync_snapshot_server_base: https://hybrid-eap.e2e.apigee.com/edgex
+apigeesync_change_server_base: https://hybrid-eap.e2e.apigee.com/edgex
+apidanalytics_uap_server_base: https://hybrid-eap.e2e.apigee.com/edgex
+apigeesync_blob_server_base: https://hybrid-eap.e2e.apigee.com/edgex
+apigeesync_consumer_key: create_your_cluster_and_use_your_own_key 
+apigeesync_consumer_secret: create_your_cluster_and_use_your_own_secret
+apigeesync_cluster_id: create_your_cluster_and_use_your_own_cluster_id
+log_level: Error    # valid values: Debug, Info, Warning, Error, Panic, Fatal
+gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:8079
+local_storage_path: /opt/apigee/data/apigee-apid/
