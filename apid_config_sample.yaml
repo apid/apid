@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-api_listen: 127.0.0.1:8079  # will allow local connections only
+api_listen: 127.0.0.1:9090  # will allow local connections only
 apigeesync_proxy_server_base: https://hybrid-eap.e2e.apigee.com/edgex
 apigeesync_snapshot_server_base: https://hybrid-eap.e2e.apigee.com/edgex
 apigeesync_change_server_base: https://hybrid-eap.e2e.apigee.com/edgex
@@ -22,5 +22,5 @@ apigeesync_consumer_key: create_your_cluster_and_use_your_own_key
 apigeesync_consumer_secret: create_your_cluster_and_use_your_own_secret
 apigeesync_cluster_id: create_your_cluster_and_use_your_own_cluster_id
 log_level: Error    # valid values: Debug, Info, Warning, Error, Panic, Fatal
-gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:8079
+gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:9090
 local_storage_path: /opt/apigee/data/apigee-apid/
