@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-api_listen: 127.0.0.1:9090  # will allow local connections only
+api_listen: 0.0.0.0:9090  # will allow local connections only
 apigeesync_proxy_server_base: https://hybrid-eap.e2e.apigee.com/edgex
 apigeesync_snapshot_server_base: https://hybrid-eap.e2e.apigee.com/edgex
 apigeesync_change_server_base: https://hybrid-eap.e2e.apigee.com/edgex
