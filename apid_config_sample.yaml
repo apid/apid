@@ -13,11 +13,11 @@
 # limitations under the License.
 
 api_listen: 0.0.0.0:9090  # will allow local connections only
-apigeesync_proxy_server_base: https://hybrid-eap.e2e.apigee.com/edgex
-apigeesync_snapshot_server_base: https://hybrid-eap.e2e.apigee.com/edgex
-apigeesync_change_server_base: https://hybrid-eap.e2e.apigee.com/edgex
-apidanalytics_uap_server_base: https://hybrid-eap.e2e.apigee.com/edgex
-apigeesync_blob_server_base: https://hybrid-eap.e2e.apigee.com/edgex
+apigeesync_proxy_server_base: https://hybrid-eap.apigee.com/edgex
+apigeesync_snapshot_server_base: https://hybrid-eap.apigee.com/edgex
+apigeesync_change_server_base: https://hybrid-eap.apigee.com/edgex
+apidanalytics_uap_server_base: https://hybrid-eap.apigee.com/edgex
+apigeesync_blob_server_base: https://hybrid-eap.apigee.com/edgex
 apigeesync_consumer_key: create_your_cluster_and_use_your_own_key 
 apigeesync_consumer_secret: create_your_cluster_and_use_your_own_secret
 apigeesync_cluster_id: create_your_cluster_and_use_your_own_cluster_id
