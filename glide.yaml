@@ -21,7 +21,7 @@ import:
 - package: github.com/30x/apidGatewayConfDeploy
   version: master
 - package: github.com/30x/apidVerifyAPIKey
-  version: rj_XAPID-1037_a
+  version: master
 - package: github.com/30x/apidAnalytics
   version: master
 - package: github.com/Sirupsen/logrus
