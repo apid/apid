@@ -7,11 +7,10 @@ RUN mkdir -p /demo/data
 WORKDIR /go/src/github.com/30x
 RUN go version
 # install apid
-RUN git clone https://github.com/30x/apid.git \
+RUN git clone -b ISSUE-65203841 https://github.com/30x/apid.git \
  && (cd apid; glide install) \
  && (cd apid; go build) \
  && cp apid/apid /demo
-
 WORKDIR /demo
 COPY ./apid_config.yaml apid_config.yaml
 COPY ./init_base_db.sql init_base_db.sql
