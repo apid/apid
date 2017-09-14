@@ -16,39 +16,20 @@
 //
 module.exports = {
   captureConfigurations: captureConfigurations,
-  //fakeStatuses: fakeStatuses,
   randomUserKey: randomUserKey
 }
 
 function captureConfigurations(requestParams, response, context, ee, next) {
-    console.log("--------------------------");
-    var d = JSON.parse(response.body);
-    var statusArray = [];
-    for (var i = 0; i< d.length; i++) {
-        var status = {
-            "kind": d[i].kind,
-			//"self": d[i].self,
-			"contents": d[i].contents,
-        };
-        statusArray.push(status);
-    }
-    console.log(statusArray);
-
+	if (response.statusCode != 200) {
+		console.error("error response:", response.statusCode);
+	}
+	var d = JSON.parse(response.body);
+	if (d.contents.length != 30) {
+		console.error("error response:", d);
+	}
 	return next(); // MUST be called for the scenario to continue
 }
-/*
- requestParam are the parameters from this list
- https://github.com/request/request#requestoptions-callback
- */
-/*
-function fakeStatuses(requestParams, context, ee, next) {
-    var d = context.vars.captureConfigurations;
-requestParams.body = statusArray;
-    requestParams.json = true;
-    //console.log(requestParams.body);
-    return next();// MUST be called for the scenario to continue
-}
-*/
+
 function randomUserKey(requestParams, context, ee, next) {
     numDevs = 50000
     key = Math.floor((Math.random() * numDevs) + 1)

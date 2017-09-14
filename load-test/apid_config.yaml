@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-api_listen: localhost:9000    # note: leaves api open for for artillery to connect from anywhere
-apigeesync_proxy_server_base: http://localhost:9001
+api_listen: :9000    # note: leaves api open for for artillery to connect from anywhere
+apigeesync_proxy_server_base: http://mockserver-lt:9001
 apigeesync_snapshot_server_base: dummy #http://localhost:9001
 apigeesync_change_server_base: dummy #http://localhost:9001
 apidanalytics_uap_server_base: dummy #http://localhost:9001
@@ -21,8 +21,8 @@ apigeesync_blob_server_base: dummy #http://localhost:9001
 gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:9000
 apigeesync_consumer_key: key
 apigeesync_consumer_secret: secret
-apigeesync_cluster_id: cluster
-log_level: Debug
+apigeesync_cluster_id: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+log_level: Error
 local_storage_path: /demo/data
 apigeesync_diagnostic_mode: true
 #db_config_max_conns: 600
