@@ -21,6 +21,7 @@ cd /demo
 if [ -z "$CLOUD_IP" ];  then
   echo "No replace"
 else
+  echo "CLOUD_IP is ${CLOUD_IP}"
   sed "s/localhost/${CLOUD_IP}/" apid_config.yaml
 fi
 BASE_DB_PATH="/demo/data/sqlite/common/base"
