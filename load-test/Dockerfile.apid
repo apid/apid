@@ -8,7 +8,7 @@ WORKDIR /go/src/github.com/30x
 RUN go version
 # install apid
 RUN git clone -b ISSUE-65203841 https://github.com/30x/apid.git \
- && (cd apid; glide install) \
+ && (cd apid; glide install -v) \
  && (cd apid; go build) \
  && cp apid/apid /demo
 WORKDIR /demo
