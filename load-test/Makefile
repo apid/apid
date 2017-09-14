@@ -1,11 +1,10 @@
 docker:
 	docker build -f Dockerfile.apid . -t apid-lt -t alexkhimich/apid-lt
-	docker build -f Dockerfile.mockedcloud . -t apid-lt-mockedcloud -t alexkhimich/apid-lt-mockedcloud
 dockerpush:
 	docker push alexkhimich/apid-lt
-	docker push alexkhimich/apid-lt-mockedcloud
 dockerloadtest:
-	docker rm apid-lt-mockedcloud || true
 	docker rm apid-lt || true
-	docker run -d --name apid-lt-mockedcloud -e CLOUD_IP=192.168.99.100 -p 9001:9001 apid-lt-mockedcloud
-	docker run -d --name apid-lt -e CLOUD_IP=192.168.99.100 -p 9000:9000 apid-lt
+	docker run -d --name apid-lt -e CLOUD_IP=localhost -p 9000:9000 apid-lt
+clean:
+	docker rmi -f apid-lt
+	docker rmi -f alexkhimich/apid-lt

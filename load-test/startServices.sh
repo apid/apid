@@ -21,8 +21,16 @@ cd /demo
 if [ -z "$CLOUD_IP" ];  then
   echo "No replace"
 else
-  sed -i "s/localhost/${CLOUD_IP}/" apid_config.yaml
+  sed "s/localhost/${CLOUD_IP}/" apid_config.yaml
 fi
+BASE_DB_PATH="/demo/data/sqlite/common/base"
+DATA_DB_PATH="/demo/data/sqlite/common/1:1:"
+
+mkdir -p $BASE_DB_PATH
+mkdir -p $DATA_DB_PATH
+
+cat init_base_db.sql | sqlite3 ${BASE_DB_PATH}/sqlite3
+cat init_data_db.sql | sqlite3 ${DATA_DB_PATH}/sqlite3
 
 echo "----- Apid config being loaded -----"
 cat apid_config.yaml
