@@ -12,20 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//
-//
 module.exports = {
-  captureConfigurations: captureConfigurations,
+  captureVerifyApiKey: captureVerifyApiKey,
 }
 
-function captureConfigurations(requestParams, response, context, ee, next) {
+function captureVerifyApiKey (requestParams, response, context, ee, next) {
 	if (response.statusCode != 200) {
 		console.error("error response:", response.statusCode);
 		return next();
 	}
-	var d = JSON.parse(response.body);
-	if (d.contents.length != 30) {
-		console.error("error response:", d);
+	if (response.body.apiProduct.apiproxies.length != 2) {
+		console.error("error response:", response.body);
 		return next();
 	}
 	return next(); // MUST be called for the scenario to continue
