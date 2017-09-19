@@ -13,8 +13,8 @@ RUN git clone -b ISSUE-65203841 https://github.com/30x/apid.git \
  && cp apid/apid /demo
 WORKDIR /demo
 COPY ./apid_config.yaml apid_config.yaml
-COPY ./init_base_db.sql init_base_db.sql
-COPY ./init_data_db.sql init_data_db.sql
+COPY ./base_sqlite3 base_sqlite3
+COPY ./data_sqlite3 data_sqlite3
 COPY ./startServices.sh startServices.sh
 
 EXPOSE 9000

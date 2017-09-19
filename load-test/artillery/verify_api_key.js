@@ -21,9 +21,5 @@ function captureVerifyApiKey (requestParams, response, context, ee, next) {
 		console.error("error response:", response.statusCode);
 		return next();
 	}
-	if (response.body.apiProduct.apiproxies.length != 2) {
-		console.error("error response:", response.body);
-		return next();
-	}
 	return next(); // MUST be called for the scenario to continue
 }
