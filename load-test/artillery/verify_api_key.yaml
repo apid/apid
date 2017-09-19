@@ -18,7 +18,7 @@ config:
     timeout: 10
   phases:
     - duration: 10
-      arrivalRate: 100
+      arrivalRate: 10
   processor: "./verify_api_key.js"
 
 scenarios:
