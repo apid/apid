@@ -14,9 +14,9 @@
 
 #!/bin/bash
 ORG=eaptest5
-MGMT_HOST=https://api.e2e.apigee.net
-MGMT_USER_ID=alexkhimich+edgex-apid-tests@google.com
-MGMT_USER_PWD=Google123
+MGMT_HOST=
+MGMT_USER_ID=
+MGMT_USER_PWD=
 NO_OF_DEVELOPERS_PER_PRODUCT=1000
 DEV_PREFIX=apid_test
 NO_OF_APPS_PER_DEV=1
