@@ -28,8 +28,19 @@ mkdir -p $DATA_DB_PATH
 #cat init_data_db.sql | sqlite3 ${DATA_DB_PATH}/sqlite3
 mv base_sqlite3 ${BASE_DB_PATH}/sqlite3
 mv data_sqlite3 ${DATA_DB_PATH}/sqlite3
-
-
+CREATE_INDEX='CREATE INDEX app_company_id on KMS_APP (company_id);
+CREATE INDEX kms_app_id on KMS_APP_CREDENTIAL (app_id);
+CREATE INDEX app_developer_id on KMS_APP (developer_id);
+CREATE INDEX kms_id on KMS_APP_CREDENTIAL (id);
+CREATE INDEX kms_tenant_id on KMS_APP_CREDENTIAL (tenant_id);
+CREATE INDEX mp_appcred_id on KMS_APP_CREDENTIAL_APIPRODUCT_MAPPER (appcred_id);
+CREATE INDEX mp_app_id on KMS_APP_CREDENTIAL_APIPRODUCT_MAPPER (app_id);
+CREATE INDEX mp_apiprdt_id on KMS_APP_CREDENTIAL_APIPRODUCT_MAPPER (apiprdt_id);
+CREATE INDEX org_tenant_id on KMS_ORGANIZATION (tenant_id);
+CREATE INDEX org_name on KMS_ORGANIZATION (name);
+CREATE INDEX ap_id on KMS_API_PRODUCT (id);
+CREATE INDEX ap_tenant_id on KMS_API_PRODUCT (tenant_id);'
+echo ${CREATE_INDEX} | sqlite3 ${DATA_DB_PATH}/sqlite3
 echo "APID table:"
 echo "select * from APID;" | sqlite3 ${BASE_DB_PATH}/sqlite3
 
