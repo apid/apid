@@ -24,8 +24,11 @@ DATA_DB_PATH="/demo/data/sqlite/common/1:1:"
 mkdir -p $BASE_DB_PATH
 mkdir -p $DATA_DB_PATH
 
-cat init_base_db.sql | sqlite3 ${BASE_DB_PATH}/sqlite3
-cat init_data_db.sql | sqlite3 ${DATA_DB_PATH}/sqlite3
+#cat init_base_db.sql | sqlite3 ${BASE_DB_PATH}/sqlite3
+#cat init_data_db.sql | sqlite3 ${DATA_DB_PATH}/sqlite3
+mv base_sqlite3 ${BASE_DB_PATH}/sqlite3
+mv data_sqlite3 ${DATA_DB_PATH}/sqlite3
+
 
 echo "APID table:"
 echo "select * from APID;" | sqlite3 ${BASE_DB_PATH}/sqlite3

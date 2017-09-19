@@ -31,9 +31,9 @@ scenarios:
           afterResponse: "captureVerifyApiKey"
           json:
             action : "verify"
-            key : "qUQLHViLHm9a4L623DSnmZohz6m7C83C"
-            uriPath : "/facebook"
-            organizationName : "edgex01"
+            key : "pXcCxLsRgYM4kmmptZa5GG1LOmAXAUPj"
+            uriPath : "/"
+            organizationName : "eaptest5"
             environmentName : "test"
-            apiProxyName : "test-proxy-for-vijay"
+            apiProxyName : ""
             validateAgainstApiProxiesAndEnvs : false
