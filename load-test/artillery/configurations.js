@@ -23,10 +23,5 @@ function captureConfigurations(requestParams, response, context, ee, next) {
 		console.error("error response:", response.statusCode);
 		return next();
 	}
-	var d = JSON.parse(response.body);
-	if (d.contents.length != 30) {
-		console.error("error response:", d);
-		return next();
-	}
 	return next(); // MUST be called for the scenario to continue
 }
