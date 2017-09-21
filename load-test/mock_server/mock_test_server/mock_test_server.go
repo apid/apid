@@ -16,7 +16,7 @@ package mock_test_server
 
 import (
 	"encoding/json"
-	"github.com/30x/apidApigeeSync"
+	"github.com/apid/apidApigeeSync"
 	"net/http"
 )
 

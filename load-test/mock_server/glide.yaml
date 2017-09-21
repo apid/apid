@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package: github.com/30x/apid/load-test/mock_server
+package: github.com/apid/apid/load-test/mock_server
 import:
-- package: github.com/30x/apidApigeeSync
+- package: github.com/apid/apidApigeeSync
   version: master

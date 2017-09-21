@@ -17,10 +17,10 @@ FROM golang:1.8.3-stretch
 RUN apt-get update && apt-get -y install vim && curl https://glide.sh/get | sh
 
 RUN mkdir -p /demo
-WORKDIR /go/src/github.com/30x
+WORKDIR /go/src/github.com/apid
 RUN go version
 # install mock_server
-RUN git clone -b ISSUE-65203841 https://github.com/30x/apid.git \
+RUN git clone -b haomingtemp https://github.com/apid/apid.git \
  && (cd apid/load-test/mock_server; glide install -v; go build) \
  && cp apid/load-test/mock_server/mock_server /demo
 WORKDIR /demo
