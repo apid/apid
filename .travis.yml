@@ -28,7 +28,7 @@ deploy:
     file: apid_linux
     skip_cleanup: true
     on:
-      repo: 30x/apid
+      repo: apid/apid
       tags: true
       all_branches: true
       condition: $TRAVIS_OS_NAME == linux
@@ -38,7 +38,7 @@ deploy:
     file: apid_osx
     skip_cleanup: true
     on:
-      repo: 30x/apid
+      repo: apid/apid
       tags: true
       all_branches: true
       condition: $TRAVIS_OS_NAME == osx
