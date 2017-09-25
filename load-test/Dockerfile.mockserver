@@ -20,7 +20,7 @@ RUN mkdir -p /demo
 WORKDIR /go/src/github.com/apid
 RUN go version
 # install mock_server
-RUN git clone -b haomingtemp https://github.com/apid/apid.git \
+RUN git clone https://github.com/apid/apid.git \
  && (cd apid/load-test/mock_server; glide install -v; go build) \
  && cp apid/load-test/mock_server/mock_server /demo
 WORKDIR /demo
