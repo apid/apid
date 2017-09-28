@@ -17,8 +17,21 @@ config:
   http:
     timeout: 10
   phases:
-    - duration: 10
+    - duration: 5
+      arrivalRate: 100
+      name: "arrival rate=100"
+    - pause: 5
+    - duration: 5
+      arrivalRate: 200
+      name: "arrival rate=200"
+    - pause: 5
+    - duration: 5
+      arrivalRate: 300
+      name: "arrival rate=300"
+    - pause: 5
+    - duration: 5
       arrivalRate: 400
+      name: "arrival rate=400"
   processor: "./verify_api_key.js"
 
 scenarios:
