@@ -12,17 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package: github.com/30x/apid
+package: github.com/apid/apid
 import:
-- package: github.com/30x/apid-core
+- package: github.com/apid/apid-core
   version: Release_170815-EdgeX-EAP
-- package: github.com/30x/apidApigeeSync
+- package: github.com/apid/apidApigeeSync
   version: Release_170815-EdgeX-EAP
-- package: github.com/30x/apidGatewayConfDeploy
+- package: github.com/apid/apidGatewayConfDeploy
   version: Release_170815-EdgeX-EAP
-- package: github.com/30x/apidVerifyAPIKey
+- package: github.com/apid/apidVerifyAPIKey
   version: Release_170815-EdgeX-EAP
-- package: github.com/30x/apidAnalytics
+- package: github.com/apid/apidAnalytics
   version: Release_170815-EdgeX-EAP
 - package: github.com/Sirupsen/logrus
   version: v0.11.0
@@ -32,7 +32,7 @@ import:
   version: v1.2.0
 - package: github.com/gorilla/mux
   version: v1.3.0
-- package: github.com/30x/goscaffold
+- package: github.com/apid/goscaffold
   version: 68835e7a23284346c2a11ad43effe69197c71b26
 testImport:
 - package: github.com/onsi/ginkgo/ginkgo

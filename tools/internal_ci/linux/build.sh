@@ -26,7 +26,7 @@ export GOPATH
 
 go get github.com/Masterminds/glide
 
-base=${gobase}/src/github.com/30x/apid
+base=${gobase}/src/github.com/apid/apid
 mkdir -p ${base}
 (cd ${BUILDROOT}; tar cf - .) | (cd ${base}; tar xf -)
 

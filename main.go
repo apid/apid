@@ -16,10 +16,10 @@ package main
 
 import (
 	// import plugins to ensure they're bound into the executable
-	_ "github.com/30x/apidAnalytics"
-	_ "github.com/30x/apidApigeeSync"
-	_ "github.com/30x/apidGatewayConfDeploy"
-	_ "github.com/30x/apidVerifyAPIKey"
+	_ "github.com/apid/apidAnalytics"
+	_ "github.com/apid/apidApigeeSync"
+	_ "github.com/apid/apidGatewayConfDeploy"
+	_ "github.com/apid/apidVerifyAPIKey"
 
 	// other imports
 	"flag"
@@ -27,9 +27,9 @@ import (
 	"os"
 	"reflect"
 
-	"github.com/30x/apid-core"
-	"github.com/30x/apid-core/factory"
-	"github.com/30x/apid/version"
+	"github.com/apid/apid-core"
+	"github.com/apid/apid-core/factory"
+	"github.com/apid/apid/version"
 )
 
 func main() {
