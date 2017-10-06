@@ -39,14 +39,14 @@ apid's "log_level" configuration setting, set env var "apid_log_level".
  
 ### Core
 
-* [ApigeeSync](https://github.com/30x/apidApigeeSync)
+* [ApigeeSync](https://github.com/apid/apidApigeeSync)
  
 ### Plugins
 
-* [ApigeeSync](https://github.com/30x/apidApigeeSync)
-* [VerifyAPIKey](https://github.com/30x/apidVerifyApiKey)
-* [GatewayDeploy](https://github.com/30x/apidGatewayDeploy)
-* [ApigeeAnalytics](https://github.com/30x/apidAnalytics)
+* [ApigeeSync](https://github.com/apid/apidApigeeSync)
+* [VerifyAPIKey](https://github.com/apid/apidVerifyApiKey)
+* [GatewayDeploy](https://github.com/apid/apidGatewayDeploy)
+* [ApigeeAnalytics](https://github.com/apid/apidAnalytics)
 
 To change plugins list, edit main.go add to glide.yaml and follow the release process below.
 
