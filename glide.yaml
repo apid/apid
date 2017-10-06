@@ -15,15 +15,15 @@
 package: github.com/apid/apid
 import:
 - package: github.com/apid/apid-core
-  version: Release_170815-EdgeX-EAP
+  version: rj_67510558
 - package: github.com/apid/apidApigeeSync
-  version: Release_170815-EdgeX-EAP
+  version: rj_67510558
 - package: github.com/apid/apidGatewayConfDeploy
-  version: Release_170815-EdgeX-EAP
+  version: rj_67510558
 - package: github.com/apid/apidVerifyAPIKey
-  version: Release_170815-EdgeX-EAP
+  version: rj_67510558
 - package: github.com/apid/apidAnalytics
-  version: Release_170815-EdgeX-EAP
+  version: rj_67510558
 - package: github.com/Sirupsen/logrus
   version: v0.11.0
 - package: github.com/spf13/viper

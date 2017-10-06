@@ -7,6 +7,8 @@ API publishing, data access, and a local pub/sub event system.
 
     glide install --strip-vendor
     go build
+    Note : to embed source version use -ldflags "-X main.APID_SOURCE_VERSION=`git rev-parse --abbrev-ref HEAD`-`git rev-parse HEAD`"
+    example : go build -ldflags "-X main.APID_SOURCE_VERSION=`git rev-parse --abbrev-ref HEAD`-`git rev-parse HEAD`" 
     ./apid
 
 For command line options:
