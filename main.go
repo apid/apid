@@ -27,9 +27,14 @@ import (
 	"os"
 	"reflect"
 
+	"encoding/json"
 	"github.com/apid/apid-core"
 	"github.com/apid/apid-core/factory"
 	"github.com/apid/apid/version"
+)
+
+var (
+	APID_SOURCE_VERSION = "NOT SET"
 )
 
 func main() {
@@ -53,7 +58,13 @@ func main() {
 	f.Parse(os.Args[1:])
 
 	if *versionFlag {
-		fmt.Println("APID Version Number: " + version.VERSION_NUMBER)
+		fmt.Println("APID Version Number     : " + version.VERSION_NUMBER)
+		fmt.Println("APID Source Git Revsion : " + APID_SOURCE_VERSION)
+		pluginVersions, err := json.Marshal(apid.PluginVersionTracker)
+		if err != nil {
+			fmt.Println("APID Plugins Version: Unable to get plugin version due to ", err)
+		}
+		fmt.Println("APID Plugins Version    : " + string(pluginVersions))
 		return
 	}
 
