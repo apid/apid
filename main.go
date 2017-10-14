@@ -34,12 +34,12 @@ import (
 )
 
 var (
-	apidCore = "not available"
-	goscaffold = "not available"
-	apidAnalytics = "not available"
-	apidApigeeSync = "not available"
+	apidCore              = "not available"
+	goscaffold            = "not available"
+	apidAnalytics         = "not available"
+	apidApigeeSync        = "not available"
 	apidGatewayConfDeploy = "not available"
-	apidVerifyAPIKey = "not available"
+	apidVerifyAPIKey      = "not available"
 )
 
 func main() {
