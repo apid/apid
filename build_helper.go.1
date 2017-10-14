@@ -1,0 +1,57 @@
+package main
+
+import (
+    "bufio"
+    "fmt"
+    "os"
+"regexp"
+)
+
+func main() {
+	var buildstr string = "go build -ldflags \""
+	var key, value, str string
+	file, err := os.Open("./glide.lock")
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Cannot open glide.lock")
+		return
+	}
+	defer file.Close()
+	m := make(map[string]string)
+    scanner := bufio.NewScanner(file)
+    if err := scanner.Err(); err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to read glide.lock")
+	    return
+    }
+    r1 := regexp.MustCompile("- name: github.com/apid/(.*)")
+    r2 := regexp.MustCompile("^\\s*version: (.*)")
+    for scanner.Scan() {
+			line := scanner.Text()
+			status1 := r1.FindStringSubmatch(line)
+			if status1 != nil {
+				key = status1[1]
+			}
+			status2 := r2.FindStringSubmatch(line)
+			if status2 != nil {
+				value = status2[1]
+			}
+			if key != "" && value != "" {
+			    if key == "apid-core" {
+			        key = "apidCore"
+			    }
+				m[key] = value
+				key = ""
+				value = ""
+			}
+	}
+	for k, v := range m {
+		str = " -X main." + k + "=" + v
+		buildstr += str
+	}
+	if len(m) == 0 {
+		fmt.Fprintf(os.Stderr, "Is glide.lock corrupted?\n")
+	} else {
+	    buildstr += "\""
+		fmt.Fprintf(os.Stdout, "%s", buildstr)
+	}
+
+}

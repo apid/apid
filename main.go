@@ -34,7 +34,12 @@ import (
 )
 
 var (
-	APID_SOURCE_VERSION = "NOT SET"
+	apidCore = "not available"
+	goscaffold = "not available"
+	apidAnalytics = "not available"
+	apidApigeeSync = "not available"
+	apidGatewayConfDeploy = "not available"
+	apidVerifyAPIKey = "not available"
 )
 
 func main() {
@@ -54,13 +59,23 @@ func main() {
 	configFlag := f.String("config", "", "path to the yaml config file [./apid_config.yaml]")
 	cleanFlag := f.Bool("clean", false, "start clean, deletes all existing data from local_storage_path")
 	versionFlag := f.Bool("version", false, "display the version number of apid and exits")
+	cmtIdFlag := f.Bool("commits", false, "provides plugins unique hash identifier")
 
 	f.Parse(os.Args[1:])
 
+	if *cmtIdFlag {
+		fmt.Println("apid-core               : " + apidCore)
+		fmt.Println("goscaffold              : " + goscaffold)
+		fmt.Println("apidAnalytics           : " + apidAnalytics)
+		fmt.Println("apidApigeeSync          : " + apidApigeeSync)
+		fmt.Println("apidGatewayConfDeploy   : " + apidGatewayConfDeploy)
+		fmt.Println("apidVerifyAPIKey        : " + apidVerifyAPIKey)
+		return
+	}
+
 	if *versionFlag {
 		fmt.Println("APID Version Number     : " + version.VERSION_NUMBER)
-		fmt.Println("APID Source Git Revsion : " + APID_SOURCE_VERSION)
-		pluginVersions, err := json.Marshal(apid.PluginVersionTracker)
+		pluginVersions, err := json.MarshalIndent(apid.PluginVersionTracker, "", " ")
 		if err != nil {
 			fmt.Println("APID Plugins Version: Unable to get plugin version due to ", err)
 		}
