@@ -16,13 +16,12 @@ limitations under the License.
 package main
 
 import (
-	"fmt"
+	"context"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"os/exec"
 	"strings"
-		"context"
-		"time"
+	"time"
 )
 
 // Make sure all plugins are accounted for
@@ -33,7 +32,6 @@ var _ = Describe("glide contains all apid plugins", func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Millisecond)
 		defer cancel()
 		cmd, err := exec.CommandContext(ctx, "./buildhelper", "../glide.lock").Output()
-		fmt.Println(err, string(cmd))
 		Expect(err).NotTo(HaveOccurred())
 		for _, v := range apidpluginlist {
 			Ω(strings.Contains(string(cmd), v)).Should(BeTrue())

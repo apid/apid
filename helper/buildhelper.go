@@ -21,6 +21,12 @@ import (
 	"regexp"
 )
 
+/*
+ * Program takes glide.lock as command line arg and dumps to
+ * stdout the go build command with all the plugins based on
+ * glide.lock. If error encountered the stderr will have the
+ * error details
+ */
 func main() {
 	var buildstr string = "go build -ldflags \""
 	var key, value, str string
