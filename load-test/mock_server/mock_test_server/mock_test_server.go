@@ -26,7 +26,7 @@ type MockAuthServer struct {
 }
 
 func (m *MockAuthServer) sendToken(w http.ResponseWriter, req *http.Request) {
-	oauthToken := apidApigeeSync.GenerateUUID()
+	oauthToken := "dummy-token"
 	res := apidApigeeSync.OauthToken{
 		AccessToken: oauthToken,
 		ExpiresIn:   oauthExpiresIn,
