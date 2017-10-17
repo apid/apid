@@ -11,7 +11,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:masterminds/glide -y  ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -q                            ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install glide -y                     ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glide ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then go get github.com/Masterminds/glide ; fi
 
 install:
   - glide install --strip-vendor
