@@ -23,4 +23,3 @@ time ${GOPATH}/bin/glide up -v
 
 go version
 make build
-go test $(${GOPATH}/bin/glide novendor)
