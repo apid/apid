@@ -19,7 +19,7 @@ install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then go build -o apid_linux ; fi
 
 script:
-  - go test $(glide novendor)
+  - make fresh
 
 deploy:
   - provider: releases
