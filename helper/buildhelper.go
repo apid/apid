@@ -24,7 +24,8 @@ import (
 func main() {
 	var buildstr string = "go build -ldflags \""
 	var key, value, str string
-	file, err := os.Open("./glide.lock")
+	glideLock := os.Args[1]
+	file, err := os.Open(glideLock)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Cannot open glide.lock")
 		return
