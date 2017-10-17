@@ -22,5 +22,5 @@ echo "Install dependencies for tests"
 time ${GOPATH}/bin/glide up -v
 
 go version
-go build
+make build
 go test $(${GOPATH}/bin/glide novendor)
