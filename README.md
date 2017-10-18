@@ -5,11 +5,8 @@ API publishing, data access, and a local pub/sub event system.
 
 ## To build and run
 
-    glide install --strip-vendor
-    go build
-    Note : to embed source version use -ldflags "-X main.APID_SOURCE_VERSION=`git rev-parse --abbrev-ref HEAD`-`git rev-parse HEAD`"
-    example : go build -ldflags "-X main.APID_SOURCE_VERSION=`git rev-parse --abbrev-ref HEAD`-`git rev-parse HEAD`" 
-    ./apid
+    make build - will build apid by linking with all the apid plugins mentioned in main.go
+    make fresh - will build after updating glide (glide up -v)
 
 For command line options:
 
@@ -43,11 +40,11 @@ apid's "log_level" configuration setting, set env var "apid_log_level".
 
 * [ApigeeSync](https://github.com/apid/apidApigeeSync)
  
-### Plugins
+### Included apid plugins
 
 * [ApigeeSync](https://github.com/apid/apidApigeeSync)
 * [VerifyAPIKey](https://github.com/apid/apidVerifyApiKey)
-* [GatewayDeploy](https://github.com/apid/apidGatewayDeploy)
+* [GatewayConfDeploy](https://github.com/apid/apidGatewayConfDeploy)
 * [ApigeeAnalytics](https://github.com/apid/apidAnalytics)
 
 To change plugins list, edit main.go add to glide.yaml and follow the release process below.
@@ -57,13 +54,27 @@ To change plugins list, edit main.go add to glide.yaml and follow the release pr
 To update the build dependencies and release, follow this process:
 
 1. Update `glide.yaml` to the correct versions
-2. `rm glide.lock`
-3. Run `glide up`
-4. `go build` and verify the result
-5. Commit (should be glide.yaml, glide.lock, and vendor changes)
-6. Add a Git label on the commit for the version of the release (use semver, ie. "1.2.3") 
-7. Push commit and label to Github to cause Travis to create a release and attach binaries for OS X and Linux
-8. Once the release has been created, you may edit it on Github to add release notes  
+2. Run `make fresh` and ensure you get `build complete`
+3. Commit glide.yaml
+4. Add a Git label on the commit for the version of the release (use semver, ie. "1.2.3")
+5. Push commit and label to Github to cause Travis to create a release and attach binaries for OS X and Linux
+6. Once the release has been created, you may edit it on Github to add release notes
+7. Do not commit glide.lock file.
+8. Run `./apid -commits` and ensure the new plugin commit Id matches the entry seen in glide.lock
+
+### Adding a new plugin
+
+To add a new plugin, update the build dependencies and release, follow this process:
+
+1. Update `glide.yaml` to include the new apid plugin and its version
+2. Update main.go by importing the new plugin, and adding updating plugin info in cmtIdFlag section
+2. Run `make fresh` and ensure you get `build complete`
+3. Commit glide.yaml
+4. Add a Git label on the commit for the version of the release (use semver, ie. "1.2.3")
+5. Push commit and label to Github to cause Travis to create a release and attach binaries for OS X and Linux
+6. Once the release has been created, you may edit it on Github to add release notes
+7. Do not commit glide.lock file.
+8. Run `./apid -commits` and ensure the new plugin commit Id matches the entry seen in glide.lock
 
 #### Notes on release process
 
@@ -71,7 +82,6 @@ In order to have a reproducible build, we have the following rules:
 
 * All `glide.yaml` packages must specify a version. 
 * Any 3rd-party libraries used by apid-core or used by any plugin must be checked into the vendor dir.
-* The `glide.lock` file is checked in and `glide up` is only used to update library versions
 * Use an empty $GOPATH (aside from apid itself) to ensure a clean build
 * apid-core and all plugins must only rely on libraries including by this apid module.
   If there are additional libraries that are needed, they must be approved, added to glide.yaml,
