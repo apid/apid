@@ -15,15 +15,15 @@
 package: github.com/apid/apid
 import:
 - package: github.com/apid/apid-core
-  version: master
+  version: bug67694505
 - package: github.com/apid/apidApigeeSync
-  version: master
+  version: bug67694505
 - package: github.com/apid/apidGatewayConfDeploy
-  version: master
+  version: bug-67694505
 - package: github.com/apid/apidVerifyAPIKey
   version: master
 - package: github.com/apid/apidAnalytics
-  version: master
+  version: bug-67694505
 - package: github.com/Sirupsen/logrus
   version: v0.11.0
 - package: github.com/spf13/viper
