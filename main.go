@@ -39,7 +39,7 @@ var (
 	apidAnalytics         = "not available"
 	apidApigeeSync        = "not available"
 	apidGatewayConfDeploy = "not available"
-	apidVerifyAPIKey      = "not available"
+	apidVerifyApiKey      = "not available"
 )
 
 func main() {
@@ -69,7 +69,7 @@ func main() {
 		fmt.Println("apidAnalytics           : " + apidAnalytics)
 		fmt.Println("apidApigeeSync          : " + apidApigeeSync)
 		fmt.Println("apidGatewayConfDeploy   : " + apidGatewayConfDeploy)
-		fmt.Println("apidVerifyAPIKey        : " + apidVerifyAPIKey)
+		fmt.Println("apidVerifyApiKey        : " + apidVerifyApiKey)
 		return
 	}
 
