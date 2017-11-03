@@ -15,13 +15,13 @@
 package: github.com/apid/apid
 import:
 - package: github.com/apid/apid-core
-  version: master
+  version: ISSUE-68272561
 - package: github.com/apid/apidApigeeSync
   version: master
 - package: github.com/apid/apidGatewayConfDeploy
   version: master
-- package: github.com/apid/apidVerifyAPIKey
-  version: master
+- package: github.com/apid/apidVerifyApiKey
+  version: ISSUE-67901957
 - package: github.com/apid/apidAnalytics
   version: master
 - package: github.com/Sirupsen/logrus

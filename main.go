@@ -19,7 +19,7 @@ import (
 	_ "github.com/apid/apidAnalytics"
 	_ "github.com/apid/apidApigeeSync"
 	_ "github.com/apid/apidGatewayConfDeploy"
-	_ "github.com/apid/apidVerifyAPIKey"
+	_ "github.com/apid/apidVerifyApiKey"
 
 	// other imports
 	"flag"
