@@ -25,9 +25,8 @@ apigeesync_cluster_id: fc0e5137-d3fa-4017-8bfa-86b1103bc85d
 log_level: debug    # valid values: Debug, Info, Warning, Error, Panic, Fatal
 gatewaydeploy_bundle_download_endpoint: http://127.0.0.1:9000
 local_storage_path: /opt/apigee/
-configfwdproxy_url: 127.0.0.1 # Optional Fwd Proxy server
-configfwdproxy_port: 3129 # Fwd Proxy server port
-configfwdproxy_user: testuser # Optional Auth cred of Proxy server
+configfwdproxy_url: 127.0.0.1 #Optional Fwd Proxy server
+configfwdproxy_port: 3129 #Fwd Proxy server port
+configfwdproxy_user: testuser #Optional Auth cred of Proxy server
 configfwdproxy_passwd: pass
-configfwdproxy_prot: https # Optional: default is https
-
+configfwdproxy_prot: https #Optional: default is https
