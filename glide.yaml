@@ -17,7 +17,7 @@ import:
 - package: github.com/apid/apid-core
   version: master
 - package: github.com/apid/apidApigeeSync
-  version: master
+  version: ISSUE-67308179
 - package: github.com/apid/apidGatewayConfDeploy
   version: master
 - package: github.com/apid/apidVerifyAPIKey
