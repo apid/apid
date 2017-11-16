@@ -13,6 +13,8 @@
 # limitations under the License.
 
 api_listen: 127.0.0.1:9000  # will allow local connections only
+api_tls_key: certs/key.pem
+api_tls_cert: certs/certificate.pem
 api_expvar_path: null  # not exposed
 apigeesync_proxy_server_base: http://localhost:9001/edgex
 apigeesync_snapshot_server_base: http://localhost:9001/edgex
