@@ -13,6 +13,7 @@
 // limitations under the License.
 
 package version
+
 const (
 	VERSION_NUMBER = "0.0.26"
 )

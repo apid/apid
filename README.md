@@ -1,5 +1,7 @@
 # apid
 
+[![Build Status](https://travis-ci.org/apid/apid.svg)](https://travis-ci.org/apid/apid) [![Go Report Card](https://goreportcard.com/badge/github.com/apid/apid)](https://goreportcard.com/report/github.com/apid/apid)
+
 apid is a container for publishing APIs that provides core services to its plugins including configuration, 
 API publishing, data access, and a local pub/sub event system.
 

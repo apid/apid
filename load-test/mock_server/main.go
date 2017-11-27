@@ -14,9 +14,10 @@
 package main
 
 import (
-	"net/http"
 	"github.com/apid/apid/load-test/mock_server/mock_test_server"
+	"net/http"
 )
+
 func main() {
 	testServer := &mock_test_server.MockAuthServer{}
 	testServer.Start()
