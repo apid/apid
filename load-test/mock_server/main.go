@@ -14,12 +14,12 @@
 package main
 
 import (
-	"github.com/apid/apid/load-test/mock_server/mock_test_server"
+	"github.com/apid/apid/load-test/mock_server/mocktestserver"
 	"net/http"
 )
 
 func main() {
-	testServer := &mock_test_server.MockAuthServer{}
+	testServer := &mocktestserver.MockAuthServer{}
 	testServer.Start()
 	http.ListenAndServe(":9001", nil)
 }
