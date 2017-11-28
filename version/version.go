@@ -15,5 +15,6 @@
 package version
 
 const (
+	// APID version number
 	VERSION_NUMBER = "0.0.26"
 )
