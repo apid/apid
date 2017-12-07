@@ -20,7 +20,7 @@ import:
   version: master
 - package: github.com/apid/apidGatewayConfDeploy
   version: master
-- package: github.com/apid/apidVerifyAPIKey
+- package: github.com/apid/apidApiMetadata
   version: master
 - package: github.com/apid/apidAnalytics
   version: master

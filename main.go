@@ -17,9 +17,9 @@ package main
 import (
 	// import plugins to ensure they're bound into the executable
 	_ "github.com/apid/apidAnalytics"
+	_ "github.com/apid/apidApiMetadata"
 	_ "github.com/apid/apidApigeeSync"
 	_ "github.com/apid/apidGatewayConfDeploy"
-	_ "github.com/apid/apidVerifyAPIKey"
 
 	// other imports
 	"flag"
@@ -39,7 +39,7 @@ var (
 	apidAnalytics         = "not available"
 	apidApigeeSync        = "not available"
 	apidGatewayConfDeploy = "not available"
-	apidVerifyAPIKey      = "not available"
+	apidApiMetadata       = "not available"
 )
 
 func main() {
@@ -69,7 +69,7 @@ func main() {
 		fmt.Println("apidAnalytics           : " + apidAnalytics)
 		fmt.Println("apidApigeeSync          : " + apidApigeeSync)
 		fmt.Println("apidGatewayConfDeploy   : " + apidGatewayConfDeploy)
-		fmt.Println("apidVerifyAPIKey        : " + apidVerifyAPIKey)
+		fmt.Println("apidApiMetadata        : " + apidApiMetadata)
 		return
 	}
 
