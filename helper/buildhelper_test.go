@@ -25,7 +25,7 @@ import (
 )
 
 // Make sure all plugins are accounted for
-var apidpluginlist = []string{"apidVerifyApiKey", "apidGatewayConfDeploy", "apidApigeeSync", "apidAnalytics", "goscaffold", "apidCore"}
+var apidpluginlist = []string{"apidApiMetadata", "apidGatewayConfDeploy", "apidApigeeSync", "apidAnalytics", "goscaffold", "apidCore"}
 
 var _ = Describe("glide contains all apid plugins", func() {
 	It("glide contains all apid plugins", func() {

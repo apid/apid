@@ -43,7 +43,7 @@ apid's "log_level" configuration setting, set env var "apid_log_level".
 ### Included apid plugins
 
 * [ApigeeSync](https://github.com/apid/apidApigeeSync)
-* [VerifyAPIKey](https://github.com/apid/apidVerifyApiKey)
+* [ApiMetadata](https://github.com/apid/apidApiMetadata)
 * [GatewayConfDeploy](https://github.com/apid/apidGatewayConfDeploy)
 * [ApigeeAnalytics](https://github.com/apid/apidAnalytics)
 
